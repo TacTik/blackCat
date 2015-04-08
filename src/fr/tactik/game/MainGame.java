@@ -2,7 +2,6 @@ package fr.tactik.game;
 
 /**
  * 
- * @author juliette
  * The main function. Create the window that launches the game.
  *
  */
