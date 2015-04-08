@@ -1,5 +1,6 @@
 package fr.tactik.game;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
@@ -19,7 +20,8 @@ public class GameWindow extends JFrame{
 		setTitle("Un super Titre de Jeu OH YEAH");
 		setSize(800,800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		setIconImage(new ImageIcon("images/icon.png").getImage());
+
 		Menu gameMenu = new Menu();
 		setJMenuBar(gameMenu);
 		
