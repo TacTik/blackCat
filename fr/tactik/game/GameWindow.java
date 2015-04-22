@@ -8,13 +8,29 @@ import javax.swing.JPanel;
  * 
  * The main window. Contains the whole universe.
  *
+ * @author Juliette Belin, Alice Neichols, Denis Tribouillois 
+ * @version 1.0
  */
 public class GameWindow extends JFrame{
 
-	Menu gameMenu = new Menu();
+	/**
+	* It create a new menu for the game.
+	*/
+	Menu gameMenu;
+	
+	/**
+	* It is the table which contains all our entity.
+	*/
 	int[] gameGrid;
+	
+	/**
+	* It is the place where the game is launch.
+	*/
 	static String rootDir = System.getProperty("user.dir");
 	
+	/**
+	* Create a new window.
+	*/
 	GameWindow(){
 		setTitle("Un super Titre de Jeu OH YEAH");
 		setSize(800,800);
@@ -31,7 +47,10 @@ public class GameWindow extends JFrame{
 		setVisible (true);		
 	}
 	
-	
+
+	/**
+	* Create a panel for the window.
+	*/
 	public static JPanel createPanel(){
 
 		GameDisplay gamePanel = new GameDisplay();
