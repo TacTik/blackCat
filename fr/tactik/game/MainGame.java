@@ -10,6 +10,6 @@ import fr.tactik.editor.EditorWindow;
 public class MainGame {
 	public static void main (String [] args){
 		GameWindow window = new GameWindow();
-		// EditorWindow levelEditor = EditorWindow.createWindow(1000,700);
+		// EditorWindow.createWindow(1000,700);
 	}
 }
