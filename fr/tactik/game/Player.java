@@ -3,13 +3,20 @@
  */
 package fr.tactik.game;
 
+import java.awt.Image;
 import java.util.Vector;
 
 /**
  * @author juliette
  *
  */
-public class Player {
+public class Player extends Mobile{
+
+	public Player(float posX, float posY, int sizeX, int sizeY,
+			boolean isWalkable, Vector<String> textures, int id) {
+		super(posX, posY, sizeX, sizeY, isWalkable, textures, id);
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * 
@@ -18,11 +25,8 @@ public class Player {
 	int lifePoints;
 	float speed;
 	int state;
-	Vector inventory;
-	
-	public Player() {
-		// TODO Auto-generated constructor stub
-	}
+	Vector<String> inventory;
+
 
 	public void crouch(){
 		
