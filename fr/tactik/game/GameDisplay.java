@@ -31,6 +31,12 @@ public class GameDisplay extends JPanel implements Runnable {
 	int offsetX=0;
 	int offsetY=0;
 	
+	long lastLoopTime = System.nanoTime();
+	final int TARGET_FPS = 60;
+	final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+	int lastFpsTime =0;
+    int fps = 0;
+	
 	public void initGame() {
 		
 		entities = new Vector<Entity>();
@@ -85,10 +91,36 @@ public class GameDisplay extends JPanel implements Runnable {
 	public void run() {
 		
 		while (true){
+			 long now = System.nanoTime();
+		     long updateLength = now - lastLoopTime;
+		     lastLoopTime = now;
+		     double delta = updateLength / ((double)OPTIMAL_TIME);
+
+		      // update the frame counter
+		      lastFpsTime += updateLength;
+		      fps++;
+		      
+		      // update our FPS counter if a second has passed since
+		      // we last recorded
+		      if (lastFpsTime >= 1000000000)
+		      {
+		         System.out.println("(FPS: "+fps+")");
+		         lastFpsTime = 0;
+		         fps = 0;
+		      }
+		      
+		      if (lastFpsTime >= 1000000000)
+		      {
+		         System.out.println("(FPS: "+fps+")");
+		         lastFpsTime = 0;
+		         fps = 0;
+		      }
+		      
 			gameUpdate();
 			render();
+			
 			try {
-				Thread.sleep(17);
+				Thread.sleep((lastLoopTime-System.nanoTime() + OPTIMAL_TIME)/1000000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
