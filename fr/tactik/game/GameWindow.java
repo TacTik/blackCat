@@ -41,24 +41,15 @@ public class GameWindow extends JFrame{
 		setJMenuBar(gameMenu);
 		
 		gameGrid = GameLoader.load("monFichier.bct");
-
-		getContentPane().add(createPanel());
 		
-		setVisible (true);		
-	}
-	
-
-	/**
-	* Create a panel for the window.
-	*/
-	public static JPanel createPanel(){
-
 		GameDisplay gamePanel = new GameDisplay();
-		System.out.println(rootDir);
-		
-		
 		gamePanel.setBackground(rootDir + "/images/game/background.jpg"); 		
+
+		getContentPane().add(gamePanel);
 		
-		return gamePanel;
+		setVisible (true);
+		gamePanel.run();
+
+		
 	}
 }
