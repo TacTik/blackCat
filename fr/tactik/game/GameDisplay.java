@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.LayoutManager;
 import java.io.File;
 import java.io.IOException;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -16,8 +17,12 @@ public class GameDisplay extends JPanel {
 	//controler de jeu
 	//controler de menu
 
-	Player player;
+	static String rootdir = System.getProperty("user.dir");
+	
+	Player player = new Player(10,10,50,50,false, rootdir + "/images/game/player/",1, 1);
 	Image background;
+
+	
 	
 	public GameDisplay() {
 		// TODO Auto-generated constructor stub
@@ -36,8 +41,9 @@ public class GameDisplay extends JPanel {
 	@Override
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
-    		g.drawImage(player.getCurrentTexture(),0,0,null);
 	    	g.drawImage(background,0,0,null);
+    		g.drawImage(player.getCurrentTexture(),(int)player.getPosX(),(int)player.getPosX(),null);
+	    	
 
 	}
 }
