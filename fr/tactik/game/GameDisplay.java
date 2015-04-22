@@ -35,8 +35,9 @@ public class GameDisplay extends JPanel {
 	
 	@Override
 	  protected void paintComponent(Graphics g) {
-
 	    super.paintComponent(g);
-	    	g.drawImage(background,0,0, 50,50,null);
+    		g.drawImage(player.getCurrentTexture(),0,0,null);
+	    	g.drawImage(background,0,0,null);
+
 	}
 }
