@@ -35,15 +35,15 @@ public abstract class Entity {
 	 */
 	int sizeY;
 
+	/**
+	 * This is the texture path of the entity. 
+	 * 	 
+	 */
 	String path;
 	Vector<Image> texturesImages;
 	
 	int current;
 
-	/**
-	 * This is the texture of the entity. This is a vector because an entity can have several textures like the player.
-	 */
-	Vector<String> textures;
 	/**
 	 * Indicate if the player can walk on the entity.
 	 */
@@ -69,15 +69,19 @@ public abstract class Entity {
 	 * @param textures
 	 * 				This is the texture of the entity. This is a vector because an entity can have several textures like the player.
 	 */
-	public Entity(float posX, float posY, int sizeX, int sizeY, boolean isWalkable, Vector<String> textures,
-			int id) {
+	public Entity(float posX, float posY, int sizeX, int sizeY, boolean isWalkable, String path,
+			int current, int id) {
 		this.posX = posX;
 		this.posY = posY;
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 		this.isWalkable = isWalkable;
-		this.textures = textures;
+		this.path = path;
+		this.current = current;
 		this.id = id;
+		
+		this.texturesImages = new Vector<Image>();
+		this.setTexturesImages();
 	}
 
 	/**
@@ -162,8 +166,8 @@ public abstract class Entity {
 	* @return textures
 	* 			A vector of all the textures of the entity.
 	*/
-	public Vector<String> getTextures() {
-		return textures;
+	public String getPath() {
+		return path;
 	}
 
 	/**
@@ -171,8 +175,8 @@ public abstract class Entity {
 	* @param textures 
 	* 			the new textures of the entity.
 	*/
-	public void setTextures(Vector<String> textures) {
-		this.textures = textures;
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	/**
@@ -203,25 +207,26 @@ public abstract class Entity {
 	}
 	
 	public void setTexturesImages(){
-		Iterator<String> it = textures.iterator();
-		while(it.hasNext()){
-			 try {
-		        	texturesImages.add (ImageIO.read(new File(it.next().toString())) );
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		        }
-		}      
+		File folder = new File(path);
+		File[] listOfFiles = folder.listFiles();
+		
+		for (int i =0; i < listOfFiles.length; i++) {
+			if (listOfFiles[i].isFile()) {
+				try {
+					texturesImages.add (ImageIO.read(new File(path + listOfFiles[i].getName())));
+				} catch (IOException e) {
+					System.out.println("expect");
+					e.printStackTrace();
+				}
+			}
+		} 
 	}
 	
-	public Image getCurrentText(){
+	public Image getCurrentTexture(){
 		return texturesImages.get(current);
 	}
 	
 	public void updateCurrentText(){
 		current = texturesImages.size() -1; // FIX ME ! must be a loop in the vector  
-	}
-	
-	public Image getCurrentTexture(){
-		return texturesImages.get(1);
 	}
 }

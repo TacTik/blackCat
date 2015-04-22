@@ -12,9 +12,9 @@ import java.util.Vector;
  */
 public class Player extends Mobile{
 
-	public Player(float posX, float posY, int sizeX, int sizeY,
-			boolean isWalkable, Vector<String> textures, int id) {
-		super(posX, posY, sizeX, sizeY, isWalkable, textures, id);
+	public Player(float posX, float posY, int sizeX, int sizeY, boolean isWalkable, String path,
+		int current, int id) {
+		super(posX, posY, sizeX, sizeY, isWalkable, path, current, id);
 		// TODO Auto-generated constructor stub
 	}
 
