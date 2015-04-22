@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-public class GameDisplay extends JPanel {
+public class GameDisplay extends JPanel implements Runnable {
 	//hero
 	//monde
 	//controler de jeu
@@ -19,15 +19,37 @@ public class GameDisplay extends JPanel {
 
 	static String rootdir = System.getProperty("user.dir");
 	
-	Player player = new Player(10,10,50,50,false, rootdir + "/images/game/player/",1, 1);
 	Image background;
-
+	Vector<Entity> entities;
+	int offsetX=0;
+	int offsetY=0;
+	
+	public void initGame() {
+		
+		entities = new Vector<Entity>();
+		
+		Player player1 = new Player(10,10,50,50,false, rootdir + "/images/game/player/",1, 1);
+		Player player2 = new Player(600,600,50,50,false, rootdir + "/images/game/player/",2, 1);
+		
+		entities.add (player1);
+		entities.add (player2);
+	}
+	
+	public void gameUpdate() {
+		entities.get(0).setPosX((entities.get(0).getPosX() + 1)%800 );
+	}
+	
+	public void render() {
+		repaint();
+	}
 	
 	
 	public GameDisplay() {
 		// TODO Auto-generated constructor stub
-		
+		initGame();	
 	}
+	
+	
 	
 	public void setBackground(String path){
 		  // load the background image
@@ -38,12 +60,33 @@ public class GameDisplay extends JPanel {
         }
 	}
 	
+	
+	
+	
 	@Override
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 	    	g.drawImage(background,0,0,null);
-    		g.drawImage(player.getCurrentTexture(),(int)player.getPosX(),(int)player.getPosX(),null);
-	    	
+    		//g.drawImage(player.getCurrentTexture(),(int)player.getPosX(),(int)player.getPosX(),null);
+	    	for (int i = 0; i < entities.size(); i++){
+	    		g.drawImage(entities.get(i).getCurrentTexture(),(int)entities.get(i).getPosX()+offsetX,(int)entities.get(i).getPosY()+offsetY,null);
+	    	}
 
 	}
+
+	@Override
+	public void run() {
+		
+		while (true){
+			gameUpdate();
+			render();
+			try {
+				Thread.sleep(17);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 }
