@@ -10,6 +10,12 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+/**
+ * This is the GameDisplay Class. This class permit to display all the entity of the game.
+ * 
+ * @author Juliette Belin, Alice Neichols, Denis Tribouillois 
+ * @version 1.0
+ */
 public class GameDisplay extends JPanel {
 	//hero
 	//monde
