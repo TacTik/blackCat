@@ -8,8 +8,10 @@ import java.awt.Color;
 import javax.swing.JPanel;
 
 /**
- * @author juliette
- *
+ * This is the GameLoeader Class. This class permit to load the configuration file of the level.
+ * 
+ * @author Juliette Belin, Alice Neichols, Denis Tribouillois 
+ * @version 1.0
  */
 public class GameLoader {
 
