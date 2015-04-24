@@ -25,7 +25,6 @@ public class Player extends Mobile{
 	 */
 	
 	int lifePoints;
-	float speed;
 	int state;
 	Vector<String> inventory;
 

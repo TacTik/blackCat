@@ -40,6 +40,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
 	int lastFpsTime =0;
     int fps = 0;
+    ControlerPlayer controlPlayer;
 	
 	public void initGame() {
 		
@@ -65,12 +66,21 @@ public class GameDisplay extends JPanel implements Runnable{
 		
 		stills.add (still1);
 		stills.add (still2);
+		
+		controlPlayer = new ControlerPlayer(player);
+		this.addKeyListener(controlPlayer);
+		this.setFocusable(true);
 	}
 	
 	public void gameUpdate() {
+
 		mobiles.get(0).moveLeft(1);
 		mobiles.get(1).updateCurrentText();
 		mobiles.get(2).moveInField(100, 0);
+
+		// mobiles.get(0).moveLeft(1);
+		// mobiles.get(1).updateCurrentText();
+		player.update();
 	}
 	
 	public void render() {		
@@ -129,14 +139,14 @@ public class GameDisplay extends JPanel implements Runnable{
 		      // we last recorded
 		      if (lastFpsTime >= 1000000000)
 		      {
-		         System.out.println("(FPS: "+fps+")");
+		         //System.out.println("(FPS: "+fps+")");
 		         lastFpsTime = 0;
 		         fps = 0;
 		      }
 		      
 		      if (lastFpsTime >= 1000000000)
 		      {
-		         System.out.println("(FPS: "+fps+")");
+		         // System.out.println("(FPS: "+fps+")");
 		         lastFpsTime = 0;
 		         fps = 0;
 		      }
