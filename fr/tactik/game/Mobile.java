@@ -20,12 +20,21 @@ public abstract class Mobile extends Entity {
 	 * @param isWalkable
 	 * @param id
 	 */
+
+	float moveFieldX;
+	float moveFieldY;
+	float initialPosX;
+	float initialPosY;
+
 	float xspeed, yspeed;
 	
 	public Mobile(float posX, float posY, int sizeX, int sizeY, boolean isWalkable, String path,
 			int current, int id) {
 		super(posX, posY, sizeX, sizeY, isWalkable, path, current, id);
 		// TODO Auto-generated constructor stub
+		initialPosX = posX;
+		initialPosY = posY;
+		
 	}
 
 	public void update(){
@@ -47,7 +56,31 @@ public abstract class Mobile extends Entity {
 		this.yspeed = -y;
 	}
 	
-	public void moveDown(float y){
+	public void moveDown(float y){ 
 		this.yspeed = y;
+	}
+	
+	public void moveInField(float moveFieldX, float moveFieldY){
+		//For moveFieldX
+		if((posX < moveFieldX + initialPosX ) && (xspeed >= 0)){
+			this.moveRight(1);
+		}
+		else if((posX >= moveFieldX + initialPosX) && (xspeed > 0)){
+			this.moveLeft(1);
+		}
+		else if ((posX <= initialPosX) && (xspeed <0)){
+			this.moveRight(1);
+		}
+		
+		//For moveFieldY
+		if((posY < moveFieldY + initialPosY ) && (yspeed >= 0)){
+			this.moveDown(1);
+		}
+		else if((posY >= moveFieldY + initialPosY) && (yspeed > 0)){
+			this.moveUp(1);
+		}
+		else if ((posY <= initialPosY) && (yspeed <0)){
+			this.moveDown(1);
+		}
 	}
 }
