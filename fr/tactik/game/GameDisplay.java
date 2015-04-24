@@ -27,7 +27,8 @@ public class GameDisplay extends JPanel implements Runnable {
 	static String rootdir = System.getProperty("user.dir");
 	
 	Image background;
-	Vector<Entity> entities;
+	Vector<Mobile> mobiles;
+	Vector<Still> stills;
 	int offsetX=0;
 	int offsetY=0;
 	
@@ -39,17 +40,29 @@ public class GameDisplay extends JPanel implements Runnable {
 	
 	public void initGame() {
 		
-		entities = new Vector<Entity>();
+		mobiles = new Vector<Mobile>();
+		stills = new Vector<Still>();
 		
-		Player player1 = new Player(10,10,50,50,false, rootdir + "/images/game/player/",1, 1);
-		Player player2 = new Player(600,600,50,50,false, rootdir + "/images/game/player/",2, 1);
+		Player player = new Player(10,10,50,50,false, rootdir + "/images/game/player/",1, 1);
+		MobilePlat mobile1 = new MobilePlat(600,600,50,50,false, rootdir + "/images/game/mobile1/",2, 1);
+		MobilePlat mobile2 = new MobilePlat(400,400,50,50,false, rootdir + "/images/game/mobile2/",0, 1);
 		
-		entities.add (player1);
-		entities.add (player2);
+		mobiles.add (player);
+		mobiles.add (mobile1);
+		mobiles.add (mobile2);
+		
+		StillPlat still1 = new StillPlat(200,200,50,50,false, rootdir + "/images/game/still1/",0, 1);
+		StillPlat still2 = new StillPlat(300,300,50,50,false, rootdir + "/images/game/still2/",0, 1);
+		
+		stills.add (still1);
+		stills.add (still2);
 	}
 	
 	public void gameUpdate() {
-		entities.get(0).setPosX((entities.get(0).getPosX() + 1)%800 );
+		mobiles.get(0).moveRight(1);
+		mobiles.get(1).moveLeft(1);
+		mobiles.get(2).moveUp(1);
+		//entities.get(0).setPosX((entities.get(0).getPosX() + 1)%800 );
 	}
 	
 	public void render() {
@@ -79,10 +92,17 @@ public class GameDisplay extends JPanel implements Runnable {
 	@Override
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
+	    	// Background
 	    	g.drawImage(background,0,0,null);
-    		//g.drawImage(player.getCurrentTexture(),(int)player.getPosX(),(int)player.getPosX(),null);
-	    	for (int i = 0; i < entities.size(); i++){
-	    		g.drawImage(entities.get(i).getCurrentTexture(),(int)entities.get(i).getPosX()+offsetX,(int)entities.get(i).getPosY()+offsetY,null);
+    		
+	    	// Mobile elements
+	    	for (int i = 0; i < mobiles.size(); i++){
+	    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX()+offsetX,(int)mobiles.get(i).getPosY()+offsetY,null);
+	    	}
+	    	
+	    	// Still elements
+	    	for (int i = 0; i < stills.size(); i++){
+	    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX()+offsetX,(int)stills.get(i).getPosY()+offsetY,null);
 	    	}
 
 	}
