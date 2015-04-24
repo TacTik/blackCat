@@ -227,6 +227,6 @@ public abstract class Entity {
 	}
 	
 	public void updateCurrentText(){
-		current = texturesImages.size() -1; // FIX ME ! must be a loop in the vector  
+		current = (current + 1) % texturesImages.size(); // FIX ME ! must be a loop in the vector  
 	}
 }
