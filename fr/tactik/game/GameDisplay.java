@@ -81,6 +81,7 @@ public class GameDisplay extends JPanel implements Runnable{
 		// mobiles.get(0).moveLeft(1);
 		// mobiles.get(1).updateCurrentText();
 		player.update();
+		mobiles.get(2).update();
 	}
 	
 	public void render() {		
