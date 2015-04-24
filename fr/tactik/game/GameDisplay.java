@@ -5,8 +5,7 @@ import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -40,27 +39,103 @@ public class GameDisplay extends JPanel implements Runnable{
 	final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
 	int lastFpsTime =0;
     int fps = 0;
+
+
+
+    
+	public static int[][] readLevel(int a, int b){
+		int [][] tab = new int [a][b];
+		int i = 0;
+    	try{
+    		FileInputStream fstream = new FileInputStream("level1.txt");
+    		DataInputStream in = new DataInputStream(fstream);
+    		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    		String strLine;
+    		while ((strLine = br.readLine()) != null)   {
+	    	   String[] tokens = strLine.split(" ");
+	    	   for (int j = 0; j < b ; j++){
+	    		   tab[i][j] = Integer.parseInt(tokens[j]);
+	    	   }
+	    	   i++;
+    		}
+    		in.close();
+    	}
+    	catch (Exception e){
+    	     System.err.println("Error: " + e.getMessage());
+    	}
+    	return tab;
+	}
 	
+	public static int readLevelLines(){
+		int res = -1;
+    	try{
+    		FileInputStream fstream = new FileInputStream("level1_size.txt");
+    		DataInputStream in = new DataInputStream(fstream);
+    		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    		String strLine;
+    		while ((strLine = br.readLine()) != null)   {
+ 	    		String[] tokens = strLine.split(" ");
+ 	    		res = Integer.parseInt(tokens[0]);
+ 	    	}
+     		in.close();
+    	}
+    	catch (Exception e){
+    	     System.err.println("Error: " + e.getMessage());
+    	}
+    	return res;
+	}
+	
+	public static int readLevelColumns(){
+		int res = -1;
+    	try{
+    		FileInputStream fstream = new FileInputStream("level1_size.txt");
+    		DataInputStream in = new DataInputStream(fstream);
+    		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    		String strLine;
+    		while ((strLine = br.readLine()) != null)   {
+ 	    		String[] tokens = strLine.split(" ");
+ 	    		res = Integer.parseInt(tokens[1]);
+ 	    	}
+     		in.close();
+    	}
+    	catch (Exception e){
+    	     System.err.println("Error: " + e.getMessage());
+    	}
+    	return res;
+	}
+    
+    
 	public void initGame() {
-		
-		player = new Player(10,10,50,50,false, rootdir + "/images/game/player/",1, 1);
-		
 		mobiles = new Vector<Mobile>();
-		
-		MobilePlat mobile1 = new MobilePlat(600,600,50,50,false, rootdir + "/images/game/mobile1/",2, 1);
-		MobilePlat mobile2 = new MobilePlat(400,400,50,50,false, rootdir + "/images/game/mobile2/",0, 1);
-		
-		
-		mobiles.add (mobile1);
-		mobiles.add (mobile2);
-		
 		stills = new Vector<Still>();
 		
-		StillPlat still1 = new StillPlat(200,200,50,50,false, rootdir + "/images/game/still1/",0, 1);
-		StillPlat still2 = new StillPlat(300,300,50,50,false, rootdir + "/images/game/still2/",0, 1);
+		int nbLines = readLevelLines();
+		int nbColumns = readLevelColumns();
+		int[][] level = readLevel(nbLines,nbColumns);
 		
-		stills.add (still1);
-		stills.add (still2);
+		for (int i = 0; i < nbLines; i++){
+			for (int j = 0; j < nbColumns ; j++){
+				int id = level[i][j];
+				switch (id) {
+		            case 1:  player = new Player(50*j,50*i,50,50,false, rootdir + "/images/game/player/",1, i*nbColumns+j);
+		                     break;
+		            case 2:  MobilePlat mobile1 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile1/",2, i*nbColumns+j);
+		            		 mobiles.add (mobile1);
+		            		 break;
+		            case 3:  MobilePlat mobile2 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile2/",2, i*nbColumns+j);
+		            		 mobiles.add (mobile2);
+		            		 break;
+		            case 4:  StillPlat still1 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/still1/",0, i*nbColumns+j);
+	       		 			 stills.add (still1);
+	       		 			 break;
+		            case 5:  StillPlat still2 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/still2/",0, i*nbColumns+j);
+			 			 	 stills.add (still2);
+			 			 	 break;
+		            default: 
+		                     break;
+				}
+			}
+		}
 	}
 	
 	public void gameUpdate() {
