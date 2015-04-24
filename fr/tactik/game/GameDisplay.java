@@ -117,9 +117,7 @@ public class GameDisplay extends JPanel implements Runnable{
 		int[][] level = readLevel(nbLines,nbColumns);
 
 		
-		controlPlayer = new ControlerPlayer(player);
-		this.addKeyListener(controlPlayer);
-		this.setFocusable(true);
+		
 
 		for (int i = 0; i < nbLines; i++){
 			for (int j = 0; j < nbColumns ; j++){
@@ -147,6 +145,10 @@ public class GameDisplay extends JPanel implements Runnable{
 				}
 			}
 		}
+		
+		controlPlayer = new ControlerPlayer(player);
+		this.addKeyListener(controlPlayer);
+		this.setFocusable(true);
 	}
 	
 	public void gameUpdate() {
