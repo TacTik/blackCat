@@ -20,6 +20,10 @@ public abstract class Mobile extends Entity {
 	 * @param isWalkable
 	 * @param id
 	 */
+	
+	float moveFieldX;
+	float moveFieldY;
+	
 	public Mobile(float posX, float posY, int sizeX, int sizeY, boolean isWalkable, String path,
 			int current, int id) {
 		super(posX, posY, sizeX, sizeY, isWalkable, path, current, id);
@@ -42,5 +46,9 @@ public abstract class Mobile extends Entity {
 	
 	public void moveDown(float y){
 		this.posY += y;
+	}
+	
+	public void moveInField(float moveFieldX, float moveFieldY){
+
 	}
 }

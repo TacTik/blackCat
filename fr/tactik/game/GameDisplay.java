@@ -44,15 +44,19 @@ public class GameDisplay extends JPanel implements Runnable{
 	public void initGame() {
 		
 		player = new Player(10,10,50,50,false, rootdir + "/images/game/player/",1, 1);
+
 		
 		mobiles = new Vector<Mobile>();
 		
 		MobilePlat mobile1 = new MobilePlat(600,600,50,50,false, rootdir + "/images/game/mobile1/",2, 1);
 		MobilePlat mobile2 = new MobilePlat(400,400,50,50,false, rootdir + "/images/game/mobile2/",0, 1);
+		Foes foe1 = new Foes(20,500,50,50,false, rootdir + "/images/game/player/",0, 1);
 		
 		
 		mobiles.add (mobile1);
 		mobiles.add (mobile2);
+		mobiles.add(foe1);
+		
 		
 		stills = new Vector<Still>();
 		
@@ -66,6 +70,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	public void gameUpdate() {
 		mobiles.get(0).moveLeft(1);
 		mobiles.get(1).updateCurrentText();
+		mobiles.get(2).moveInField(100, 0);
 	}
 	
 	public void render() {		
