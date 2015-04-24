@@ -3,6 +3,8 @@ package fr.tactik.game;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.LayoutManager;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
@@ -18,7 +20,7 @@ import javax.swing.JPanel;
  * @version 1.0
  */
 
-public class GameDisplay extends JPanel implements Runnable {
+public class GameDisplay extends JPanel implements Runnable{
 	//hero
 	//monde
 	//controler de jeu
@@ -27,6 +29,7 @@ public class GameDisplay extends JPanel implements Runnable {
 	static String rootdir = System.getProperty("user.dir");
 	
 	Image background;
+	Player player;
 	Vector<Mobile> mobiles;
 	Vector<Still> stills;
 	int offsetX=0;
@@ -40,16 +43,18 @@ public class GameDisplay extends JPanel implements Runnable {
 	
 	public void initGame() {
 		
-		mobiles = new Vector<Mobile>();
-		stills = new Vector<Still>();
+		player = new Player(10,10,50,50,false, rootdir + "/images/game/player/",1, 1);
 		
-		Player player = new Player(10,10,50,50,false, rootdir + "/images/game/player/",1, 1);
+		mobiles = new Vector<Mobile>();
+		
 		MobilePlat mobile1 = new MobilePlat(600,600,50,50,false, rootdir + "/images/game/mobile1/",2, 1);
 		MobilePlat mobile2 = new MobilePlat(400,400,50,50,false, rootdir + "/images/game/mobile2/",0, 1);
 		
-		mobiles.add (player);
+		
 		mobiles.add (mobile1);
 		mobiles.add (mobile2);
+		
+		stills = new Vector<Still>();
 		
 		StillPlat still1 = new StillPlat(200,200,50,50,false, rootdir + "/images/game/still1/",0, 1);
 		StillPlat still2 = new StillPlat(300,300,50,50,false, rootdir + "/images/game/still2/",0, 1);
@@ -59,23 +64,17 @@ public class GameDisplay extends JPanel implements Runnable {
 	}
 	
 	public void gameUpdate() {
-		mobiles.get(0).moveRight(1);
-		mobiles.get(1).moveLeft(1);
-		mobiles.get(2).moveUp(1);
-		//entities.get(0).setPosX((entities.get(0).getPosX() + 1)%800 );
+		mobiles.get(0).moveLeft(1);
+		mobiles.get(1).updateCurrentText();
 	}
 	
-	public void render() {
+	public void render() {		
 		repaint();
 	}
 	
-	
-	public GameDisplay() {
-		// TODO Auto-generated constructor stub
+	public GameDisplay() {	
 		initGame();	
-	}
-	
-	
+	}	
 	
 	public void setBackground(String path){
 		  // load the background image
@@ -87,14 +86,15 @@ public class GameDisplay extends JPanel implements Runnable {
 	}
 	
 	
-	
-	
 	@Override
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 	    	// Background
 	    	g.drawImage(background,0,0,null);
     		
+	    	// Player
+	    	g.drawImage(player.getCurrentTexture(),(int)player.getPosX()+offsetX,(int)player.getPosY()+offsetY,null);
+	    	
 	    	// Mobile elements
 	    	for (int i = 0; i < mobiles.size(); i++){
 	    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX()+offsetX,(int)mobiles.get(i).getPosY()+offsetY,null);
@@ -135,7 +135,7 @@ public class GameDisplay extends JPanel implements Runnable {
 		         lastFpsTime = 0;
 		         fps = 0;
 		      }
-		      
+		     
 			gameUpdate();
 			render();
 			

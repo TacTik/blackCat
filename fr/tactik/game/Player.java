@@ -16,6 +16,8 @@ public class Player extends Mobile{
 		int current, int id) {
 		super(posX, posY, sizeX, sizeY, isWalkable, path, current, id);
 		// TODO Auto-generated constructor stub
+		
+		
 	}
 
 	/**
@@ -26,7 +28,6 @@ public class Player extends Mobile{
 	float speed;
 	int state;
 	Vector<String> inventory;
-
 
 	public void crouch(){
 		
