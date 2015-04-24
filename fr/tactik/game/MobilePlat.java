@@ -10,29 +10,16 @@ import java.util.Vector;
  * @author juliette
  *
  */
-public class Player extends Mobile{
+public class MobilePlat extends Mobile{
 
-	public Player(float posX, float posY, int sizeX, int sizeY, boolean isWalkable, String path,
+	public MobilePlat(float posX, float posY, int sizeX, int sizeY, boolean isWalkable, String path,
 		int current, int id) {
 		super(posX, posY, sizeX, sizeY, isWalkable, path, current, id);
 		// TODO Auto-generated constructor stub
-		
-		
 	}
 
 	/**
 	 * 
 	 */
-	
-	int lifePoints;
-	int state;
-	Vector<String> inventory;
 
-	public void crouch(){
-		
-	}
-	
-	public void run(){
-		
-	}
 }

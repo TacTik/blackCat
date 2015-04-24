@@ -91,7 +91,6 @@ public class EditorWindow extends JFrame{
 		final JMenuItem quit = new JMenuItem ("Quit");
 		quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
 
-		
 		project.add(quit);
 		menuBar.add(project);
 		menuBar.add(about);

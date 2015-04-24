@@ -3,6 +3,7 @@
  */
 package fr.tactik.game;
 
+import java.awt.Image;
 import java.util.Vector;
 
 /**
@@ -19,27 +20,34 @@ public abstract class Mobile extends Entity {
 	 * @param isWalkable
 	 * @param id
 	 */
-	public Mobile(float posX, float posY, int sizeX, int sizeY, boolean isWalkable, Vector<String> textures,
-			int id) {
-		super(posX, posY, sizeX, sizeY, isWalkable, textures, id);
+	float xspeed, yspeed;
+	
+	public Mobile(float posX, float posY, int sizeX, int sizeY, boolean isWalkable, String path,
+			int current, int id) {
+		super(posX, posY, sizeX, sizeY, isWalkable, path, current, id);
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	public void moveLeft(){
-		
+	public void update(){
+		this.posX += this.xspeed;
+		this.posY += this.yspeed;
+
 	}
 	
-	public void moveRight(){
-		
+	public void moveLeft(float x){
+		this.xspeed = -x;
+	}
+	
+	public void moveRight(float x){
+		this.xspeed = x;
 	}
 	
 	
-	public void moveUp(){
-		
+	public void moveUp(float y){
+		this.yspeed = -y;
 	}
 	
-	public void moveDown(){
-		
+	public void moveDown(float y){
+		this.yspeed = y;
 	}
 }
