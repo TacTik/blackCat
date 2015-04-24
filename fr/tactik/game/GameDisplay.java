@@ -130,14 +130,14 @@ public class GameDisplay extends JPanel implements Runnable{
 		      // we last recorded
 		      if (lastFpsTime >= 1000000000)
 		      {
-		         System.out.println("(FPS: "+fps+")");
+		         //System.out.println("(FPS: "+fps+")");
 		         lastFpsTime = 0;
 		         fps = 0;
 		      }
 		      
 		      if (lastFpsTime >= 1000000000)
 		      {
-		         System.out.println("(FPS: "+fps+")");
+		         // System.out.println("(FPS: "+fps+")");
 		         lastFpsTime = 0;
 		         fps = 0;
 		      }
