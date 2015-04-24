@@ -10,7 +10,7 @@ import java.util.Vector;
  * @author juliette
  *
  */
-public abstract class Mobile extends Entity {
+public abstract class Still extends Entity {
 
 	/**
 	 * @param posX
@@ -20,27 +20,10 @@ public abstract class Mobile extends Entity {
 	 * @param isWalkable
 	 * @param id
 	 */
-	public Mobile(float posX, float posY, int sizeX, int sizeY, boolean isWalkable, String path,
+	public Still(float posX, float posY, int sizeX, int sizeY, boolean isWalkable, String path,
 			int current, int id) {
 		super(posX, posY, sizeX, sizeY, isWalkable, path, current, id);
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	public void moveLeft(float x){
-		this.posX -= x;
-	}
-	
-	public void moveRight(float x){
-		this.posX += x;
-	}
-	
-	
-	public void moveUp(float y){
-		this.posY -= y;
-	}
-	
-	public void moveDown(float y){
-		this.posY += y;
-	}
 }
