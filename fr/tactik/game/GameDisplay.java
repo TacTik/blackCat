@@ -92,7 +92,7 @@ public class GameDisplay extends JPanel implements Runnable{
 			for (int j = 0; j < nbColumns ; j++){
 				int id = level[i][j];
 				switch (id) {
-		            case 1:  player = new Player(50*j,50*i,50,50,false, rootdir + "/images/game/player/",1, i*nbColumns+j);
+		            case 1:  player = new Player(50*j,50*i,50,50,false, rootdir + "/images/game/player/",0, i*nbColumns+j);
 		            		 level[i][j] = 0;
 		                     break;
 		            case 2:  MobilePlat mobile1 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile1/",2, i*nbColumns+j);
