@@ -1,12 +1,17 @@
 package fr.tactik.game;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
+
+import fr.tactik.editor.EditorWindow;
 
 /**
  * 
@@ -58,10 +63,30 @@ public class Menu extends JMenuBar {
 		quit.setActionCommand("Quitter :'(");
 		game.add(quit);
 		
-		// Editor <-- dunno if this is the right place for it. Anyway.
+		// Editor 
 		JMenu editor = new JMenu ("Editor");
 		editor.setMnemonic(KeyEvent.VK_J);
 		add(editor);
+
+		
+		editor.addMenuListener(new MenuListener() {
+			@Override
+			public void menuSelected(MenuEvent arg0) {
+				EditorWindow.createWindow(1000,700);
+			}
+
+			@Override
+			public void menuCanceled(MenuEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void menuDeselected(MenuEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 			// about
 		JMenu about = new JMenu ("About");

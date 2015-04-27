@@ -1,35 +1,47 @@
 package fr.tactik.editor;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 
+import handlers.TextureHandler;
+
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
+public class LevelPanel extends JPanel  {
 
-public class LevelPanel extends JScrollPane{
 	private static final long serialVersionUID = 1L;
-	private static JPanel levelView;
-	//TODO : afficher tiles / plateform / objects delimitations ?
+	Image backgroundImage;
+	String bg;
+	int width, height;
+	int tileDimention = 50;
 	
-	public LevelPanel(int vsbPolicy, int hsbPolicy) {
-		super(vsbPolicy, hsbPolicy);
+	public LevelPanel(int width, int height, String background){
+		this.bg = background;
+		this.width = width;
+		this.height = height;
 	}
-
 	
-	public void initView() {
-		JPanel outer = new JPanel(); //permet d'avoir le JPanel à la bonne taille, même si plus petit que le scrollPanel
-		levelView = new JPanel();
-		outer.add(levelView);
+	public int init(){
+		backgroundImage = TextureHandler.getImageFromPath(this.bg);
 		
-		//TODO think about define a level model to get width heigh etc
-		levelView.setPreferredSize(new Dimension((int)800, (int)500));
-		getViewport().add(outer, BorderLayout.NORTH);
-		revalidate();
+		setPreferredSize(new Dimension((int)width * tileDimention, (int)height * tileDimention));
+
+		if (null == backgroundImage)
+			JOptionPane.showMessageDialog(null, "Background is set to white.");
+			setBackground(Color.white);
+		return 0;
 	}
+	
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		for(int a = 0; a <= tileDimention; a++){
+			//tracé des lignes du damier
+			g.drawLine(0, a * tileDimention, width* tileDimention, a * tileDimention);
+			g.drawLine(a * tileDimention, 0 , a * tileDimention, height* tileDimention);
+		}
 	}
 }

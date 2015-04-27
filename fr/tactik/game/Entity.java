@@ -3,8 +3,11 @@
  */
 package fr.tactik.game;
 
+import handlers.TextureHandler;
+
 import java.awt.Image;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Vector;
@@ -81,7 +84,7 @@ public abstract class Entity {
 		this.id = id;
 		
 		this.texturesImages = new Vector<Image>();
-		this.setTexturesImages();
+		texturesImages = TextureHandler.getTexturesFromFolder(path);
 	}
 
 	/**
@@ -204,22 +207,6 @@ public abstract class Entity {
 	*/
 	public void setId(int id) {
 		this.id = id;
-	}
-	
-	public void setTexturesImages(){
-		File folder = new File(path);
-		File[] listOfFiles = folder.listFiles();
-		
-		for (int i =0; i < listOfFiles.length; i++) {
-			if (listOfFiles[i].isFile()) {
-				try {
-					texturesImages.add (ImageIO.read(new File(path + listOfFiles[i].getName())));
-				} catch (IOException e) {
-					System.out.println("expect");
-					e.printStackTrace();
-				}
-			}
-		} 
 	}
 	
 	public Image getCurrentTexture(){

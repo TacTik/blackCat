@@ -49,7 +49,5 @@ public class GameWindow extends JFrame{
 		
 		setVisible (true);
 		gamePanel.run();
-
-		
 	}
 }

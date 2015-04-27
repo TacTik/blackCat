@@ -55,13 +55,13 @@ public class DialogWindow extends JDialog{
 			nDialog.setLocation(owner.getWidth()/2, owner.getHeight()/2);
 			nDialog.setResizable(true);
 			nDialog.setLayout(grid);
-			JLabel width = new JLabel ("Width :");
-			JLabel height = new JLabel ("Height :");
+			JLabel width = new JLabel ("width (tile number) :");
+			JLabel height = new JLabel ("Height (tile number):");
 			JLabel bgColor = new JLabel ("Background path :");
 			
 			JButton validation = new JButton("OK");
-			final JTextField widthField = new JTextField("1000");
-			final JTextField heightField = new JTextField("600");
+			final JTextField widthField = new JTextField("100");
+			final JTextField heightField = new JTextField("100");
 			final JTextField bgPathField = new JTextField("/path/to/your/background");
 			
 			nDialog.add(width);
