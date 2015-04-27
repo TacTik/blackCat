@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,9 +24,11 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class EditorWindow extends JFrame{
+import sun.awt.WindowClosingListener;
+
+public class EditorWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
-	private static final String picturesFolder = "images/";
+	private static final String picturesFolder = "images/icons/";
 	private static LevelStruct currentLevelFile;
 
 
@@ -36,32 +41,65 @@ public class EditorWindow extends JFrame{
 	
 	//level file extension
 	private static final String extName = "blkt"; //à rendre plus sérieux
-
-
+	public static EditorWindow  win;
+	
+	//Check if the editor is open
+	static boolean isOpen = false;
+	
 	private EditorWindow() {};
 	
 	public static EditorWindow createWindow(int w, int h) {
-		EditorWindow  win = new EditorWindow();
-		win.setTitle("level Editor");
-		win.setSize(800,800);
-		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
-		win.setIconImage(new ImageIcon("images/icon_editor.png").getImage());
-
-		createMenu(win);
+		if (win == null && !getIsOpen()){
+			win = new EditorWindow();
+			win.setTitle("level Editor");
+			win.setSize(800,800);
+			win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			win.setIconImage(new ImageIcon("images/icon_editor.png").getImage());
 	
-		JToolBar toolBar = new JToolBar("Still draggable");
-		toolBar.setPreferredSize(new Dimension(w, 30));
-		toolBar.setFloatable(false);
-		addComponents(toolBar, win);
+			createMenu(win);
 
-		JPanel mainPanel = new JPanel();
-		addPanels(mainPanel, w, h);
-		mainPanel.add(toolBar, BorderLayout.NORTH);
-		win.add(mainPanel);
-		
-		win.setVisible (true);
-		
+			JToolBar toolBar = new JToolBar("Still draggable");
+			toolBar.setPreferredSize(new Dimension(w, 30));
+			toolBar.setFloatable(false);
+			addComponents(toolBar, win);
+	
+			JPanel mainPanel = new JPanel();
+			addPanels(mainPanel, w, h);
+			mainPanel.add(toolBar, BorderLayout.NORTH);
+			win.add(mainPanel);
+			setIsOpen(true);
+			
+			win.addWindowListener(new WindowListener() {
+		            public void windowClosed(WindowEvent arg0) {}
+		            public void windowActivated(WindowEvent arg0) {}
+		            public void windowClosing(WindowEvent arg0) {
+		                setIsOpen(false);
+		                win = null;
+		            }
+		            public void windowDeactivated(WindowEvent arg0) {}
+		            public void windowDeiconified(WindowEvent arg0) {}
+		            public void windowIconified(WindowEvent arg0) {}
+		            public void windowOpened(WindowEvent arg0) {}
+		        });
+			
+			win.setVisible (true);
+		}
+			
 		return win;
+	}
+	
+	public Object clone()
+	throws CloneNotSupportedException
+	{
+		throw new CloneNotSupportedException(); 
+	}
+	
+	public static void setIsOpen(boolean status){
+		isOpen = status;
+	}
+	
+	public static boolean getIsOpen(){
+		return isOpen;
 	}
 	
 	private static void createMenu(final EditorWindow win) {
@@ -72,6 +110,11 @@ public class EditorWindow extends JFrame{
 		final JMenuItem newItem = new JMenuItem ("New");
 		newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		project.add(newItem);
+		newItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				newLevel(win);
+			}
+		});
 
 		final JMenuItem openItem = new JMenuItem ("Open");
 		openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK));
@@ -224,6 +267,9 @@ public class EditorWindow extends JFrame{
 	private static void saveLevel(EditorWindow win){}
 	
 	private static void createNewLevel(){
+		if(-1 == levelPanel.initView(DialogWindow.getLevelWidth(), DialogWindow.getLevelHeight(),DialogWindow.getLevelBackground().toString()))
+			return;
+
 		currentLevelFile = new LevelStruct(DialogWindow.getLevelWidth(), DialogWindow.getLevelHeight(), DialogWindow.getLevelBackground());
 		// TODO init the view with the background, size etc
 		saveLevel.setEnabled(true);
