@@ -128,6 +128,7 @@ public class GameDisplay extends JPanel implements Runnable{
 		// mobiles.get(0).moveLeft(1);
 		// mobiles.get(1).updateCurrentText();
 
+		controlPlayer.control();
 		player.jump();
 		player.gravity();
 		player.collision(level,nbLines,nbColumns);
