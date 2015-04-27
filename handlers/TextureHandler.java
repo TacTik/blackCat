@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class TextureHandler {
@@ -42,6 +43,22 @@ public class TextureHandler {
 			JOptionPane.showMessageDialog(null, "can't read your file !");
 		}
 		return image;
+	}
+	
+	public static Vector<ImageIcon> getImageIconFromPath(String path, int... number){
+		Vector<ImageIcon> texturesImages = new Vector<ImageIcon>();
+		
+		File folder = new File(path);
+		File[] listOfFiles = folder.listFiles();
+		
+		int max = (number.length == 0) ? listOfFiles.length : number[0];
+		
+		for (int i = 0; i < max; i++) {
+			if (listOfFiles[i].isFile()) {
+				texturesImages.add (new ImageIcon(path + listOfFiles[i].getName()));
+			}
+		} 
+		return texturesImages;
 	}
 
 }
