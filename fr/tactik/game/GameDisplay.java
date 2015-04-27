@@ -41,24 +41,35 @@ public class GameDisplay extends JPanel implements Runnable{
     int fps = 0;
     ControlerPlayer controlPlayer;
 
-
+    int[][] level;
+    static int nbLines = 0;
+	static int nbColumns = 0;
 
 
     
-	public static int[][] readLevel(int a, int b){
-		int [][] tab = new int [a][b];
+	public static int[][] readLevel(){
+		
 		int i = 0;
-    	try{
+		int[][] tab = null;
+    	
+		try{
     		FileInputStream fstream = new FileInputStream("level1.txt");
     		DataInputStream in = new DataInputStream(fstream);
     		BufferedReader br = new BufferedReader(new InputStreamReader(in));
     		String strLine;
+    		
+    		strLine = br.readLine();  
+			String[] tokens = strLine.split(" ");
+			nbLines = Integer.parseInt(tokens[0]);
+			nbColumns = Integer.parseInt(tokens[1]);
+			tab = new int [nbLines][nbColumns];
+    		
     		while ((strLine = br.readLine()) != null)   {
-	    	   String[] tokens = strLine.split(" ");
-	    	   for (int j = 0; j < b ; j++){
-	    		   tab[i][j] = Integer.parseInt(tokens[j]);
-	    	   }
-	    	   i++;
+    			tokens = strLine.split(" ");
+	    	    for (int j = 0; j < nbColumns ; j++){
+	    		    tab[i][j] = Integer.parseInt(tokens[j]);
+    			}
+	    	    i++;
     		}
     		in.close();
     	}
@@ -67,44 +78,6 @@ public class GameDisplay extends JPanel implements Runnable{
     	}
     	return tab;
 	}
-	
-	public static int readLevelLines(){
-		int res = -1;
-    	try{
-    		FileInputStream fstream = new FileInputStream("level1_size.txt");
-    		DataInputStream in = new DataInputStream(fstream);
-    		BufferedReader br = new BufferedReader(new InputStreamReader(in));
-    		String strLine;
-    		while ((strLine = br.readLine()) != null)   {
- 	    		String[] tokens = strLine.split(" ");
- 	    		res = Integer.parseInt(tokens[0]);
- 	    	}
-     		in.close();
-    	}
-    	catch (Exception e){
-    	     System.err.println("Error: " + e.getMessage());
-    	}
-    	return res;
-	}
-	
-	public static int readLevelColumns(){
-		int res = -1;
-    	try{
-    		FileInputStream fstream = new FileInputStream("level1_size.txt");
-    		DataInputStream in = new DataInputStream(fstream);
-    		BufferedReader br = new BufferedReader(new InputStreamReader(in));
-    		String strLine;
-    		while ((strLine = br.readLine()) != null)   {
- 	    		String[] tokens = strLine.split(" ");
- 	    		res = Integer.parseInt(tokens[1]);
- 	    	}
-     		in.close();
-    	}
-    	catch (Exception e){
-    	     System.err.println("Error: " + e.getMessage());
-    	}
-    	return res;
-	}
     
     
 	public void initGame() {
@@ -112,18 +85,15 @@ public class GameDisplay extends JPanel implements Runnable{
 		mobiles = new Vector<Mobile>();		
 		stills = new Vector<Still>();
 		
-		int nbLines = readLevelLines();
-		int nbColumns = readLevelColumns();
-		int[][] level = readLevel(nbLines,nbColumns);
-
 		
-		
+		 level = readLevel();
 
 		for (int i = 0; i < nbLines; i++){
 			for (int j = 0; j < nbColumns ; j++){
 				int id = level[i][j];
 				switch (id) {
 		            case 1:  player = new Player(50*j,50*i,50,50,false, rootdir + "/images/game/player/",1, i*nbColumns+j);
+		            		 level[i][j] = 0;
 		                     break;
 		            case 2:  MobilePlat mobile1 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile1/",2, i*nbColumns+j);
 		            		 mobiles.add (mobile1);
@@ -153,14 +123,17 @@ public class GameDisplay extends JPanel implements Runnable{
 	
 	public void gameUpdate() {
 
-		mobiles.get(0).moveLeft(1);
-		mobiles.get(1).updateCurrentText();
-		mobiles.get(2).moveInField(100, 0);
+		//mobiles.get(2).moveInField(100, 0);
 
 		// mobiles.get(0).moveLeft(1);
 		// mobiles.get(1).updateCurrentText();
+
+		player.jump();
+		player.gravity();
+		player.collision(level,nbLines,nbColumns);
 		player.update();
-		mobiles.get(2).update();
+		
+		//mobiles.get(2).update();
 	}
 	
 	public void render() {		
