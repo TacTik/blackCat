@@ -40,25 +40,28 @@ public abstract class Mobile extends Entity {
 	public void update(){
 		this.posX += this.xspeed;
 		this.posY += this.yspeed;
-
+		this.xspeed = 0;
+		this.yspeed = 0;
 	}
 	
 	public void moveLeft(float x){
-		this.xspeed = -x;
+		this.xspeed += -x;
 	}
 	
 	public void moveRight(float x){
-		this.xspeed = x;
+		this.xspeed += x;
 	}
 	
 	
 	public void moveUp(float y){
-		this.yspeed = -y;
+		this.yspeed += -y;
 	}
 	
 	public void moveDown(float y){ 
-		this.yspeed = y;
+		this.yspeed += y;
 	}
+	
+	
 	
 	public void moveInField(float moveFieldX, float moveFieldY){
 		//For moveFieldX
