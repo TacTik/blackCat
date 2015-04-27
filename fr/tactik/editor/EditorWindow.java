@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -24,15 +23,13 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import sun.awt.WindowClosingListener;
-
 public class EditorWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static final String picturesFolder = "images/icons/";
 	private static LevelStruct currentLevelFile;
 
 
-	private static LevelPanel levelPanel;
+	private static LevelPanelContainer levelPanel;
 	private static TilesContentPanel tilesContentPanel;
 	private static JSplitPane splitPane;
 
@@ -182,7 +179,7 @@ public class EditorWindow extends JFrame {
 		BorderLayout layout = new BorderLayout();
 		mainPanel.setLayout(layout);
 		
-		levelPanel = new LevelPanel(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		levelPanel = new LevelPanelContainer(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		tilesContentPanel = new TilesContentPanel(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tilesContentPanel, levelPanel);
@@ -218,6 +215,7 @@ public class EditorWindow extends JFrame {
 					case 1:
 						currentLevelFile = null; 
 						tilesContentPanel.repaint();
+						newLevel(win);
 						// TODO : destruction, garbage collector toussa ? refresh etc etc
 						break;
 					case 2 :

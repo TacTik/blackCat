@@ -1,52 +1,47 @@
 package fr.tactik.editor;
 
-import handlers.TextureHandler;
-
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 
+import handlers.TextureHandler;
+
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
+public class LevelPanel extends JPanel  {
 
-public class LevelPanel extends JScrollPane{
 	private static final long serialVersionUID = 1L;
-	private static JPanel levelView;
-	int width, height;
-	
 	Image backgroundImage;
-	//TODO : afficher tiles / plateform / objects delimitations ?
+	String bg;
+	int width, height;
+	int tileDimention = 50;
 	
-	public LevelPanel(int vsbPolicy, int hsbPolicy) {
-		super(vsbPolicy, hsbPolicy);
-	}
-
-	
-	public int initView(int width, int height, String background) {
-		backgroundImage = TextureHandler.getImageFromPath(background);
-		if (null == backgroundImage)
-			return -1;
-		
-		JPanel outer = new JPanel();
-		levelView = new JPanel();
-		outer.add(levelView);
-		
+	public LevelPanel(int width, int height, String background){
+		this.bg = background;
 		this.width = width;
 		this.height = height;
-		levelView.setPreferredSize(new Dimension((int)width, (int)height));
-		levelView.setBackground(Color.white);
-		outer.setBackground(Color.gray);
-		
-		getViewport().add(outer, BorderLayout.NORTH);
-		revalidate();
-		return 1;
 	}
+	
+	public int init(){
+		backgroundImage = TextureHandler.getImageFromPath(this.bg);
+		
+		setPreferredSize(new Dimension((int)width * tileDimention, (int)height * tileDimention));
+
+		if (null == backgroundImage)
+			JOptionPane.showMessageDialog(null, "Background is set to white.");
+			setBackground(Color.white);
+		return 0;
+	}
+	
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		g.drawImage(backgroundImage,0,0,null);
+		for(int a = 0; a <= tileDimention; a++){
+			//tracé des lignes du damier
+			g.drawLine(0, a * tileDimention, width* tileDimention, a * tileDimention);
+			g.drawLine(a * tileDimention, 0 , a * tileDimention, height* tileDimention);
+		}
 	}
 }
