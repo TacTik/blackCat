@@ -17,7 +17,7 @@ public class MainGame {
 		
 		/******   DEBUG    ******/
 		
-		EditorWindow.createWindow(1000,700);
+		//EditorWindow.createWindow(1000,700);
 
 		/***********************/
 	}

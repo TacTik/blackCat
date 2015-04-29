@@ -38,7 +38,7 @@ public class EditorWindow extends JFrame {
 	private static JMenuItem changeBg;
 	
 	//level file extension
-	private static final String extName = "bCat"; //à rendre plus sérieux
+	private static final String extName = "bCat";
 	public static EditorWindow  win;
 	
 	//Check if the editor is open
@@ -52,7 +52,7 @@ public class EditorWindow extends JFrame {
 			win.setTitle("level Editor");
 			win.setSize(800,800);
 			win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			win.setIconImage(new ImageIcon("images/icon_editor.png").getImage());
+			win.setIconImage(new ImageIcon("images/icons/icon_editor.png").getImage());
 	
 			createMenu(win);
 

@@ -64,9 +64,16 @@ public class DialogWindow extends JDialog{
 			JButton validation = new JButton("OK");
 			final JTextField widthField = new JTextField("50");
 			final JTextField heightField = new JTextField("10");
+			final JButton bgPathField = new JButton("Browse ...");
 			
-			final JTextField bgPathField = new JTextField("/path/to/your/background");
-			
+			bgPathField.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(false == createBgDialog(owner)){
+						setLevelBgPath("default");
+					}
+				}
+			});
+
 			nDialog.add(width);
 			nDialog.add(widthField);
 			nDialog.add(height);
@@ -86,7 +93,6 @@ public class DialogWindow extends JDialog{
 					try{
 						setLevelWidth(Short.parseShort(widthField.getText()));
 						setLevelHeight(Short.parseShort(heightField.getText()));
-						setLevelBgPath(bgPathField.getText().toString());
 						setLevelCreated(true);
 						nDialog.dispose();
 					}catch(NumberFormatException exept){
@@ -127,9 +133,10 @@ public class DialogWindow extends JDialog{
 			if(chooser.showOpenDialog(owner) == JFileChooser.APPROVE_OPTION) {
 				System.out.println(chooser.getSelectedFile().getAbsolutePath());
 				setLevelBgPath(chooser.getSelectedFile().getAbsolutePath());
+				return true;
 			}
+			return false;
 			
-			return true;
 		}
 
 		public static boolean isLevelCreated() {
