@@ -1,7 +1,5 @@
 package fr.tactik.editor;
 
-import handlers.TexturesMapper;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JPanel;
@@ -31,6 +29,12 @@ public class LevelPanelContainer extends JScrollPane{
 		getViewport().add(outer, BorderLayout.NORTH);
 		revalidate();
 		return 1;
+	}
+
+
+	public void changeBg(String levelBackground) {
+		levelView.setBg(levelBackground);
+		
 	}
 
 }
