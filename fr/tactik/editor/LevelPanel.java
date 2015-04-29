@@ -7,11 +7,12 @@ import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
+import handlers.SelectTileHelper;
 import handlers.TextureLoader;
 import handlers.TexturesMapper;
-
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class LevelPanel extends JPanel implements MouseListener, MouseMotionListener {
 
@@ -31,9 +32,13 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		this.requestFocus();
-		
-		//boolean t = TexturesMapper.init();
 
+	}
+	
+	public void setBg(String background){
+		this.bg = background;
+		backgroundImage = TextureLoader.getImageFromPath(this.bg);
+		repaint();
 	}
 	
 	public int init(){
@@ -42,7 +47,6 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 		setPreferredSize(new Dimension((int)width * tileDimention, (int)height * tileDimention));
 		this.requestFocus();
 		if (null == backgroundImage)
-			JOptionPane.showMessageDialog(null, "Background is set to white.");
 			setBackground(Color.white);
 		return 0;
 	}
@@ -59,10 +63,8 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 				if(tiles[i][j] == -8){
 					g.fillRect(i * 50, j * 50, 50, 50);
 				}
-				if(tiles[i][j] == 2){
-					//g.setColor(new Color(2,51,5,40));
-					//g.fillRect(i * 50, j * 50, 50, 50);
-					g.drawImage(TexturesMapper.getImageById(2).getImage(), i*50, j*50, 50 , 50, null);
+				else if(tiles[i][j] != 0){
+					g.drawImage(TexturesMapper.getImageById(tiles[i][j]).getImage(), i*50, j*50, 50 , 50, null);
 				}
 			}
 		}
@@ -83,12 +85,24 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 	public void mousePressed(MouseEvent e) {}
 	@Override
 	public void mouseReleased(MouseEvent e) {}
+	
 	@Override
-	public void mouseDragged(MouseEvent e) {}
+	public void mouseDragged(MouseEvent e) {
+		if (SwingUtilities.isRightMouseButton(e)){
+			tiles[ e.getX() / 50][e.getY() / 50] = 0;
+		}
+		else 
+			tiles[ e.getX() / 50][e.getY() / 50] = SelectTileHelper.getSelectedTile();
+		repaint();
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		tiles[ e.getX() / 50][e.getY() / 50] = 2; // TODO place an id and display image and go make a coffe.
+		if (SwingUtilities.isRightMouseButton(e)){
+			tiles[ e.getX() / 50][e.getY() / 50] = 0;
+		}
+		else 
+			tiles[ e.getX() / 50][e.getY() / 50] = SelectTileHelper.getSelectedTile();
 		repaint();
 	}
 	
