@@ -2,14 +2,9 @@ package fr.tactik.game;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.LayoutManager;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.*;
 import java.util.Vector;
-
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
@@ -20,6 +15,9 @@ import javax.swing.JPanel;
  */
 
 public class GameDisplay extends JPanel implements Runnable{
+
+	private static final long serialVersionUID = 1L;
+
 	//hero
 	//monde
 	//controler de jeu
@@ -183,7 +181,6 @@ public class GameDisplay extends JPanel implements Runnable{
 			 long now = System.nanoTime();
 		     long updateLength = now - lastLoopTime;
 		     lastLoopTime = now;
-		     double delta = updateLength / ((double)OPTIMAL_TIME);
 
 		      // update the frame counter
 		      lastFpsTime += updateLength;
