@@ -3,6 +3,7 @@ package handlers;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -18,6 +19,7 @@ public class TextureLoader {
 		
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
+		Arrays.sort(listOfFiles);
 		
 		int max = (number.length == 0) ? listOfFiles.length : number[0] + 1;
 		
@@ -48,6 +50,7 @@ public class TextureLoader {
 		
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
+		Arrays.sort(listOfFiles);
 		
 		int max = (number.length == 0) ? listOfFiles.length : number[0];
 		
