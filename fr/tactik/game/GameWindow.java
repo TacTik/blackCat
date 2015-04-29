@@ -42,8 +42,7 @@ public class GameWindow extends JFrame{
 		
 		gameGrid = GameLoader.load("monFichier.bct");
 		
-		GameDisplay gamePanel = new GameDisplay();
-		gamePanel.setBackground(rootDir + "/images/game/background.jpg"); 		
+		GameDisplay gamePanel = new GameDisplay(); 		
 
 		getContentPane().add(gamePanel);
 		
