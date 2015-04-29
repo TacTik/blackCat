@@ -12,7 +12,7 @@ import fr.tactik.editor.EditorWindow;
  */
 public class MainGame {
 	public static void main (String [] args){
-		//GameWindow window = new GameWindow();
+		GameWindow window = new GameWindow();
 		
 		
 		/******   DEBUG    ******/
