@@ -120,6 +120,21 @@ public class DialogWindow extends JDialog{
 			nDialog.setVisible(true);
 			return isLevelCreated();
 		}
+		
+		static boolean createBgDialog(final JFrame owner) {
+			final JFileChooser chooser = new JFileChooser();
+			chooser.setDialogTitle("Load background");
+			FileNameExtensionFilter filter = new FileNameExtensionFilter(
+			        "png", "jpg", "JPEG", "PNG");
+			    chooser.setFileFilter(filter);
+			chooser.setMultiSelectionEnabled(false);
+			if(chooser.showOpenDialog(owner) == JFileChooser.APPROVE_OPTION) {
+				System.out.println(chooser.getSelectedFile().getAbsolutePath());
+				setLevelBgPath(chooser.getSelectedFile().getAbsolutePath());
+			}
+			
+			return true;
+		}
 
 		public static boolean isLevelCreated() {
 			return levelCreated;
