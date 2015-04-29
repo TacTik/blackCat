@@ -26,6 +26,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	static String rootdir = System.getProperty("user.dir");
 	
 	Image background;
+	Image footprint;
 	Player player;
 	Vector<Mobile> mobiles;
 	Vector<Still> stills;
@@ -79,7 +80,20 @@ public class GameDisplay extends JPanel implements Runnable{
     
     
 	public void initGame() {
-			
+		
+		try {
+        	background = ImageIO.read(new File(rootdir + "/images/game/background.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		try {
+        	footprint = ImageIO.read(new File(rootdir + "/images/game/footprint.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		
 		mobiles = new Vector<Mobile>();		
 		stills = new Vector<Still>();
 		
@@ -90,7 +104,7 @@ public class GameDisplay extends JPanel implements Runnable{
 			for (int j = 0; j < nbColumns ; j++){
 				int id = level[i][j];
 				switch (id) {
-		            case 1:  player = new Player(50*j,50*i,50,50,false, rootdir + "/images/game/player/",0, i*nbColumns+j);
+		            case 1:  player = new Player(50*j,50*i,50,50,false, rootdir + "/images/game/player/",1, i*nbColumns+j);
 		            		 level[i][j] = 0;
 		                     break;
 		            case 2:  MobilePlat mobile1 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile1/",2, i*nbColumns+j);
@@ -124,9 +138,10 @@ public class GameDisplay extends JPanel implements Runnable{
 		//mobiles.get(2).moveInField(100, 0);
 
 		// mobiles.get(0).moveLeft(1);
-		// mobiles.get(1).updateCurrentText();
+		//player.updateCurrentText();
 
 		controlPlayer.control();
+		controlPlayer.playerSprite();
 		player.jump();
 		player.gravity();
 		player.collision(level,nbLines,nbColumns);
@@ -142,15 +157,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	public GameDisplay() {	
 		initGame();	
 	}	
-	
-	public void setBackground(String path){
-		  // load the background image
-        try {
-        	background = ImageIO.read(new File(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-	}
+
 	
 	
 	@Override
@@ -160,7 +167,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	    	g.drawImage(background,0,0,null);
     		
 	    	// Player
-	    	g.drawImage(player.getCurrentTexture(),(int)player.getPosX()+offsetX,(int)player.getPosY()+offsetY,null);
+	    	g.drawImage(player.getCurrentTexture(),(int)player.getPosX()+offsetX,(int)player.getPosY()+offsetY,this);
 	    	
 	    	// Mobile elements
 	    	for (int i = 0; i < mobiles.size(); i++){
@@ -170,6 +177,11 @@ public class GameDisplay extends JPanel implements Runnable{
 	    	// Still elements
 	    	for (int i = 0; i < stills.size(); i++){
 	    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX()+offsetX,(int)stills.get(i).getPosY()+offsetY,null);
+	    	}
+	    	
+	    	// Life points
+	    	for (int i = 0; i < player.lifePoints; i++){
+	    		g.drawImage(footprint,30*i +10,10 ,null);
 	    	}
 
 	}
