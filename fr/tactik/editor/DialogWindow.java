@@ -7,10 +7,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 public class DialogWindow extends JDialog{
@@ -62,6 +64,7 @@ public class DialogWindow extends JDialog{
 			JButton validation = new JButton("OK");
 			final JTextField widthField = new JTextField("50");
 			final JTextField heightField = new JTextField("10");
+			
 			final JTextField bgPathField = new JTextField("/path/to/your/background");
 			
 			nDialog.add(width);
@@ -75,16 +78,11 @@ public class DialogWindow extends JDialog{
 			
 			JButton cancel = new JButton("Cancel");
 
-			
-			
-			
-			
-			
+
 			//events
 
 			validation.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("TEST");
 					try{
 						setLevelWidth(Short.parseShort(widthField.getText()));
 						setLevelHeight(Short.parseShort(heightField.getText()));
@@ -92,7 +90,6 @@ public class DialogWindow extends JDialog{
 						setLevelCreated(true);
 						nDialog.dispose();
 					}catch(NumberFormatException exept){
-						System.out.println("TEST");
 						JOptionPane.showMessageDialog(owner,
 							    "Incorrect format",
 							    "Format error",
@@ -103,7 +100,6 @@ public class DialogWindow extends JDialog{
 			
 			cancel.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("TEST");
 					setLevelCreated(false);
 					nDialog.dispose();
 				}
@@ -119,6 +115,21 @@ public class DialogWindow extends JDialog{
 			nDialog.pack();
 			nDialog.setVisible(true);
 			return isLevelCreated();
+		}
+		
+		static boolean createBgDialog(final JFrame owner) {
+			final JFileChooser chooser = new JFileChooser();
+			chooser.setDialogTitle("Load background");
+			FileNameExtensionFilter filter = new FileNameExtensionFilter(
+			        "png", "jpg", "JPEG", "PNG");
+			    chooser.setFileFilter(filter);
+			chooser.setMultiSelectionEnabled(false);
+			if(chooser.showOpenDialog(owner) == JFileChooser.APPROVE_OPTION) {
+				System.out.println(chooser.getSelectedFile().getAbsolutePath());
+				setLevelBgPath(chooser.getSelectedFile().getAbsolutePath());
+			}
+			
+			return true;
 		}
 
 		public static boolean isLevelCreated() {

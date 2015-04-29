@@ -1,5 +1,6 @@
 package fr.tactik.editor;
 
+import handlers.SelectTileHelper;
 import handlers.TexturesMapper;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -7,6 +8,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
 
 public class TilesPanel extends JPanel {
@@ -22,18 +25,24 @@ public class TilesPanel extends JPanel {
 		FlowLayout layout = new FlowLayout(0, 0, 0);
 		setLayout(layout);
 		
-		for (int i = 1; i <= nbTexturesSet; i++)
-		buttons.add(new JButton (TexturesMapper.getImageById(i)));
-		
+		for (int i = 1; i < nbTexturesSet; i++){
+			JButton b = new JButton (TexturesMapper.getImageById(i));
+			b.setName(Integer.toString(i));
+			buttons.add(b);
+		}
 
-		for (JButton b : buttons) {
+		for (final JButton b : buttons) {
 			b.setPreferredSize(new Dimension(50, 50));
 			b.setBackground(null);
+	        b.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					 SelectTileHelper.setSelectedTile(Integer.parseInt(b.getName()));
+					
+				}
+			});
 	        add(b);
 		  }
-
-        
-       // b.addActionListener(new ButtonEvent(b, system, row, col));
 	}
 
 	public void paintComponent(Graphics g){
