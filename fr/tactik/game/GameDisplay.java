@@ -92,7 +92,7 @@ public class GameDisplay extends JPanel implements Runnable{
 			for (int j = 0; j < nbColumns ; j++){
 				int id = level[i][j];
 				switch (id) {
-		            case 1:  player = new Player(50*j,50*i,50,50,false, rootdir + "/images/game/player/",0, i*nbColumns+j);
+		            case 1:  player = new Player(50*j,50*i,50,50,false, rootdir + "/images/game/player/",1, i*nbColumns+j);
 		            		 level[i][j] = 0;
 		                     break;
 		            case 2:  MobilePlat mobile1 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile1/",2, i*nbColumns+j);
@@ -126,9 +126,10 @@ public class GameDisplay extends JPanel implements Runnable{
 		//mobiles.get(2).moveInField(100, 0);
 
 		// mobiles.get(0).moveLeft(1);
-		// mobiles.get(1).updateCurrentText();
+		//player.updateCurrentText();
 
 		controlPlayer.control();
+		controlPlayer.playerSprite();
 		player.jump();
 		player.gravity();
 		player.collision(level,nbLines,nbColumns);
@@ -162,7 +163,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	    	g.drawImage(background,0,0,null);
     		
 	    	// Player
-	    	g.drawImage(player.getCurrentTexture(),(int)player.getPosX()+offsetX,(int)player.getPosY()+offsetY,null);
+	    	g.drawImage(player.getCurrentTexture(),(int)player.getPosX()+offsetX,(int)player.getPosY()+offsetY,this);
 	    	
 	    	// Mobile elements
 	    	for (int i = 0; i < mobiles.size(); i++){
