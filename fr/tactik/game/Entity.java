@@ -3,7 +3,7 @@
  */
 package fr.tactik.game;
 
-import handlers.TextureHandler;
+import handlers.TextureLoader;
 
 import java.awt.Image;
 import java.io.File;
@@ -83,9 +83,10 @@ public abstract class Entity {
 		this.path = path;
 		this.current = current;
 		this.id = id;
-		
+
 		this.texturesImages = new Vector<ImageIcon>();
-		texturesImages = TextureHandler.getImageIconFromPath(path);
+		texturesImages = TextureLoader.getImageIconFromPath(path);
+
 	}
 
 	/**

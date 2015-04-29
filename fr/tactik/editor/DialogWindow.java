@@ -60,8 +60,8 @@ public class DialogWindow extends JDialog{
 			JLabel bgColor = new JLabel ("Background path :");
 			
 			JButton validation = new JButton("OK");
-			final JTextField widthField = new JTextField("100");
-			final JTextField heightField = new JTextField("100");
+			final JTextField widthField = new JTextField("50");
+			final JTextField heightField = new JTextField("10");
 			final JTextField bgPathField = new JTextField("/path/to/your/background");
 			
 			nDialog.add(width);
