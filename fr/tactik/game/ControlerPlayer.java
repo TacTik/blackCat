@@ -45,18 +45,14 @@ public class ControlerPlayer implements KeyListener {
 	
 	public void playerSprite(){
 		// going left
-		System.out.println(left);
-		System.out.println(player.jumpsAvailable);
 		if (left == true && player.jumpsAvailable == 2){
 			// running
 			if (player.running == true) {
 				player.current = 1;
-				System.out.println("running left");
 			}
 			// walking
 			else {
 				player.current = 0;
-				System.out.println("walking left");
 			}
 		}
 		
@@ -65,19 +61,16 @@ public class ControlerPlayer implements KeyListener {
 			// running
 			if (player.running == true) {
 				player.current = 2;
-				//System.out.println("running right");
 			}
 			// walking
 			else {
 				player.current = 4;
-				//System.out.println("walking right");
 			}
 		}
 		
 		// on the ground, not moving
 		else if ((right == false && left == false) && player.jumpsAvailable == 2) {
 			player.current = 6;
-			//System.out.println("sitting");
 		}
 		// in the air
 		else if (player.jumpsAvailable != 2) {
@@ -91,7 +84,6 @@ public class ControlerPlayer implements KeyListener {
 				player.current = 5;
 				deltaX = 1;
 			}
-			//System.out.println("jumping");
 			
 			else if (player.xspeed == 0) {
 				if (deltaX == -1) player.current = 3;

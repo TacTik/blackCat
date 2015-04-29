@@ -79,18 +79,6 @@ public class Player extends Mobile{
 		else if (level[(int)(posY + this.yspeed) / 50][(int)(posX + this.xspeed) / 50] != 0 ||
 				level[((int)(posY + this.yspeed - 1) / 50) + 1][(int)(posX + this.xspeed) / 50] != 0)
 			this.xspeed = 0;
-		
-		
-		
-		
-		
 	}
 	
-	public void crouch(){
-		
-	}
-	
-	public void run(){
-		
-	}
 }
