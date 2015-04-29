@@ -48,11 +48,11 @@ public class ControlerPlayer implements KeyListener {
 		if (left == true && player.jumpsAvailable == 2){
 			// running
 			if (player.running == true) {
-				player.current = 1;
+				player.current = 0;
 			}
 			// walking
 			else {
-				player.current = 0;
+				player.current = 2;
 			}
 		}
 		
@@ -60,34 +60,34 @@ public class ControlerPlayer implements KeyListener {
 		if (right == true && player.jumpsAvailable == 2){
 			// running
 			if (player.running == true) {
-				player.current = 2;
+				player.current = 1;
 			}
 			// walking
 			else {
-				player.current = 4;
+				player.current = 3;
 			}
 		}
 		
 		// on the ground, not moving
 		else if ((right == false && left == false) && player.jumpsAvailable == 2) {
-			player.current = 6;
+			player.current = 4;
 		}
 		// in the air
 		else if (player.jumpsAvailable != 2) {
 			// looking left
 			if (player.xspeed < 0){
-				player.current = 3;
+				player.current = 5;
 				deltaX = -1;
 			}
 			// looking right
 			else if (player.xspeed > 0) {
-				player.current = 5;
+				player.current = 6;
 				deltaX = 1;
 			}
 			
 			else if (player.xspeed == 0) {
-				if (deltaX == -1) player.current = 3;
-				if (deltaX == 1) player.current = 5;
+				if (deltaX == -1) player.current = 5;
+				if (deltaX == 1) player.current = 6;
 			}
 		}
 		//player.current = 6;
