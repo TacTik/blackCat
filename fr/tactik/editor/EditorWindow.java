@@ -35,8 +35,10 @@ public class EditorWindow extends JFrame {
 	//buttons
 	private static JButton saveLevel;
 	
+	private static JMenuItem changeBg;
+	
 	//level file extension
-	private static final String extName = "blkt"; //à rendre plus sérieux
+	private static final String extName = "bCat"; //à rendre plus sérieux
 	public static EditorWindow  win;
 	
 	//Check if the editor is open
@@ -103,6 +105,16 @@ public class EditorWindow extends JFrame {
 		JMenu project = new JMenu("Project");
 		JMenu about = new JMenu("About the Editor");
 		
+		changeBg = new JMenuItem("Change background");
+		changeBg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(DialogWindow.createBgDialog(win)){
+					levelPanel.changeBg(DialogWindow.getLevelBackground());
+				}
+			}
+		});
+		changeBg.setEnabled(false);
+		
 		final JMenuItem newItem = new JMenuItem ("New");
 		newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		project.add(newItem);
@@ -111,6 +123,7 @@ public class EditorWindow extends JFrame {
 				newLevel(win);
 			}
 		});
+		
 
 		final JMenuItem openItem = new JMenuItem ("Open");
 		openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK));
@@ -120,7 +133,6 @@ public class EditorWindow extends JFrame {
 				openLevel(win);
 			}
 		});
-
 
 		
 		final JMenuItem save = new JMenuItem ("Save");
@@ -133,8 +145,12 @@ public class EditorWindow extends JFrame {
 		project.add(quit);
 		menuBar.add(project);
 		menuBar.add(about);
-		
+		project.addSeparator();
+		project.add(changeBg);
 		win.setJMenuBar(menuBar);
+		
+
+
 	}
 	
 	private static void addComponents(JToolBar toolBar, final EditorWindow win) {
@@ -268,8 +284,8 @@ public class EditorWindow extends JFrame {
 			return;
 
 		currentLevelFile = new LevelStruct(DialogWindow.getLevelWidth(), DialogWindow.getLevelHeight(), DialogWindow.getLevelBackground());
-		// TODO init the view with the background, size etc
 		saveLevel.setEnabled(true);
+		changeBg.setEnabled(true);
 	}
 
 }
