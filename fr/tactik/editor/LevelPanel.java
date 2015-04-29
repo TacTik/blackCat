@@ -88,6 +88,9 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
+		if(e.getX() < 0 || e.getY() < 0)
+			return;
+		
 		if (SwingUtilities.isRightMouseButton(e)){
 			tiles[ e.getX() / 50][e.getY() / 50] = 0;
 		}
@@ -98,6 +101,9 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		if(e.getX() < 0 || e.getY() < 0)
+			return;
+		
 		if (SwingUtilities.isRightMouseButton(e)){
 			tiles[ e.getX() / 50][e.getY() / 50] = 0;
 		}

@@ -14,6 +14,11 @@ import javax.swing.JPanel;
 public class GameWindow extends JFrame{
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	* It create a new menu for the game.
 	*/
 	Menu gameMenu;
@@ -35,7 +40,7 @@ public class GameWindow extends JFrame{
 		setTitle("Un super Titre de Jeu OH YEAH");
 		setSize(800,800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setIconImage(new ImageIcon("images/icon.png").getImage());
+		setIconImage(new ImageIcon("images/icons/icon.png").getImage());
 		
 		Menu gameMenu = new Menu();
 		setJMenuBar(gameMenu);
