@@ -28,7 +28,6 @@ public class EditorWindow extends JFrame {
 	private static final String picturesFolder = "images/icons/";
 	private static LevelStruct currentLevelFile;
 
-
 	private static LevelPanelContainer levelPanel;
 	private static TilesContentPanel tilesContentPanel;
 	private static JSplitPane splitPane;
