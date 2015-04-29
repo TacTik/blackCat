@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -50,11 +51,13 @@ public class TextureHandler {
 		
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
+		Arrays.sort(listOfFiles);
 		
 		int max = (number.length == 0) ? listOfFiles.length : number[0];
 		
 		for (int i = 0; i < max; i++) {
 			if (listOfFiles[i].isFile()) {
+				System.out.println(listOfFiles[i].getName());
 				texturesImages.add (new ImageIcon(path + listOfFiles[i].getName()));
 			}
 		} 
