@@ -57,7 +57,6 @@ public class TextureHandler {
 		
 		for (int i = 0; i < max; i++) {
 			if (listOfFiles[i].isFile()) {
-				System.out.println(listOfFiles[i].getName());
 				texturesImages.add (new ImageIcon(path + listOfFiles[i].getName()));
 			}
 		} 
