@@ -28,6 +28,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	static String rootdir = System.getProperty("user.dir");
 	
 	Image background;
+	Image footprint;
 	Player player;
 	Vector<Mobile> mobiles;
 	Vector<Still> stills;
@@ -81,7 +82,20 @@ public class GameDisplay extends JPanel implements Runnable{
     
     
 	public void initGame() {
-			
+		
+		try {
+        	background = ImageIO.read(new File(rootdir + "/images/game/background.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		try {
+        	footprint = ImageIO.read(new File(rootdir + "/images/game/footprint.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		
 		mobiles = new Vector<Mobile>();		
 		stills = new Vector<Still>();
 		
@@ -145,15 +159,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	public GameDisplay() {	
 		initGame();	
 	}	
-	
-	public void setBackground(String path){
-		  // load the background image
-        try {
-        	background = ImageIO.read(new File(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-	}
+
 	
 	
 	@Override
@@ -173,6 +179,11 @@ public class GameDisplay extends JPanel implements Runnable{
 	    	// Still elements
 	    	for (int i = 0; i < stills.size(); i++){
 	    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX()+offsetX,(int)stills.get(i).getPosY()+offsetY,null);
+	    	}
+	    	
+	    	// Life points
+	    	for (int i = 0; i < player.lifePoints; i++){
+	    		g.drawImage(footprint,30*i +10,10 ,null);
 	    	}
 
 	}

@@ -27,6 +27,7 @@ public class ControlerPlayer implements KeyListener {
 		if(key == KeyEvent.VK_SPACE && player.jumpsAvailable > 0){
 			player.jump = 13;
 			player.jumpsAvailable--;
+			player.lifePoints--;
 	    }
 		if(key == KeyEvent.VK_CAPS_LOCK){
 			player.running ^= true;
