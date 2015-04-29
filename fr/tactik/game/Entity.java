@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  * This is the Entity abstract Class. All objects extends this class.
@@ -43,7 +44,7 @@ public abstract class Entity {
 	 * 	 
 	 */
 	String path;
-	Vector<Image> texturesImages;
+	Vector<ImageIcon> texturesImages;
 	
 	int current;
 
@@ -83,8 +84,8 @@ public abstract class Entity {
 		this.current = current;
 		this.id = id;
 		
-		this.texturesImages = new Vector<Image>();
-		texturesImages = TextureHandler.getTexturesFromFolder(path);
+		this.texturesImages = new Vector<ImageIcon>();
+		texturesImages = TextureHandler.getImageIconFromPath(path);
 	}
 
 	/**
@@ -209,8 +210,12 @@ public abstract class Entity {
 		this.id = id;
 	}
 	
+	public void setCurrent(int current) {
+		this.current = current;
+	}
+	
 	public Image getCurrentTexture(){
-		return texturesImages.get(current);
+		return texturesImages.get(current).getImage();
 	}
 	
 	public void updateCurrentText(){
