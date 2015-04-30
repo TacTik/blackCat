@@ -30,8 +30,13 @@ public class GameDisplay extends JPanel implements Runnable{
 	Player player;
 	Vector<Mobile> mobiles;
 	Vector<Still> stills;
-	int offsetX=0;
-	int offsetY=0;
+	
+	static int windowSizeX = 1000;
+	static int windowSizeY = 600;
+	static int worldSizeX = 0;
+	static int worldSizeY = 0;
+	int offsetX = 0;
+	int offsetY = 0;
 	
 	long lastLoopTime = System.nanoTime();
 	final int TARGET_FPS = 60;
@@ -62,6 +67,10 @@ public class GameDisplay extends JPanel implements Runnable{
 			nbLines = Integer.parseInt(tokens[0]);
 			nbColumns = Integer.parseInt(tokens[1]);
 			tab = new int [nbLines][nbColumns];
+			
+			worldSizeX = nbColumns * 50;
+			worldSizeY = nbLines * 50;
+			
     		
     		while ((strLine = br.readLine()) != null)   {
     			tokens = strLine.split(" ");
@@ -168,6 +177,9 @@ public class GameDisplay extends JPanel implements Runnable{
 		player.collision(level,nbLines,nbColumns);
 		player.update();
 		
+		offsetX = (int) player.posX - (windowSizeX/2 - 50);
+		offsetY = (int) player.posY - (windowSizeY/2 - 25);
+		
 		
 	}
 	
@@ -186,19 +198,173 @@ public class GameDisplay extends JPanel implements Runnable{
 	    super.paintComponent(g);
 	    	// Background
 	    	g.drawImage(background,0,0,null);
-    		
-	    	// Player
-	    	g.drawImage(player.getCurrentTexture(),(int)player.getPosX()+offsetX,(int)player.getPosY()+offsetY,this);
-	    	
-	    	// Mobile elements
-	    	for (int i = 0; i < mobiles.size(); i++){
-	    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX()+offsetX,(int)mobiles.get(i).getPosY()+offsetY,null);
+	    	//System.out.println("worldSizeY "+worldSizeY);
+    		//System.out.println("windowSizeY/2 "+windowSizeY/2);
+	    	//System.out.println(player.posX);
+	    	//System.out.println(player.posY);
+	    	// -------------------------------- Center -----------------------------	    	
+	    	if (player.posX > windowSizeX/2 && player.posX < worldSizeX - windowSizeX/2 &&
+	    		player.posY > windowSizeY/2 && player.posY < worldSizeY - windowSizeY/2){
+	    		
+	    		// Player
+		    	g.drawImage(player.getCurrentTexture(),windowSizeX/2 - 50,windowSizeY/2 - 25,this);
+		    	
+		    	// Mobile elements
+		    	for (int i = 0; i < mobiles.size(); i++){
+		    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX() - offsetX,(int)mobiles.get(i).getPosY() - offsetY,null);
+		    	}
+		    	
+		    	// Still elements
+		    	for (int i = 0; i < stills.size(); i++){
+		    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX() - offsetX,(int)stills.get(i).getPosY() - offsetY,null);
+		    	}
 	    	}
 	    	
-	    	// Still elements
-	    	for (int i = 0; i < stills.size(); i++){
-	    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX()+offsetX,(int)stills.get(i).getPosY()+offsetY,null);
+	    	// -------------------------------- Top/Left -----------------------------
+	    	else if (player.posX <= windowSizeX/2 &&
+		    		player.posY <= windowSizeY/2){
+	    		
+	    		// Player
+			    g.drawImage(player.getCurrentTexture(),(int)player.getPosX(),(int)player.getPosY(),this);
+		    	
+		    	// Mobile elements
+		    	for (int i = 0; i < mobiles.size(); i++){
+		    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX(),(int)mobiles.get(i).getPosY(),null);
+		    	}
+		    	
+		    	// Still elements
+		    	for (int i = 0; i < stills.size(); i++){
+		    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX(),(int)stills.get(i).getPosY(),null);
+		    	}
 	    	}
+	    	
+	    	// -------------------------------- Left -----------------------------
+	    	else if (player.posX <= windowSizeX/2 &&
+	    			player.posY > windowSizeY/2 && player.posY < worldSizeY - windowSizeY/2){
+
+	    		// Player
+			    g.drawImage(player.getCurrentTexture(),(int)player.getPosX(),windowSizeY/2 - 25,this);
+		    	
+		    	// Mobile elements
+		    	for (int i = 0; i < mobiles.size(); i++){
+		    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX(),(int)mobiles.get(i).getPosY() - offsetY,null);
+		    	}
+		    	
+		    	// Still elements
+		    	for (int i = 0; i < stills.size(); i++){
+		    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX(),(int)stills.get(i).getPosY() - offsetY,null);
+		    	}
+	    	}
+	    	
+	    	// -------------------------------- Bot/Left -----------------------------
+	    	else if (player.posX <= windowSizeX/2 &&
+		    		player.posY >= worldSizeY - windowSizeY/2){
+	    		
+	    		// Player
+			    g.drawImage(player.getCurrentTexture(),(int)player.getPosX(),(int)player.getPosY() - (worldSizeY - windowSizeY + 50),this);
+		    	
+		    	// Mobile elements
+		    	for (int i = 0; i < mobiles.size(); i++){
+		    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX(),(int)mobiles.get(i).getPosY() - (worldSizeY - windowSizeY + 50),null);
+		    	}
+		    	
+		    	// Still elements
+		    	for (int i = 0; i < stills.size(); i++){
+		    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX(),(int)stills.get(i).getPosY() - (worldSizeY - windowSizeY + 50),null);
+		    	}
+	    	}
+	    	
+	    	// -------------------------------- Bot -----------------------------
+	    	else if (player.posX > windowSizeX/2 && player.posX < worldSizeX - windowSizeX/2 &&
+		    		player.posY >= worldSizeY - windowSizeY/2){
+
+	    		// Player
+			    g.drawImage(player.getCurrentTexture(),windowSizeX/2 - 50,(int)player.getPosY() - (worldSizeY - windowSizeY + 50),this);
+		    	
+		    	// Mobile elements
+		    	for (int i = 0; i < mobiles.size(); i++){
+		    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX() - offsetX,(int)mobiles.get(i).getPosY() - (worldSizeY - windowSizeY + 50),null);
+		    	}
+		    	
+		    	// Still elements
+		    	for (int i = 0; i < stills.size(); i++){
+		    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX() - offsetX,(int)stills.get(i).getPosY() - (worldSizeY - windowSizeY + 50),null);
+		    	}
+	    	}
+	    	
+	    	// -------------------------------- Bot/Right -----------------------------
+	    	else if (player.posX >= worldSizeX - windowSizeX/2 &&
+		    		player.posY >= worldSizeY - windowSizeY/2){
+	    		
+	    		// Player
+			    g.drawImage(player.getCurrentTexture(),(int)player.getPosX()- (worldSizeX - windowSizeX + 20),(int)player.getPosY() - (worldSizeY - windowSizeY + 50),this);
+		    	
+		    	// Mobile elements
+		    	for (int i = 0; i < mobiles.size(); i++){
+		    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX()- (worldSizeX - windowSizeX + 20),(int)mobiles.get(i).getPosY() - (worldSizeY - windowSizeY + 50),null);
+		    	}
+		    	
+		    	// Still elements
+		    	for (int i = 0; i < stills.size(); i++){
+		    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX()- (worldSizeX - windowSizeX + 20),(int)stills.get(i).getPosY() - (worldSizeY - windowSizeY + 50),null);
+		    	}
+	    	}
+	    	
+	    	// -------------------------------- Right -----------------------------
+	    	else if (player.posX >= worldSizeX - windowSizeX/2 &&
+	    			player.posY > windowSizeY/2 && player.posY < worldSizeY - windowSizeY/2){
+	    		
+	    		// Player
+			    g.drawImage(player.getCurrentTexture(),(int)player.getPosX()- (worldSizeX - windowSizeX + 20),windowSizeY/2 - 25,this);
+		    	
+		    	// Mobile elements
+		    	for (int i = 0; i < mobiles.size(); i++){
+		    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX()- (worldSizeX - windowSizeX + 20),(int)mobiles.get(i).getPosY() - offsetY,null);
+		    	}
+		    	
+		    	// Still elements
+		    	for (int i = 0; i < stills.size(); i++){
+		    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX()- (worldSizeX - windowSizeX + 20),(int)stills.get(i).getPosY() - offsetY,null);
+		    	}
+	    	}
+	    	
+	    	// -------------------------------- Top/Right -----------------------------
+	    	else if (player.posX >= worldSizeX - windowSizeX/2 &&
+	    			player.posY <= windowSizeY/2){
+	    		
+	    		// Player
+			    g.drawImage(player.getCurrentTexture(),(int)player.getPosX()- (worldSizeX - windowSizeX + 20),(int)player.getPosY(),this);
+		    	
+		    	// Mobile elements
+		    	for (int i = 0; i < mobiles.size(); i++){
+		    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX()- (worldSizeX - windowSizeX + 20),(int)mobiles.get(i).getPosY(),null);
+		    	}
+		    	
+		    	// Still elements
+		    	for (int i = 0; i < stills.size(); i++){
+		    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX()- (worldSizeX - windowSizeX + 20),(int)stills.get(i).getPosY(),null);
+		    	}
+	    	}
+	    	
+	    	// -------------------------------- Top -----------------------------
+	    	else if (player.posX > windowSizeX/2 && player.posX < worldSizeX - windowSizeX/2 &&
+	    			player.posY <= windowSizeY/2){
+	    		
+	    		// Player
+			    g.drawImage(player.getCurrentTexture(),windowSizeX/2 - 50,(int)player.getPosY(),this);
+		    	
+		    	// Mobile elements
+		    	for (int i = 0; i < mobiles.size(); i++){
+		    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX() - offsetX,(int)mobiles.get(i).getPosY(),null);
+		    	}
+		    	
+		    	// Still elements
+		    	for (int i = 0; i < stills.size(); i++){
+		    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX() - offsetX,(int)stills.get(i).getPosY(),null);
+		    	}
+	    	}
+	    	
+	    	
 	    	
 	    	// Life points
 	    	for (int i = 0; i < player.lifePoints; i++){

@@ -72,7 +72,7 @@ public class Player extends Mobile{
 		else if (level[(int)(posY + this.yspeed + 3) / 50][((int)(posX + this.xspeed) / 50) + 2] != 0 ||
 				level[((int)(posY + this.yspeed - 3) / 50) + 1][((int)(posX + this.xspeed) / 50) + 2] != 0){
 			this.xspeed = 0;
-			jumpsAvailable = 1;
+			if (jumpsAvailable != 2) jumpsAvailable = 1;
 		}
 			
 		
@@ -82,7 +82,7 @@ public class Player extends Mobile{
 		else if (level[(int)(posY + this.yspeed + 3) / 50][(int)(posX + this.xspeed) / 50] != 0 ||
 				level[((int)(posY + this.yspeed - 3) / 50) + 1][(int)(posX + this.xspeed) / 50] != 0){
 			this.xspeed = 0;
-			jumpsAvailable = 1;
+			if (jumpsAvailable != 2) jumpsAvailable = 1;
 		}
 			
 	}
