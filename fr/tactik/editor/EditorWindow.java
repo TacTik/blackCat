@@ -262,7 +262,9 @@ public class EditorWindow extends JFrame {
 			switch(option){
 				case 0 :
 					//save()
+					LevelPanel.writeFileFromEditor();
 					currentLevelFile = null;
+					levelPanel.repaint();
 					// openLevel();
 					break;
 				case 1:
@@ -277,7 +279,9 @@ public class EditorWindow extends JFrame {
 	}
 	
 	// TODO save level
-	private static void saveLevel(EditorWindow win){}
+	private static void saveLevel(EditorWindow win){
+		LevelPanel.writeFileFromEditor();
+	}
 	
 	private static void createNewLevel(){
 		if(-1 == levelPanel.initView(DialogWindow.getLevelWidth(), DialogWindow.getLevelHeight(),DialogWindow.getLevelBackground().toString()))

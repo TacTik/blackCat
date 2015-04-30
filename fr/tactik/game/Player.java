@@ -47,12 +47,12 @@ public class Player extends Mobile{
 	public void collision(int[][] level, int nbLines, int nbColumns){	
 		
 		// Bottom
-		if ((int)(posY + this.yspeed - 1) + 50 >= nbLines * 50){
+		if ((int)(posY + this.yspeed - 2) + 50 >= nbLines * 50){
 			this.yspeed = 0;
 			jumpsAvailable = 2;
 		}
-		else if (level[((int)(posY + this.yspeed - 1) / 50) + 1][(int)(posX) / 50] != 0 ||
-				level[((int)(posY + this.yspeed - 1) / 50) + 1][((int)(posX) / 50) + 2] != 0){
+		else if (level[((int)(posY + this.yspeed - 2) / 50) + 1][(int)(posX + 3) / 50] != 0 ||
+				level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX - 3) / 50) + 2] != 0){
 			this.yspeed = 0;
 			jumpsAvailable = 2;
 		}
@@ -61,24 +61,30 @@ public class Player extends Mobile{
 		// Top
 		if ((int)(posY + this.yspeed) < 0)
 			this.yspeed = 0;
-		else if (level[(int)(posY + this.yspeed - 1) / 50][(int)(posX) / 50] != 0 ||
-				level[(int)(posY + this.yspeed - 1) / 50][((int)(posX) / 50) + 2] != 0)
+		else if (level[(int)(posY + this.yspeed - 1) / 50][(int)(posX + 3) / 50] != 0 ||
+				level[(int)(posY + this.yspeed - 1) / 50][((int)(posX - 3) / 50) + 2] != 0)
 			this.yspeed = 0;
 		
 
 		/// Right
 		if ((int)(posX + this.xspeed) + 100 >= nbColumns * 50)
 			this.xspeed = 0;
-		else if (level[(int)(posY + this.yspeed) / 50][((int)(posX + this.xspeed) / 50) + 2] != 0 ||
-				level[((int)(posY + this.yspeed - 1) / 50) + 1][((int)(posX + this.xspeed) / 50) + 2] != 0)
+		else if (level[(int)(posY + this.yspeed + 3) / 50][((int)(posX + this.xspeed) / 50) + 2] != 0 ||
+				level[((int)(posY + this.yspeed - 3) / 50) + 1][((int)(posX + this.xspeed) / 50) + 2] != 0){
 			this.xspeed = 0;
+			jumpsAvailable = 1;
+		}
+			
 		
 		// Left
 		if ((int)(posX + this.xspeed) < 0)
 			this.xspeed = 0;
-		else if (level[(int)(posY + this.yspeed) / 50][(int)(posX + this.xspeed) / 50] != 0 ||
-				level[((int)(posY + this.yspeed - 1) / 50) + 1][(int)(posX + this.xspeed) / 50] != 0)
+		else if (level[(int)(posY + this.yspeed + 3) / 50][(int)(posX + this.xspeed) / 50] != 0 ||
+				level[((int)(posY + this.yspeed - 3) / 50) + 1][(int)(posX + this.xspeed) / 50] != 0){
 			this.xspeed = 0;
+			jumpsAvailable = 1;
+		}
+			
 	}
 	
 }

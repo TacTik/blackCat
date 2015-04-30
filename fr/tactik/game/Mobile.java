@@ -27,6 +27,8 @@ public abstract class Mobile extends Entity {
 	float initialPosY;
 
 	float xspeed, yspeed;
+	float xspeedBefore = 0;
+	float yspeedBefore = 0;
 	
 	public Mobile(float posX, float posY, int sizeX, int sizeY, boolean isWalkable, String path,
 			int current, int id) {
@@ -40,6 +42,8 @@ public abstract class Mobile extends Entity {
 	public void update(){
 		this.posX += this.xspeed;
 		this.posY += this.yspeed;
+		this.xspeedBefore = this.xspeed;
+		this.yspeedBefore = this.yspeed;
 		this.xspeed = 0;
 		this.yspeed = 0;
 	}
@@ -65,25 +69,31 @@ public abstract class Mobile extends Entity {
 	
 	public void moveInField(float moveFieldX, float moveFieldY){
 		//For moveFieldX
-		if((posX < moveFieldX + initialPosX ) && (xspeed >= 0)){
+		if((posX < moveFieldX + initialPosX ) && (xspeedBefore >= 0)){
 			this.moveRight(1);
 		}
-		else if((posX >= moveFieldX + initialPosX) && (xspeed > 0)){
+		else if(posX >= moveFieldX + initialPosX){
 			this.moveLeft(1);
 		}
-		else if ((posX <= initialPosX) && (xspeed <0)){
+		else if (posX <= initialPosX){
 			this.moveRight(1);
+		}
+		else if((posX < moveFieldX + initialPosX ) && (xspeedBefore < 0)){
+			this.moveLeft(1);
 		}
 		
 		//For moveFieldY
-		if((posY < moveFieldY + initialPosY ) && (yspeed >= 0)){
+		if((posY < moveFieldY + initialPosY ) && (yspeedBefore >= 0)){
 			this.moveDown(1);
 		}
-		else if((posY >= moveFieldY + initialPosY) && (yspeed > 0)){
+		else if(posY >= moveFieldY + initialPosY){
 			this.moveUp(1);
 		}
-		else if ((posY <= initialPosY) && (yspeed <0)){
+		else if (posY <= initialPosY){
 			this.moveDown(1);
+		}
+		else if((posY < moveFieldY + initialPosY ) && (yspeedBefore < 0)){
+			this.moveUp(1);
 		}
 	}
 }

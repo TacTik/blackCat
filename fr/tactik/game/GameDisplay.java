@@ -52,7 +52,7 @@ public class GameDisplay extends JPanel implements Runnable{
 		int[][] tab = null;
     	
 		try{
-    		FileInputStream fstream = new FileInputStream("level1.txt");
+    		FileInputStream fstream = new FileInputStream("level2.txt");
     		DataInputStream in = new DataInputStream(fstream);
     		BufferedReader br = new BufferedReader(new InputStreamReader(in));
     		String strLine;
@@ -104,22 +104,22 @@ public class GameDisplay extends JPanel implements Runnable{
 			for (int j = 0; j < nbColumns ; j++){
 				int id = level[i][j];
 				switch (id) {
-		            case 1:  player = new Player(50*j,50*i,50,50,false, rootdir + "/images/game/player/",1, i*nbColumns+j);
+		            case 1:  player = new Player(50*j,50*i,50,50,false, rootdir + "/images/game/player/",1, i);
 		            		 level[i][j] = 0;
 		                     break;
-		            case 2:  MobilePlat mobile1 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile1/",2, i*nbColumns+j);
+		            case 2:  MobilePlat mobile1 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile1/",2, 2);
 		            		 mobiles.add (mobile1);
 		            		 break;
-		            case 3:  MobilePlat mobile2 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile2/",2, i*nbColumns+j);
+		            case 3:  MobilePlat mobile2 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile2/",2, 3);
 		            		 mobiles.add (mobile2);
 		            		 break;
-		            case 4:  StillPlat still1 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/still1/",0, i*nbColumns+j);
+		            case 4:  StillPlat still1 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/still1/",0, 4);
 	       		 			 stills.add (still1);
 	       		 			 break;
-		            case 5:  StillPlat still2 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/still2/",0, i*nbColumns+j);
+		            case 5:  StillPlat still2 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/still2/",0, 5);
 			 			 	 stills.add (still2);
 			 			 	 break;
-		            case 6:  MobilePlat foe1 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile2/",0, i*nbColumns+j);
+		            case 6:  MobilePlat foe1 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile2/",0, 6);
 	 			 	 		 mobiles.add (foe1);
 	 			 	 		 break;
 		            default: 
@@ -134,8 +134,29 @@ public class GameDisplay extends JPanel implements Runnable{
 	}
 	
 	public void gameUpdate() {
-
-		//mobiles.get(2).moveInField(100, 0);
+		
+		for (int i = 0; i < mobiles.size(); i++){
+			int x = 0;
+			int y = 0;
+			switch (mobiles.get(i).id) {
+	            case 1:  x = 0;
+	            		 y = 100;
+	                     break;
+	            case 2:  x = 100;
+       		 			 y = 0;
+	            		 break;
+	            case 3:  x = 100;
+       		 			 y = 100;
+	            		 break;
+	            default: x = 0;
+	            		 y = 0;
+	                     break;
+			}
+			mobiles.get(i).moveInField(x, y);
+			mobiles.get(i).update();
+		}
+		
+		
 
 		// mobiles.get(0).moveLeft(1);
 		//player.updateCurrentText();
@@ -147,7 +168,7 @@ public class GameDisplay extends JPanel implements Runnable{
 		player.collision(level,nbLines,nbColumns);
 		player.update();
 		
-		//mobiles.get(2).update();
+		
 	}
 	
 	public void render() {		
