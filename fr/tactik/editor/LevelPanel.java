@@ -7,26 +7,33 @@ import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
+import java.io.FileWriter;
 
 import handlers.SelectTileHelper;
 import handlers.TextureLoader;
 import handlers.TexturesMapper;
+
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class LevelPanel extends JPanel implements MouseListener, MouseMotionListener {
 
+	static String rootdir = System.getProperty("user.dir");
+	
 	private static final long serialVersionUID = 1L;
 	Image backgroundImage;
 	String bg;
-	int width, height;
+	
+	static int width;
+	static int height;
 	int tileDimention = 50;
-	int[][] tiles;
+	static int[][] tiles;
 	
 	public LevelPanel(int width, int height, String background){
 		this.bg = background;
-		this.width = width;
-		this.height = height;
+		LevelPanel.width = width;
+		LevelPanel.height = height;
 		tiles = new int[width][height];
 		
 		addMouseListener(this);
@@ -58,8 +65,8 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 		
 		g.setColor(new Color(51,51,51,40));
 		
-		for(int i = 0; i < this.width; i++){
-			for(int j = 0; j < this.height; j++){
+		for(int i = 0; i < LevelPanel.width; i++){
+			for(int j = 0; j < LevelPanel.height; j++){
 				if(tiles[i][j] == -8){
 					g.fillRect(i * 50, j * 50, 50, 50);
 				}
@@ -75,6 +82,32 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 			g.drawLine(0, a * tileDimention, width* tileDimention, a * tileDimention);
 			g.drawLine(a * tileDimention, 0 , a * tileDimention, height* tileDimention);
 		}
+	}
+	
+	public static void writeFileFromEditor(){
+		final String path = rootdir + "/level2.txt";
+		System.out.println(tiles[0][0]);
+        final File file =new File(path); 
+        try {
+            // file creation
+            file.createNewFile();
+            // writer creation
+            final FileWriter writer = new FileWriter(file);
+            try {
+                writer.write(height + " " + width + "\n");
+                for (int i = 0; i < height; i++){
+                	for (int j=0; j < width; j++){
+                		if (tiles[j][i] == -8) tiles[j][i] = 0;
+                		writer.write(tiles[j][i] + " ");
+                	}
+                	writer.write("\n");
+                }
+            } finally {
+                writer.close();
+            }
+        } catch (Exception e) {
+            System.out.println("can't create file");
+        }
 	}
 
 	@Override
@@ -114,8 +147,8 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 	
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		for(int i = 0; i < this.width; i++){
-			for(int j = 0; j < this.height; j++){
+		for(int i = 0; i < LevelPanel.width; i++){
+			for(int j = 0; j < LevelPanel.height; j++){
 				if(tiles[i][j] == -8 && (i !=  e.getX() && j != e.getY() )){
 					tiles[i][j] = 0;
 				}

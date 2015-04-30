@@ -37,8 +37,8 @@ public class GameWindow extends JFrame{
 	* Create a new window.
 	*/
 	GameWindow(){
-		setTitle("Un super Titre de Jeu OH YEAH");
-		setSize(800,800);
+		setTitle("BraveCat");
+		setSize(1000,600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(new ImageIcon("images/icons/icon.png").getImage());
 		
