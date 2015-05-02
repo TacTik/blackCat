@@ -67,7 +67,7 @@ public abstract class Mobile extends Entity {
 	
 	
 	
-	public void moveInField(float moveFieldX, float moveFieldY){
+	public void moveInField(float moveFieldX, float moveFieldY, int[][] level, int id){
 		//For moveFieldX
 		if((posX < moveFieldX + initialPosX ) && (xspeedBefore >= 0)){
 			this.moveRight(1);
@@ -95,5 +95,25 @@ public abstract class Mobile extends Entity {
 		else if((posY < moveFieldY + initialPosY ) && (yspeedBefore < 0)){
 			this.moveUp(1);
 		}
+
+		/* test
+		int x = (int)((posX + 25 - initialPosX)/50);
+		int xMax = (int)(moveFieldX / 50);
+		int y = (int)((posY +25 - initialPosY)/50);
+		int yMax = (int)(moveFieldY / 50);
+		System.out.println("x : " + x);
+		System.out.println("xMax : " + xMax);
+		System.out.println("y : " + y);
+		System.out.println("yMax : " + yMax);
+		for (int i = 0; i <= yMax; i++){
+			for (int j = 0; j <= xMax; j++){
+				if (i == y && j == x)
+					level[(int)(initialPosY/50)+i][(int)(initialPosX/50)+j] = id;
+				else
+					level[(int)(initialPosY/50)+i][(int)(initialPosX/50)+j] = 0;
+			}
+		}
+		*/
+		
 	}
 }

@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.*;
 import java.util.Vector;
+
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -87,6 +88,17 @@ public class GameDisplay extends JPanel implements Runnable{
     	return tab;
 	}
     
+	public void removeMobileFromLevel(int[][] level, int x, int y){
+		int index = 0;
+		for (int i = 0; i < x; i++){
+			for (int j = 0; j < y; j++){
+				if (level[i][j] >= 2 && level[i][j] <= 3) index++;
+			}
+		}
+		mobiles.remove(index);
+	}
+	
+	
     
 	public void initGame() {
 		
@@ -107,7 +119,7 @@ public class GameDisplay extends JPanel implements Runnable{
 		stills = new Vector<Still>();
 		
 		
-		 level = readLevel();
+		level = readLevel();
 
 		for (int i = 0; i < nbLines; i++){
 			for (int j = 0; j < nbColumns ; j++){
@@ -151,8 +163,8 @@ public class GameDisplay extends JPanel implements Runnable{
 	            case 1:  x = 0;
 	            		 y = 100;
 	                     break;
-	            case 2:  x = 100;
-       		 			 y = 0;
+	            case 2:  x = 0;
+       		 			 y = 100;
 	            		 break;
 	            case 3:  x = 100;
        		 			 y = 100;
@@ -161,25 +173,21 @@ public class GameDisplay extends JPanel implements Runnable{
 	            		 y = 0;
 	                     break;
 			}
-			mobiles.get(i).moveInField(x, y);
+			mobiles.get(i).moveInField(x, y, level,mobiles.get(i).id);
 			mobiles.get(i).update();
 		}
 		
-		
-
-		// mobiles.get(0).moveLeft(1);
-		//player.updateCurrentText();
 
 		controlPlayer.control();
 		controlPlayer.playerSprite();
 		player.jump();
 		player.gravity();
-		player.collision(level,nbLines,nbColumns);
+		player.collision(level,nbLines,nbColumns,stills);
 		player.update();
+		//System.out.println(level[8][5]);
 		
 		offsetX = (int) player.posX - (windowSizeX/2 - 50);
 		offsetY = (int) player.posY - (windowSizeY/2 - 25);
-		
 		
 	}
 	

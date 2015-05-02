@@ -25,5 +25,4 @@ public abstract class Still extends Entity {
 		super(posX, posY, sizeX, sizeY, isWalkable, path, current, id);
 		// TODO Auto-generated constructor stub
 	}
-
 }
