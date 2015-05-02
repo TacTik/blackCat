@@ -51,8 +51,9 @@ public class Player extends Mobile{
 			this.yspeed = 0;
 			jumpsAvailable = 2;
 		}
-		else if (level[((int)(posY + this.yspeed - 2) / 50) + 1][(int)(posX + 3) / 50] != 0 ||
-				level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX - 3) / 50) + 2] != 0){
+		else if (level[((int)(posY + this.yspeed - 2) / 50) + 1][(int)(posX + 8) / 50] != 0 ||
+				level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX) / 50) + 1] != 0 ||
+				level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX - 8) / 50) + 2] != 0){
 			this.yspeed = 0;
 			jumpsAvailable = 2;
 		}
@@ -61,8 +62,9 @@ public class Player extends Mobile{
 		// Top
 		if ((int)(posY + this.yspeed) < 0)
 			this.yspeed = 0;
-		else if (level[(int)(posY + this.yspeed - 1) / 50][(int)(posX + 3) / 50] != 0 ||
-				level[(int)(posY + this.yspeed - 1) / 50][((int)(posX - 3) / 50) + 2] != 0)
+		else if (level[(int)(posY + this.yspeed - 1) / 50][(int)(posX + 8) / 50] != 0 ||
+				level[(int)(posY + this.yspeed - 1) / 50][((int)(posX) / 50) + 1] != 0 ||
+				level[(int)(posY + this.yspeed - 1) / 50][((int)(posX - 8) / 50) + 2] != 0)
 			this.yspeed = 0;
 		
 

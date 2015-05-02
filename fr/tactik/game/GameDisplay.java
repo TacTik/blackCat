@@ -203,7 +203,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	    	//System.out.println(player.posX);
 	    	//System.out.println(player.posY);
 	    	// -------------------------------- Center -----------------------------	    	
-	    	if (player.posX > windowSizeX/2 && player.posX < worldSizeX - windowSizeX/2 &&
+	    	if (player.posX > windowSizeX/2 - 50 && player.posX < worldSizeX - windowSizeX/2 &&
 	    		player.posY > windowSizeY/2 && player.posY < worldSizeY - windowSizeY/2){
 	    		
 	    		// Player
@@ -221,7 +221,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	    	}
 	    	
 	    	// -------------------------------- Top/Left -----------------------------
-	    	else if (player.posX <= windowSizeX/2 &&
+	    	else if (player.posX <= windowSizeX/2 - 50 &&
 		    		player.posY <= windowSizeY/2){
 	    		
 	    		// Player
@@ -239,7 +239,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	    	}
 	    	
 	    	// -------------------------------- Left -----------------------------
-	    	else if (player.posX <= windowSizeX/2 &&
+	    	else if (player.posX <= windowSizeX/2 - 50 &&
 	    			player.posY > windowSizeY/2 && player.posY < worldSizeY - windowSizeY/2){
 
 	    		// Player
@@ -257,7 +257,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	    	}
 	    	
 	    	// -------------------------------- Bot/Left -----------------------------
-	    	else if (player.posX <= windowSizeX/2 &&
+	    	else if (player.posX <= windowSizeX/2 - 50 &&
 		    		player.posY >= worldSizeY - windowSizeY/2){
 	    		
 	    		// Player
@@ -275,7 +275,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	    	}
 	    	
 	    	// -------------------------------- Bot -----------------------------
-	    	else if (player.posX > windowSizeX/2 && player.posX < worldSizeX - windowSizeX/2 &&
+	    	else if (player.posX > windowSizeX/2 - 50 && player.posX < worldSizeX - windowSizeX/2 &&
 		    		player.posY >= worldSizeY - windowSizeY/2){
 
 	    		// Player
@@ -347,7 +347,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	    	}
 	    	
 	    	// -------------------------------- Top -----------------------------
-	    	else if (player.posX > windowSizeX/2 && player.posX < worldSizeX - windowSizeX/2 &&
+	    	else if (player.posX > windowSizeX/2 - 50 && player.posX < worldSizeX - windowSizeX/2 &&
 	    			player.posY <= windowSizeY/2){
 	    		
 	    		// Player
