@@ -135,9 +135,16 @@ public class EditorWindow extends JFrame {
 		});
 
 		
-		final JMenuItem save = new JMenuItem ("Save");
+		save = new JMenuItem ("Save");
 		save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
 		project.add(save);
+		save.setEnabled(false);
+		save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DialogWindow.createSaveLevelDialog(win);
+				saveLevel(win);
+			}
+		});
 		
 		final JMenuItem quit = new JMenuItem ("Quit");
 		quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
@@ -188,16 +195,24 @@ public class EditorWindow extends JFrame {
 				newLevel(win);
 			}
 		});
+		
+		saveLevel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DialogWindow.createSaveLevelDialog(win);
+				LevelPanel.writeFileFromEditor(DialogWindow.getLevelPath());
+			}
+		});
+		
 	}
 	
 	private static void addPanels(JPanel mainPanel, int width, int height) {
 		BorderLayout layout = new BorderLayout();
 		mainPanel.setLayout(layout);
 		
-		levelPanel = new LevelPanelContainer(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		levelPanelContainer = new LevelPanelContainer(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		tilesContentPanel = new TilesContentPanel(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
-		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tilesContentPanel, levelPanel);
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tilesContentPanel, levelPanelContainer);
 		splitPane.setOneTouchExpandable(true);
 		splitPane.setDividerLocation(width/5);
 		splitPane.setContinuousLayout(true);
@@ -262,15 +277,15 @@ public class EditorWindow extends JFrame {
 			switch(option){
 				case 0 :
 					//save()
-					LevelPanel.writeFileFromEditor();
+					DialogWindow.createSaveLevelDialog(win);
+					LevelPanel.writeFileFromEditor(DialogWindow.getLevelPath());
 					currentLevelFile = null;
-					levelPanel.repaint();
+					levelPanelContainer.repaint();
 					// openLevel();
 					break;
 				case 1:
 					currentLevelFile = null;
-					levelPanel.repaint();
-					// TODO : destruction, garbage collector toussa ? refresh etc etc
+					levelPanelContainer.repaint();
 					break;
 				case 2 :
 					break;
@@ -278,18 +293,18 @@ public class EditorWindow extends JFrame {
 		}
 	}
 	
-	// TODO save level
 	private static void saveLevel(EditorWindow win){
-		LevelPanel.writeFileFromEditor();
+		LevelPanel.writeFileFromEditor(DialogWindow.getLevelPath());
 	}
 	
 	private static void createNewLevel(){
-		if(-1 == levelPanel.initView(DialogWindow.getLevelWidth(), DialogWindow.getLevelHeight(),DialogWindow.getLevelBackground().toString()))
+		if(-1 == levelPanelContainer.initView(DialogWindow.getLevelWidth(), DialogWindow.getLevelHeight(),DialogWindow.getLevelBackground()))
 			return;
 
 		currentLevelFile = new LevelStruct(DialogWindow.getLevelWidth(), DialogWindow.getLevelHeight(), DialogWindow.getLevelBackground());
 		saveLevel.setEnabled(true);
 		changeBg.setEnabled(true);
+		save.setEnabled(true);
 	}
 
 }
