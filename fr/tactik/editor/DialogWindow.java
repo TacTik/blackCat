@@ -79,7 +79,7 @@ public class DialogWindow extends JDialog{
 			bgPathField.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(false == createBgDialog(owner)){
-						setLevelBgPath("default");
+						setLevelBgPath(null);
 					}
 				}
 			});
@@ -101,8 +101,12 @@ public class DialogWindow extends JDialog{
 			validation.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try{
-						setLevelWidth(Short.parseShort(widthField.getText()));
-						setLevelHeight(Short.parseShort(heightField.getText()));
+
+						short h = (11 > Short.parseShort(heightField.getText())) ? 11 : Short.parseShort(heightField.getText());
+						short w = (20 > Short.parseShort(widthField.getText())) ? 20 : Short.parseShort(widthField.getText());
+						
+						setLevelWidth(w);
+						setLevelHeight(h);
 						setLevelCreated(true);
 						nDialog.dispose();
 					}catch(NumberFormatException exept){
