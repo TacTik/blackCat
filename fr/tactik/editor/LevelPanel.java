@@ -49,7 +49,8 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 	}
 	
 	public int init(){
-		backgroundImage = TextureLoader.getImageFromPath(this.bg);
+		if(this.bg != null)
+			backgroundImage = TextureLoader.getImageFromPath(this.bg);
 		
 		setPreferredSize(new Dimension((int)width * tileDimention, (int)height * tileDimention));
 		this.requestFocus();
@@ -84,10 +85,10 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 		}
 	}
 	
-	public static void writeFileFromEditor(){
-		final String path = rootdir + "/level2.txt";
-		System.out.println(tiles[0][0]);
-        final File file =new File(path); 
+	public static void writeFileFromEditor(String levelPath){
+		final String path = levelPath;
+
+        final File file = new File(path); 
         try {
             // file creation
             file.createNewFile();
