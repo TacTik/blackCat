@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -13,13 +14,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
+import org.apache.commons.io.*;
 
 public class DialogWindow extends JDialog{
 		private static final long serialVersionUID = 1L;
 		private static short levelWidth = -1;
 		private static short levelHeight = -1;
 		private static String levelBackground = null;
+		private static String levelPath = null;
 		private static boolean levelCreated = false;
 		
 		public static short getLevelWidth() {
@@ -44,6 +46,14 @@ public class DialogWindow extends JDialog{
 
 		public static void setLevelBgPath(String levelBgPath) {
 			DialogWindow.levelBackground = levelBgPath; 
+		}
+		
+		public static void setLevelPath(String levelSave){
+			DialogWindow.levelPath = levelSave;
+		}
+		
+		public static String getLevelPath(){
+			return DialogWindow.levelPath;
 		}
 
 		private DialogWindow(JFrame owner) {
@@ -133,6 +143,26 @@ public class DialogWindow extends JDialog{
 			if(chooser.showOpenDialog(owner) == JFileChooser.APPROVE_OPTION) {
 				System.out.println(chooser.getSelectedFile().getAbsolutePath());
 				setLevelBgPath(chooser.getSelectedFile().getAbsolutePath());
+				return true;
+			}
+			return false;
+			
+		}
+		
+		static boolean createSaveLevelDialog(final JFrame owner) {
+			final JFileChooser chooser = new JFileChooser();
+			chooser.setDialogTitle("Save Leve");
+			chooser.setMultiSelectionEnabled(false);
+			if(chooser.showSaveDialog(owner) == JFileChooser.APPROVE_OPTION) {
+				File file = chooser.getSelectedFile();
+				if (FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("txt")) {
+				    // filename is OK as-is
+				} else {
+				    file = new File(file.toString() + ".txt");
+				    file = new File(file.getParentFile(), FilenameUtils.getBaseName(file.getName())+".txt");
+				}
+				
+				setLevelPath(chooser.getSelectedFile().getAbsolutePath());
 				return true;
 			}
 			return false;
