@@ -28,7 +28,7 @@ public class EditorWindow extends JFrame {
 	private static final String picturesFolder = "images/icons/";
 	private static LevelStruct currentLevelFile;
 
-	private static LevelPanelContainer levelPanel;
+	private static LevelPanelContainer levelPanelContainer;
 	private static TilesContentPanel tilesContentPanel;
 	private static JSplitPane splitPane;
 
@@ -36,6 +36,7 @@ public class EditorWindow extends JFrame {
 	private static JButton saveLevel;
 	
 	private static JMenuItem changeBg;
+	private static JMenuItem save;
 	
 	//level file extension
 	private static final String extName = "bCat";
@@ -109,7 +110,7 @@ public class EditorWindow extends JFrame {
 		changeBg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(DialogWindow.createBgDialog(win)){
-					levelPanel.changeBg(DialogWindow.getLevelBackground());
+					levelPanelContainer.changeBg(DialogWindow.getLevelBackground());
 				}
 			}
 		});
@@ -220,9 +221,8 @@ public class EditorWindow extends JFrame {
 		mainPanel.add(splitPane);
 	}
 	
-	// TODO new level
+
 	private static void newLevel(EditorWindow win){
-		//TODO : delete old level view before display the new one.
 		
 				if(currentLevelFile == null){
 					if(DialogWindow.createDialog(win)){
@@ -246,7 +246,6 @@ public class EditorWindow extends JFrame {
 						currentLevelFile = null; 
 						tilesContentPanel.repaint();
 						newLevel(win);
-						// TODO : destruction, garbage collector toussa ? refresh etc etc
 						break;
 					case 2 :
 						break;
