@@ -1,5 +1,7 @@
 package fr.tactik.game;
 
+import java.io.FileNotFoundException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -44,8 +46,7 @@ public class GameWindow extends JFrame{
 		
 		Menu gameMenu = new Menu();
 		setJMenuBar(gameMenu);
-		
-		gameGrid = GameLoader.load("monFichier.bct");
+	
 		
 		GameDisplay gamePanel = new GameDisplay(); 		
 
