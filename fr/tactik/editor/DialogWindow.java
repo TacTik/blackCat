@@ -50,6 +50,8 @@ public class DialogWindow extends JDialog{
 		
 		public static void setLevelPath(String levelSave){
 			DialogWindow.levelPath = levelSave;
+		public static void setLevelPath(String level){
+			DialogWindow.levelPath = level;
 		}
 		
 		public static String getLevelPath(){
@@ -151,6 +153,22 @@ public class DialogWindow extends JDialog{
 			}
 			return false;
 			
+		static boolean createOpenExistingLevelDialog(final JFrame owner) {
+			System.out.println("CREATION");
+			final JFileChooser chooser = new JFileChooser();
+			chooser.setCurrentDirectory(new java.io.File("."));
+			chooser.setDialogTitle("Open Level");
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt", "TXT");
+			chooser.setFileFilter(filter);
+			chooser.setMultiSelectionEnabled(false);
+			if(chooser.showOpenDialog(owner) == JFileChooser.APPROVE_OPTION) {
+				String filePath = chooser.getSelectedFile().getAbsolutePath();
+				setLevelPath(filePath);
+				setLevelWidth((short)getWidthFromFile(filePath));
+				setLevelHeight((short)getHeightFromFile(filePath));
+				return true;
+			}
+			return false;
 		}
 		
 		static boolean createSaveLevelDialog(final JFrame owner) {
@@ -179,5 +197,41 @@ public class DialogWindow extends JDialog{
 
 		public static void setLevelCreated(boolean mapIsCreated) {
 			DialogWindow.levelCreated = mapIsCreated;
+		}
+		
+		public static int getWidthFromFile(String levelPath){
+			try{
+				
+				FileInputStream fstream = new FileInputStream(levelPath);
+				DataInputStream in = new DataInputStream(fstream);
+	    		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+	    		String strLine;
+	    		
+	    		strLine = br.readLine();  
+				String[] tokens = strLine.split(" ");
+				return Integer.parseInt(tokens[1]);
+	    	}
+	    	catch (Exception e){
+	    	     System.err.println("Error: " + e.getMessage());
+	    	}
+			return 0;
+		}
+		
+		public static int getHeightFromFile(String levelPath){
+			try{
+				
+				FileInputStream fstream = new FileInputStream(levelPath);
+				DataInputStream in = new DataInputStream(fstream);
+	    		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+	    		String strLine;
+	    		strLine = br.readLine();  
+				String[] tokens = strLine.split(" ");
+				br.close();
+				return Integer.parseInt(tokens[0]);
+	    	}
+	    	catch (Exception e){
+	    	     System.err.println("Error: " + e.getMessage());
+	    	}
+			return 0;
 		}
 }
