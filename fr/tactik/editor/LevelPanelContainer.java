@@ -31,6 +31,9 @@ public class LevelPanelContainer extends JScrollPane{
 		return 1;
 	}
 
+	public void setViewFromFile(String levelPath){
+		levelView.setViewFromFile(levelPath);
+	}
 
 	public void changeBg(String levelBackground) {
 		levelView.setBg(levelBackground);
