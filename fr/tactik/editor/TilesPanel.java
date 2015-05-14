@@ -33,7 +33,7 @@ public class TilesPanel extends JPanel {
 
 		for (final JButton b : buttons) {
 			b.setPreferredSize(new Dimension(50, 50));
-			b.setBackground(null);
+			b.setBackground(new Color(225, 225, 225));
 	        b.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
