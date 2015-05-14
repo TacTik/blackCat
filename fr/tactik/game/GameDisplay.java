@@ -89,16 +89,6 @@ public class GameDisplay extends JPanel implements Runnable{
     	return tab;
 	}
     
-	public void removeMobileFromLevel(int[][] level, int x, int y){
-		int index = 0;
-		for (int i = 0; i < x; i++){
-			for (int j = 0; j < y; j++){
-				if (level[i][j] >= 2 && level[i][j] <= 3) index++;
-			}
-		}
-		mobiles.remove(index);
-	}
-	
 	
     
 	public void initGame() {
@@ -126,24 +116,45 @@ public class GameDisplay extends JPanel implements Runnable{
 			for (int j = 0; j < nbColumns ; j++){
 				int id = level[i][j];
 				switch (id) {
-		            case 1:  player = new Player(50*j,50*i,50,50,false, rootdir + "/images/game/player/",1, i);
+		            case 1:  player = new Player(50*j,50*i,50,50,false, rootdir + "/images/game/player/",1, 1);
 		            		 level[i][j] = 0;
 		                     break;
-		            case 2:  MobilePlat mobile1 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile1/",2, 2);
+		            case 2:  MobilePlat mobile0 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile/",0, 2);
+		            		 mobiles.add (mobile0);
+		            		 break;
+		            case 3:  MobilePlat mobile1 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile/",1, 3);
 		            		 mobiles.add (mobile1);
 		            		 break;
-		            case 3:  MobilePlat mobile2 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile2/",2, 3);
-		            		 mobiles.add (mobile2);
-		            		 break;
-		            case 4:  StillPlat still1 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/still1/",0, 4);
-	       		 			 stills.add (still1);
+		            case 10: StillPlat stillPlat0 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/stillPlat/",0, 10);
+	       		 			 stills.add (stillPlat0);
 	       		 			 break;
-		            case 5:  StillPlat still2 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/still2/",0, 5);
-			 			 	 stills.add (still2);
+		            case 11: StillPlat stillPlat1 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/stillPlat/",1, 11);
+  		 			 		 stills.add (stillPlat1);
+  		 			 		 break;
+		            case 12: StillPlat stillPlat2 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/stillPlat/",2, 12);
+  		 			 		 stills.add (stillPlat2);
+  		 			 		 break;
+		            case 13: StillPlat stillPlat3 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/stillPlat/",3, 13);
+  		 			 		 stills.add (stillPlat3);
+  		 			 		 break;
+		            case 14: StillPlat stillPlat4 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/stillPlat/",4, 14);
+  		 			 		 stills.add (stillPlat4);
+  		 			 		 break;
+		            case 15: StillPlat lifeBonus = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/lifeBonus/",0, 15);
+			 			 	 stills.add (lifeBonus);
 			 			 	 break;
-		            case 6:  MobilePlat foe1 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile2/",0, 6);
-	 			 	 		 mobiles.add (foe1);
+		            case 16: StillPlat foe0 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/foe/",0, 16);
+	 			 	 		 stills.add (foe0);
 	 			 	 		 break;
+		            case 17: StillPlat foe1 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/foe/",1, 16);
+		 	 		 		 stills.add (foe1);
+		 	 		 		 break;
+		            case 18: StillPlat key = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/key/",0, 17);
+				 	 		 stills.add (key);
+				 	 		 break;
+		            case 19: StillPlat door = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/door/",0, 18);
+		 	 		 		 stills.add (door);
+		 	 		 		 break;
 		            default: 
 		                     break;
 				}

@@ -30,7 +30,7 @@ public class Player extends Mobile{
 	
 	int lifePoints = 5;
 	int state;
-	Vector<String> inventory;
+	Vector<String> inventory = new Vector<String>();
 
 	
 	public void jump(){
@@ -55,13 +55,26 @@ public class Player extends Mobile{
 				level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX) / 50) + 1] != 0 ||
 				level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX - 8) / 50) + 2] != 0){
 			
-			
-			if (level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX) / 50) + 1] == 5){
-				level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX) / 50) + 1] = 0;
+			// Life bonus
+			if (level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX) / 50) + 1] == 15){
 				removeStillFromLevel(level,nbColumns,((int)(posY + this.yspeed - 2) / 50) + 1,((int)(posX) / 50) + 1,stills);
-				this.lifePoints += 10;
+				this.lifePoints += 3;
+				level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX) / 50) + 1] = 0;
 			}
-				
+			
+			// Foe
+			if (level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX) / 50) + 1] == 16 ||
+				level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX) / 50) + 1] == 17){
+				removeStillFromLevel(level,nbColumns,((int)(posY + this.yspeed - 2) / 50) + 1,((int)(posX) / 50) + 1,stills);
+				level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX) / 50) + 1] = 0;
+			}
+			
+			// Key
+			if (level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX) / 50) + 1] == 18){
+				removeStillFromLevel(level,nbColumns,((int)(posY + this.yspeed - 2) / 50) + 1,((int)(posX) / 50) + 1,stills);
+				level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX) / 50) + 1] = 0;
+				this.inventory.add("key");
+			}
 			
 			this.yspeed = 0;
 			jumpsAvailable = 2;
@@ -82,9 +95,41 @@ public class Player extends Mobile{
 			this.xspeed = 0;
 		else if (level[(int)(posY + this.yspeed + 3) / 50][((int)(posX + this.xspeed-8) / 50) + 2] != 0 ||
 				level[((int)(posY + this.yspeed - 3) / 50) + 1][((int)(posX + this.xspeed-8) / 50) + 2] != 0){
+			
+			// Life bonus
+			if (level[(int)(posY + this.yspeed +25) / 50][((int)(posX + this.xspeed-8) / 50) + 2] == 15){
+				this.lifePoints += 3;
+				removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,((int)(posX + this.xspeed-8) / 50) + 2,stills);
+				level[(int)(posY + this.yspeed +25) / 50][((int)(posX + this.xspeed-8) / 50) + 2] = 0;
+			}
+			
+			// Foe
+			if (level[(int)(posY + this.yspeed +25) / 50][((int)(posX + this.xspeed-8) / 50) + 2] == 16 ||
+					level[(int)(posY + this.yspeed +25) / 50][((int)(posX + this.xspeed-8) / 50) + 2] == 17){
+				this.lifePoints --;
+				this.posX -= 75;
+			}
+			
+			// Key
+			if (level[(int)(posY + this.yspeed +25) / 50][((int)(posX + this.xspeed-8) / 50) + 2] == 18){
+				removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,((int)(posX + this.xspeed-8) / 50) + 2,stills);
+				level[(int)(posY + this.yspeed +25) / 50][((int)(posX + this.xspeed-8) / 50) + 2] = 0;
+				this.inventory.add("key");
+			}
+			
+			// Door
+			if (level[(int)(posY + this.yspeed +25) / 50][((int)(posX + this.xspeed-8) / 50) + 2] == 19){
+				if(this.inventory.contains("key")){
+					removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,((int)(posX + this.xspeed-8) / 50) + 2,stills);
+					level[(int)(posY + this.yspeed +25) / 50][((int)(posX + this.xspeed-8) / 50) + 2] = 0;
+				}
+			}
+			
+			
 			this.xspeed = 0;
 			if (jumpsAvailable != 2) jumpsAvailable = 1;
 		}
+		
 			
 		
 		// Left
@@ -92,6 +137,38 @@ public class Player extends Mobile{
 			this.xspeed = 0;
 		else if (level[(int)(posY + this.yspeed + 3) / 50][(int)(posX + this.xspeed+8) / 50] != 0 ||
 				level[((int)(posY + this.yspeed - 3) / 50) + 1][(int)(posX + this.xspeed+8) / 50] != 0){
+			
+			// Life bonus
+			if (level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 15){
+				removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,(int)(posX + this.xspeed+8) / 50,stills);
+				this.lifePoints += 3;
+				level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] = 0;
+			}
+			
+			// Foe
+			if (level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 16 ||
+				level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 17){
+				this.lifePoints --;
+				this.posX += 75;
+			}
+			
+			// Key
+			if (level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 18){
+				removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,(int)(posX + this.xspeed+8) / 50,stills);
+				level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] = 0;
+				this.inventory.add("key");
+			}
+			
+			// Door
+			if (level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 19){
+				if(this.inventory.contains("key")){
+					removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,(int)(posX + this.xspeed+8) / 50,stills);
+					level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] = 0;
+				}
+			}
+			
+			
+			
 			this.xspeed = 0;
 			if (jumpsAvailable != 2) jumpsAvailable = 1;
 		}
@@ -103,11 +180,11 @@ public class Player extends Mobile{
 		
 		for (int j = 0; j < x; j++){
 			for (int i = 0; i < nbColumns; i++){
-				if (level[j][i] >= 4 && level[j][i] <= 5) index++;
+				if (level[j][i] >= 10 && level[j][i] <= 20) index++;
 			}
 		}
 		for (int i = 0; i < y; i++){
-			if (level[x][i] >= 4 && level[x][i] <= 5) index++;
+			if (level[x][i] >= 10 && level[x][i] <= 20) index++;
 		}
 		stills.remove(index);
 		return;
