@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
+
 import org.apache.commons.io.*;
 
 public class DialogWindow extends JDialog{
@@ -155,6 +157,7 @@ public class DialogWindow extends JDialog{
 		
 		static boolean createSaveLevelDialog(final JFrame owner) {
 			final JFileChooser chooser = new JFileChooser();
+			chooser.setCurrentDirectory(new java.io.File("."));
 			chooser.setDialogTitle("Save Leve");
 			chooser.setMultiSelectionEnabled(false);
 			if(chooser.showSaveDialog(owner) == JFileChooser.APPROVE_OPTION) {
