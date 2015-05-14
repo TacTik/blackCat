@@ -28,7 +28,7 @@ public class Player extends Mobile{
 	int jumpsAvailable = 0;
 	boolean running = false;
 	
-	int lifePoints = 5;
+	int lifePoints = 7;
 	int state;
 	Vector<String> inventory = new Vector<String>();
 
