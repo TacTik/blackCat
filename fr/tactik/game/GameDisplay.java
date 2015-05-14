@@ -59,7 +59,7 @@ public class GameDisplay extends JPanel implements Runnable{
     	
 		try{
 			
-			FileInputStream fstream = new FileInputStream("level2.txt");
+			FileInputStream fstream = new FileInputStream("level3.txt");
 			DataInputStream in = new DataInputStream(fstream);
     		BufferedReader br = new BufferedReader(new InputStreamReader(in));
     		String strLine;
@@ -125,34 +125,34 @@ public class GameDisplay extends JPanel implements Runnable{
 		            case 3:  MobilePlat mobile1 = new MobilePlat(50*j,50*i,50,50,false, rootdir + "/images/game/mobile/",1, 3);
 		            		 mobiles.add (mobile1);
 		            		 break;
-		            case 10: StillPlat stillPlat0 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/stillPlat/",0, 10);
+		            case 4: StillPlat stillPlat0 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/stillPlat/",0, 4);
 	       		 			 stills.add (stillPlat0);
 	       		 			 break;
-		            case 11: StillPlat stillPlat1 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/stillPlat/",1, 11);
+		            case 5: StillPlat stillPlat1 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/stillPlat/",1, 5);
   		 			 		 stills.add (stillPlat1);
   		 			 		 break;
-		            case 12: StillPlat stillPlat2 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/stillPlat/",2, 12);
+		            case 6: StillPlat stillPlat2 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/stillPlat/",2, 6);
   		 			 		 stills.add (stillPlat2);
   		 			 		 break;
-		            case 13: StillPlat stillPlat3 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/stillPlat/",3, 13);
+		            case 7: StillPlat stillPlat3 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/stillPlat/",3, 7);
   		 			 		 stills.add (stillPlat3);
   		 			 		 break;
-		            case 14: StillPlat stillPlat4 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/stillPlat/",4, 14);
+		            case 8: StillPlat stillPlat4 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/stillPlat/",4, 8);
   		 			 		 stills.add (stillPlat4);
   		 			 		 break;
-		            case 15: StillPlat lifeBonus = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/lifeBonus/",0, 15);
+		            case 9: StillPlat lifeBonus = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/lifeBonus/",0, 9);
 			 			 	 stills.add (lifeBonus);
 			 			 	 break;
-		            case 16: StillPlat foe0 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/foe/",0, 16);
+		            case 10: StillPlat foe0 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/foe/",0, 10);
 	 			 	 		 stills.add (foe0);
 	 			 	 		 break;
-		            case 17: StillPlat foe1 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/foe/",1, 16);
+		            case 11: StillPlat foe1 = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/foe/",1, 11);
 		 	 		 		 stills.add (foe1);
 		 	 		 		 break;
-		            case 18: StillPlat key = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/key/",0, 17);
+		            case 12: StillPlat key = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/key/",0, 12);
 				 	 		 stills.add (key);
 				 	 		 break;
-		            case 19: StillPlat door = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/door/",0, 18);
+		            case 13: StillPlat door = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/door/",0, 13);
 		 	 		 		 stills.add (door);
 		 	 		 		 break;
 		            default: 

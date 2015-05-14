@@ -14,7 +14,7 @@ import java.util.Vector;
 
 public class TilesPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private int nbTexturesSet = 6; // BEGIN AT 1 ! so, there is 5 texture in it.
+	private int nbTexturesSet = 14; // BEGIN AT 1 ! so, there is 5 texture in it.
 	static String rootdir = System.getProperty("user.dir");
 	
 	public TilesPanel() {
