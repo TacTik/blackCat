@@ -47,7 +47,7 @@ public class GameWindow extends JFrame{
 		Menu gameMenu = new Menu();
 		setJMenuBar(gameMenu);
 	
-		
+		setResizable(false);
 		GameDisplay gamePanel = new GameDisplay(); 		
 
 		getContentPane().add(gamePanel);
