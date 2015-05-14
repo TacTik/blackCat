@@ -4,7 +4,11 @@ import java.awt.GridLayout;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -48,8 +52,6 @@ public class DialogWindow extends JDialog{
 			DialogWindow.levelBackground = levelBgPath; 
 		}
 		
-		public static void setLevelPath(String levelSave){
-			DialogWindow.levelPath = levelSave;
 		public static void setLevelPath(String level){
 			DialogWindow.levelPath = level;
 		}
@@ -141,18 +143,18 @@ public class DialogWindow extends JDialog{
 		
 		static boolean createBgDialog(final JFrame owner) {
 			final JFileChooser chooser = new JFileChooser();
+			chooser.setCurrentDirectory(new java.io.File("."));
 			chooser.setDialogTitle("Load background");
-			FileNameExtensionFilter filter = new FileNameExtensionFilter(
-			        "png", "jpg", "JPEG", "PNG");
-			    chooser.setFileFilter(filter);
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("images files only", "jpg", "JPEG", "PNG", "png");
+			chooser.setFileFilter(filter);
 			chooser.setMultiSelectionEnabled(false);
 			if(chooser.showOpenDialog(owner) == JFileChooser.APPROVE_OPTION) {
-				System.out.println(chooser.getSelectedFile().getAbsolutePath());
 				setLevelBgPath(chooser.getSelectedFile().getAbsolutePath());
 				return true;
 			}
 			return false;
-			
+		}
+		
 		static boolean createOpenExistingLevelDialog(final JFrame owner) {
 			System.out.println("CREATION");
 			final JFileChooser chooser = new JFileChooser();
@@ -166,14 +168,18 @@ public class DialogWindow extends JDialog{
 				setLevelPath(filePath);
 				setLevelWidth((short)getWidthFromFile(filePath));
 				setLevelHeight((short)getHeightFromFile(filePath));
+				levelCreated = true;
 				return true;
+				
 			}
+			levelCreated = false;
 			return false;
 		}
 		
 		static boolean createSaveLevelDialog(final JFrame owner) {
 			final JFileChooser chooser = new JFileChooser();
-			chooser.setDialogTitle("Save Leve");
+			chooser.setCurrentDirectory(new java.io.File("."));
+			chooser.setDialogTitle("Save Level");
 			chooser.setMultiSelectionEnabled(false);
 			if(chooser.showSaveDialog(owner) == JFileChooser.APPROVE_OPTION) {
 				File file = chooser.getSelectedFile();
@@ -188,7 +194,6 @@ public class DialogWindow extends JDialog{
 				return true;
 			}
 			return false;
-			
 		}
 
 		public static boolean isLevelCreated() {

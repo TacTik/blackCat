@@ -38,17 +38,22 @@ public class GameWindow extends JFrame{
 	/**
 	* Create a new window.
 	*/
+	
+	GameDisplay gamePanel;
+	
 	GameWindow(){
 		setTitle("BraveCat");
 		setSize(1000,600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(new ImageIcon("images/icons/icon.png").getImage());
 		
-		Menu gameMenu = new Menu();
-		setJMenuBar(gameMenu);
+
 	
 		setResizable(false);
-		GameDisplay gamePanel = new GameDisplay(); 		
+		gamePanel = new GameDisplay(); 
+		
+		Menu gameMenu = new Menu(gamePanel);
+		setJMenuBar(gameMenu);
 
 		getContentPane().add(gamePanel);
 		
