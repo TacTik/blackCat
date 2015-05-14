@@ -58,8 +58,9 @@ public class GameDisplay extends JPanel implements Runnable{
 		int[][] tab = null;
     	
 		try{
-    		FileInputStream fstream = new FileInputStream("level2.txt");
-    		DataInputStream in = new DataInputStream(fstream);
+			
+			FileInputStream fstream = new FileInputStream("level2.txt");
+			DataInputStream in = new DataInputStream(fstream);
     		BufferedReader br = new BufferedReader(new InputStreamReader(in));
     		String strLine;
     		
@@ -149,6 +150,11 @@ public class GameDisplay extends JPanel implements Runnable{
 			}
 		}
 		
+		if (null == player){
+			player = new Player(50,50,50,50,false, rootdir + "/images/game/player/",1, 0);
+   		 	level[0][0] = 0;
+		}
+		
 		controlPlayer = new ControlerPlayer(player);
 		this.addKeyListener(controlPlayer);
 		this.setFocusable(true);
@@ -206,6 +212,8 @@ public class GameDisplay extends JPanel implements Runnable{
 	    super.paintComponent(g);
 	    	// Background
 	    	g.drawImage(background,0,0,null);
+	    	if(null == player)
+	    		return;
 	    	//System.out.println("worldSizeY "+worldSizeY);
     		//System.out.println("windowSizeY/2 "+windowSizeY/2);
 	    	//System.out.println(player.posX);
