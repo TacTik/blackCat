@@ -152,8 +152,6 @@ public class GameDisplay extends JPanel implements Runnable{
 		
 		mobiles = new Vector<Mobile>();		
 		stills = new Vector<Still>();
-		System.out.println(listLevels.elementAt(currentLevel));
-
 
 		
 		for (int i = 0; i < nbLines; i++){
@@ -216,7 +214,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	}
 	
 	public void gameUpdate() {
-		
+		checkGameOver();
 		for (int i = 0; i < mobiles.size(); i++){
 			int x = 0;
 			int y = 0;
@@ -500,12 +498,20 @@ public class GameDisplay extends JPanel implements Runnable{
 			initGame(true);
 		}
 		else{
-			System.out.println("Vous avez gagné !");
 			JOptionPane.showMessageDialog(null, "CONGRATULATIONS !! You win the game !! ");
 			System.exit(0);
 		}
 		isRunning = true;
 		this.run();
+	}
+	
+	public void checkGameOver(){
+		if (player.lifePoints != 0)
+			return;
+		isRunning = false;
+		player.cleanInventory();
+		JOptionPane.showMessageDialog(null, "You loose the game ... ");
+		System.exit(0);
 	}
 	
 }
