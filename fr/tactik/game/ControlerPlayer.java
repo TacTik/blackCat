@@ -46,10 +46,10 @@ public class ControlerPlayer implements KeyListener {
 
 		int key = e.getKeyCode();
 		
-		if(key == KeyEvent.VK_Q){
+		if(key == KeyEvent.VK_Q || key == KeyEvent.VK_LEFT){
 			left = true;
 	    }
-		if(key == KeyEvent.VK_D){
+		if(key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT){
 			right = true;
 	    }
 		if(key == KeyEvent.VK_SPACE && player.jumpsAvailable > 0){
@@ -136,10 +136,10 @@ public class ControlerPlayer implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 		
-		if(key == KeyEvent.VK_Q){
+		if(key == KeyEvent.VK_Q || key == KeyEvent.VK_LEFT){
 			left = false;
 	    }
-		if(key == KeyEvent.VK_D){
+		if(key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT){
 			right = false;
 	    }
 		if(key == KeyEvent.VK_SHIFT){
