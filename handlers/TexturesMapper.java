@@ -5,12 +5,6 @@ import java.util.Map;
 
 import javax.swing.ImageIcon;
 
-/**
- * This is the texture mapper Class.
- * 
- * @author Juliette Belin, Alice Neichols, Denis Tribouillois 
- * @version 1.0
- */
 public class TexturesMapper {
 	
 	static ImageIcon player_texturesImages;
@@ -32,9 +26,6 @@ public class TexturesMapper {
 	
 	private TexturesMapper() {}
 	
-	/**
-	 * This function get all needed images.
-	 */
 	public static boolean init(){
 		player_texturesImages = TextureLoader.getImageIconFromPath(rootdir + "/images/game/player/", 1).elementAt(0);
 		mobile_1_texturesImages = TextureLoader.getImageIconFromPath(rootdir + "/images/game/mobile/", 1).elementAt(0);
@@ -71,23 +62,10 @@ public class TexturesMapper {
 		return true;
 	}
 	
-	/**
-	 * This function get images by id.
-	 * @param id
-	 * 			the id of the image.
-	 * @return imageIcon 
-	 */
 	public static ImageIcon getImageById(int id){
 		return getKey(id);
 	}
 	
-	/**
-	 * This function get image key using the id.
-	 * @param value
-	 * 			the id in the map.
-	 * @return imageIcon
-	 * 
-	 */
 	private static ImageIcon getKey(Integer value){
 		
 	    for(ImageIcon key : textureMap.keySet()){

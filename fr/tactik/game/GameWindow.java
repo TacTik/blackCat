@@ -15,6 +15,9 @@ import javax.swing.JPanel;
  */
 public class GameWindow extends JFrame{
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
 	/**

@@ -22,12 +22,6 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
 
-/**
- * This is the EditorWindow Class. This class create the window for the editor.
- * 
- * @author Juliette Belin, Alice Neichols, Denis Tribouillois 
- * @version 1.0
- */
 public class EditorWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static final String picturesFolder = "images/icons/";
@@ -53,13 +47,6 @@ public class EditorWindow extends JFrame {
 	
 	private EditorWindow() {};
 	
-	/**
-	 * This function create an editor window.
-	 * @param w
-	 * 			the width of the window.
-	 * @param h
-	 * 			the height of the window.
-	 */
 	public static EditorWindow createWindow(int w, int h) {
 		if (win == null && !getIsOpen()){
 			win = new EditorWindow();
@@ -100,36 +87,20 @@ public class EditorWindow extends JFrame {
 		return win;
 	}
 	
-	/**
-	 * This function prevent the window to be cloned.
-	 */
 	public Object clone()
 	throws CloneNotSupportedException
 	{
 		throw new CloneNotSupportedException(); 
 	}
 	
-	/**
-	 * This function set if the window is open or not.
-	 * @param status
-	 * 			If the window is open, status is true.
-	 */
 	public static void setIsOpen(boolean status){
 		isOpen = status;
 	}
 	
-	/**
-	 * This function get if the window is open or not.
-	 * @return isOpen
-	 * 				If the window is open, isOpen is true.
-	 */
 	public static boolean getIsOpen(){
 		return isOpen;
 	}
 	
-	/**
-	 * This function create the menu.
-	 */
 	private static void createMenu(final EditorWindow win) {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu project = new JMenu("Project");
@@ -190,9 +161,6 @@ public class EditorWindow extends JFrame {
 
 	}
 	
-	/**
-	 * This function add the components to the tool bar of the editor.
-	 */
 	private static void addComponents(JToolBar toolBar, final EditorWindow win) {
 		
 		JButton newLevelConfFile = new JButton(new ImageIcon(picturesFolder + "newLevel.png"));
@@ -238,9 +206,6 @@ public class EditorWindow extends JFrame {
 		
 	}
 	
-	/**
-	 * This function add the panel of the editor.
-	 */
 	private static void addPanels(JPanel mainPanel, int width, int height) {
 		BorderLayout layout = new BorderLayout();
 		mainPanel.setLayout(layout);
@@ -256,9 +221,7 @@ public class EditorWindow extends JFrame {
 		mainPanel.add(splitPane);
 	}
 	
-	/**
-	 * This function add the panel of the editor.
-	 */
+
 	private static void newLevel(EditorWindow win){
 		
 				if(currentLevelFile == null){
@@ -291,9 +254,6 @@ public class EditorWindow extends JFrame {
 	}
 	
 	// load level
-	/**
-	 * This function load a level.
-	 */
 	private static void openLevel(EditorWindow win){
 		if(currentLevelFile == null){
 			if(DialogWindow.createOpenExistingLevelDialog(win));
@@ -324,16 +284,10 @@ public class EditorWindow extends JFrame {
 		}
 	}
 	
-	/**
-	 * This function save a level.
-	 */
 	private static void saveLevel(EditorWindow win){
 		LevelPanel.writeFileFromEditor(DialogWindow.getLevelPath());
 	}
 	
-	/**
-	 * This function create a new level.
-	 */
 	private static void createNewLevel(){
 		if(-1 == levelPanelContainer.initView(DialogWindow.getLevelWidth(), DialogWindow.getLevelHeight(),DialogWindow.getLevelBackground()))
 			return;
