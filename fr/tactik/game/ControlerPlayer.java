@@ -12,6 +12,7 @@ public class ControlerPlayer implements KeyListener {
 	
 	boolean left = false;
 	boolean right = false;
+	boolean running = false;
 	
 	
 	@Override
@@ -29,8 +30,9 @@ public class ControlerPlayer implements KeyListener {
 			player.jump = 13;
 			player.jumpsAvailable--;
 	    }
-		if(key == KeyEvent.VK_CAPS_LOCK){
-			player.running ^= true;
+		if(key == KeyEvent.VK_SHIFT){
+			player.running = true;
+			running = true;
 	    }	
 	}
 	
@@ -103,6 +105,10 @@ public class ControlerPlayer implements KeyListener {
 	    }
 		if(key == KeyEvent.VK_D){
 			right = false;
+	    }
+		if(key == KeyEvent.VK_SHIFT){
+			running = false;
+			player.running = false;
 	    }
 	}
 

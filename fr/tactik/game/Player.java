@@ -168,7 +168,6 @@ public class Player extends Mobile{
 			
 			// Key
 			if (level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 12){
-				
 				removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,(int)(posX + this.xspeed+8) / 50,stills);
 				level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] = 0;
 				this.inventory.add("key");
@@ -176,7 +175,6 @@ public class Player extends Mobile{
 			
 			// Door
 			if (level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 13){
-				System.out.println("ksss");
 				if(this.inventory.contains("key")){
 					removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,(int)(posX + this.xspeed+8) / 50,stills);
 					level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] = 0;
@@ -184,6 +182,14 @@ public class Player extends Mobile{
 				}
 			}
 			
+			// QuestionGuy
+			if (level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 12){
+				if (questionGuy(controlPlayer)==true){
+					removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,(int)(posX + this.xspeed+8) / 50,stills);
+					level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] = 0;
+				}
+				else this.posX += 10;
+			}
 			
 			
 			this.xspeed = 0;
@@ -253,6 +259,9 @@ public class Player extends Mobile{
 		
 		String test = JOptionPane.showInputDialog(null, question,"Le vieux sage",JOptionPane.QUESTION_MESSAGE);
 		controlPlayer.right = false;
+		controlPlayer.running = false;
+		controlPlayer.left = false;
+		this.running = false;
 		if (test.equals(answer)){
 			return true;
 		}
