@@ -31,7 +31,7 @@ public class Player extends Mobile{
 	int lifePoints = 7;
 	int state;
 	Vector<String> inventory = new Vector<String>();
-
+	boolean triggerNextLevel = false;
 	
 	public void jump(){
 		this.moveUp(jump);
@@ -122,6 +122,7 @@ public class Player extends Mobile{
 				if(this.inventory.contains("key")){
 					removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,((int)(posX + this.xspeed-8) / 50) + 2,stills);
 					level[(int)(posY + this.yspeed +25) / 50][((int)(posX + this.xspeed-8) / 50) + 2] = 0;
+					this.triggerNextLevel = true;
 				}
 			}
 			
@@ -154,6 +155,7 @@ public class Player extends Mobile{
 			
 			// Key
 			if (level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 12){
+				
 				removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,(int)(posX + this.xspeed+8) / 50,stills);
 				level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] = 0;
 				this.inventory.add("key");
@@ -161,9 +163,11 @@ public class Player extends Mobile{
 			
 			// Door
 			if (level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 13){
+				System.out.println("ksss");
 				if(this.inventory.contains("key")){
 					removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,(int)(posX + this.xspeed+8) / 50,stills);
 					level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] = 0;
+					this.triggerNextLevel = true;
 				}
 			}
 			
@@ -190,4 +194,7 @@ public class Player extends Mobile{
 		return;
 	}
 	
+	public void cleanInventory(){
+		inventory.clear();
+	}
 }

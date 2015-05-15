@@ -3,10 +3,12 @@ package fr.tactik.game;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.*;
+import java.util.Arrays;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.apache.commons.io.FilenameUtils;
@@ -37,19 +39,21 @@ public class GameDisplay extends JPanel implements Runnable{
 	Player player;
 	Vector<Mobile> mobiles;
 	Vector<Still> stills;
-	
+	Vector<String> listLevels;
 	static int windowSizeX = 1000;
 	static int windowSizeY = 600;
 	static int worldSizeX = 0;
 	static int worldSizeY = 0;
 	int offsetX = 0;
 	int offsetY = 0;
+	int currentLevel = 0;
 	
 	long lastLoopTime = System.nanoTime();
 	final int TARGET_FPS = 60;
 	final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
 	int lastFpsTime =0;
     int fps = 0;
+    boolean isRunning = false;
     ControlerPlayer controlPlayer;
 
     int[][] level;
@@ -97,15 +101,32 @@ public class GameDisplay extends JPanel implements Runnable{
 	}
     
 	
+    public void createListOfLevels(){
+    	listLevels = new Vector<String>();
+		final String path = "./levels";
+		File folder = new File(path);
+		File[] listOfFiles = folder.listFiles();
+
+		    for (int i = 0; i < listOfFiles.length; i++) {
+		      if (listOfFiles[i].isFile()) {
+		    	  listLevels.add("./levels/" + listOfFiles[i].getName());
+		      }
+		    }
+		Arrays.sort(listOfFiles);
+		if (listLevels.isEmpty()){
+			JOptionPane.showMessageDialog(null, "There is no level to load ! ");
+			System.exit(0);
+		}
+    }
     
 	public void initGame(boolean isFirst) {
 		
 		if(isFirst){
-			level = readLevel("level3.txt");
+			level = readLevel(listLevels.elementAt(currentLevel));
 		}
 		else {
 			final JFileChooser chooser = new JFileChooser();
-			chooser.setCurrentDirectory(new java.io.File("."));
+			chooser.setCurrentDirectory(new java.io.File("./levels"));
 			chooser.setDialogTitle("Choose a Level");
 			chooser.setMultiSelectionEnabled(false);
 			if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -117,7 +138,6 @@ public class GameDisplay extends JPanel implements Runnable{
 			if (backgroundPath == null){
 				backgroundPath = "/images/game/backgrounds/01_background.jpg";
 			}
-			System.out.println(backgroundPath);
         	background = ImageIO.read(new File(rootdir + "/" + backgroundPath));
         } catch (IOException e) {
             e.printStackTrace();
@@ -132,7 +152,7 @@ public class GameDisplay extends JPanel implements Runnable{
 		
 		mobiles = new Vector<Mobile>();		
 		stills = new Vector<Still>();
-		
+		System.out.println(listLevels.elementAt(currentLevel));
 
 
 		
@@ -225,10 +245,16 @@ public class GameDisplay extends JPanel implements Runnable{
 		player.gravity();
 		player.collision(level,nbLines,nbColumns,stills);
 		player.update();
+		
 		//System.out.println(level[8][5]);
 		
 		offsetX = (int) player.posX - (windowSizeX/2 - 50);
 		offsetY = (int) player.posY - (windowSizeY/2 - 25);
+		
+		if(player.triggerNextLevel){
+			player.triggerNextLevel = false;
+			nextLevel();
+		}
 		
 	}
 	
@@ -236,7 +262,9 @@ public class GameDisplay extends JPanel implements Runnable{
 		repaint();
 	}
 	
-	public GameDisplay() {	
+	public GameDisplay() {
+		isRunning = true;
+		createListOfLevels();
 		initGame(true);	
 	}	
 
@@ -427,7 +455,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	@Override
 	public void run() {
 		
-		while (true){
+		while (isRunning){
 			 long now = System.nanoTime();
 		     long updateLength = now - lastLoopTime;
 		     lastLoopTime = now;
@@ -462,6 +490,22 @@ public class GameDisplay extends JPanel implements Runnable{
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void nextLevel(){
+		isRunning = false;
+		player.cleanInventory();
+		if(currentLevel +1 < listLevels.size()){
+			currentLevel ++;
+			initGame(true);
+		}
+		else{
+			System.out.println("Vous avez gagné !");
+			JOptionPane.showMessageDialog(null, "CONGRATULATIONS !! You win the game !! ");
+			System.exit(0);
+		}
+		isRunning = true;
+		this.run();
 	}
 	
 }
