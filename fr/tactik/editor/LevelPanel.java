@@ -23,7 +23,7 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 	
 	private static final long serialVersionUID = 1L;
 	Image backgroundImage;
-	String bg;
+	static String bg;
 	
 	static int width;
 	static int height;
@@ -31,7 +31,7 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 	static int[][] tiles;
 	
 	public LevelPanel(int width, int height, String background){
-		this.bg = background;
+		LevelPanel.bg = background;
 		LevelPanel.width = width;
 		LevelPanel.height = height;
 		tiles = new int[width][height];
@@ -102,6 +102,7 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
                 		writer.write(tiles[j][i] + " ");
                 	}
                 	writer.write("\n");
+                	writer.write(bg);
                 }
             } finally {
                 writer.close();
