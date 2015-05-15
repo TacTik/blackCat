@@ -18,11 +18,32 @@ import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
 /**
- * @author juliette
- *
+ * This is the player Class.
+ * 
+ * @author Juliette Belin, Alice Neichols, Denis Tribouillois 
+ * @version 1.0
  */
 public class Player extends Mobile{
 
+	/**
+	 * This function is the player constructor.
+	 * @param posX
+	 * 				this is the x position of the player.
+	 * @param posY 
+	 * 				this is the y position of the player.
+	 * @param sizeX
+	 * 				this is the x size of the player.
+	 * @param sizeY 
+	 * 				this is the y size of the player.
+	 * @param isWalkable 
+	 * 				this parameter indicate if the mobile is walkable or not.
+	 * @param path 
+	 * 				this the path of the player.
+	 * @param current 
+	 * 				It indicate what is the current texture if the mobile have several textures.
+	 * @param id 
+	 * 				This is the id of the player.
+	 */
 	public Player(float posX, float posY, int sizeX, int sizeY, boolean isWalkable, String path,
 		int current, int id) {
 		super(posX, posY, sizeX, sizeY, isWalkable, path, current, id);
@@ -31,9 +52,6 @@ public class Player extends Mobile{
 		
 	}
 
-	/**
-	 * 
-	 */
 	
 	static String rootdir = System.getProperty("user.dir");
 	float jump = 0;
@@ -45,6 +63,9 @@ public class Player extends Mobile{
 	Vector<String> inventory = new Vector<String>();
 	boolean triggerNextLevel = false;
 	
+	/**
+	 * This function make the player jumping.
+	 */
 	public void jump(){
 		this.moveUp(jump);
 		if (this.jump > 0)
@@ -52,10 +73,26 @@ public class Player extends Mobile{
 		else this.jump =0;
 	}
 	
+	/**
+	 * This the gravity function for the player.
+	 */
 	public void gravity(){ 
 		this.yspeed += 4;
 	}
 	
+	/**
+	 * This function manage the collision with the player and the other items in the level.
+	 * @param level
+	 * 			this is the level.
+	 * @param nbLines
+	 * 			this is the number of lines of the level.
+	 * @param nbColumns
+	 * 			this is the number of columns of the level.
+	 * @param stills
+	 * 			this is all still element in the level.
+	 * @param controlPlayer
+	 * 			this is the control player.
+	 */
 	public void collision(int[][] level, int nbLines, int nbColumns, Vector<Still> stills, ControlerPlayer controlPlayer){	
 		
 		// Bottom
@@ -216,6 +253,9 @@ public class Player extends Mobile{
 			
 	}
 	
+	/**
+	 * This function remove the still which is breakable if the player go on them.
+	 */
 	public void removeStillFromLevel(int[][] level, int nbColumns, int x, int y, Vector<Still> stills){
 		int index = 0;
 		
