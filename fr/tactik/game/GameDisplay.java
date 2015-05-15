@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 
 import org.apache.commons.io.FilenameUtils;
 
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 import fr.tactik.editor.LevelPanel;
 
 /**
@@ -127,7 +129,7 @@ public class GameDisplay extends JPanel implements Runnable{
     }
     
 	public void initGame(boolean isFirst) {
-		
+		readSound(rootdir + "/sounds/theme.wav");
 		if(isFirst){
 			level = readLevel(listLevels.elementAt(currentLevel));
 		}
@@ -537,4 +539,22 @@ public class GameDisplay extends JPanel implements Runnable{
 		player.cleanInventory();
 		isGameOver = true;
 	}
+
+	
+	public void readSound(String path){
+	    InputStream in = null;
+		try {
+			in = new FileInputStream(path);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	    AudioStream audioStream = null;
+		try {
+			audioStream = new AudioStream(in);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    AudioPlayer.player.start(audioStream);
+	}
+
 }
