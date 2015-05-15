@@ -7,62 +7,29 @@ import java.awt.Image;
 import java.util.Vector;
 
 /**
- * This is the mobile abstract Class. This class implements the mobile entity.
- * 
- * @author Juliette Belin, Alice Neichols, Denis Tribouillois 
- * @version 1.0
+ * @author juliette
+ *
  */
 public abstract class Mobile extends Entity {
 
 	/**
-	 * This is the distance in x that the mobile can move.
+	 * @param posX
+	 * @param posY
+	 * @param sizeX
+	 * @param sizeY
+	 * @param isWalkable
+	 * @param id
 	 */
+
 	float moveFieldX;
-	/**
-	 * This is the distance in y that the mobile can move.
-	 */
 	float moveFieldY;
-	/**
-	 * This is the initial x position of the mobile.
-	 */
 	float initialPosX;
-	/**
-	 * This is the initial y position of the mobile.
-	 */
 	float initialPosY;
 
-	/**
-	 * This is the speed in x and y of the mobile.
-	 */
 	float xspeed, yspeed;
-	/**
-	 * This is the speed in x of the mobile before it change.
-	 */
 	float xspeedBefore = 0;
-	/**
-	 * This is the speed in y of the mobile before it change.
-	 */
 	float yspeedBefore = 0;
 	
-	/**
-	 * This function is the mobile constructor.
-	 * @param posX
-	 * 				this is the x position of the mobile.
-	 * @param posY 
-	 * 				this is the y position of the mobile.
-	 * @param sizeX
-	 * 				this is the x size of the mobile.
-	 * @param sizeY 
-	 * 				this is the y size of the mobile.
-	 * @param isWalkable 
-	 * 				this parameter indicate if the mobile is walkable or not.
-	 * @param path 
-	 * 				this the path of the mobile.
-	 * @param current 
-	 * 				It indicate what is the current texture if the mobile have several textures.
-	 * @param id 
-	 * 				THis is the id of the mobile.
-	 */
 	public Mobile(float posX, float posY, int sizeX, int sizeY, boolean isWalkable, String path,
 			int current, int id) {
 		super(posX, posY, sizeX, sizeY, isWalkable, path, current, id);
@@ -72,9 +39,6 @@ public abstract class Mobile extends Entity {
 		
 	}
 
-	/**
-	 * This function update the position of the mobile.
-	 */
 	public void update(){
 		this.posX += this.xspeed;
 		this.posY += this.yspeed;
@@ -84,47 +48,25 @@ public abstract class Mobile extends Entity {
 		this.yspeed = 0;
 	}
 	
-	/**
-	 * This function move the mobile to the left.
-	 */
 	public void moveLeft(float x){
 		this.xspeed += -x;
 	}
 	
-	/**
-	 * This function move the mobile to the right.
-	 */
 	public void moveRight(float x){
 		this.xspeed += x;
 	}
 	
-
-	/**
-	 * This function move up the mobile.
-	 */
+	
 	public void moveUp(float y){
 		this.yspeed += -y;
 	}
 	
-	/**
-	 * This function move down the mobile.
-	 */
 	public void moveDown(float y){ 
 		this.yspeed += y;
 	}
 	
 	
-	/**
-	 * This function move the mobile in his move field.
-	 * @param moveFieldX
-	 * 					This is the distance in x that the mobile can move.
-	 * @param moveFieldY
-	 * 					This is the distance in y that the mobile can move.
-	 * @param level
-	 * 					THis parameter help for the collision.
-	 * @param id 
-	 * 					This is the id of the mobile.
-	 */
+	
 	public void moveInField(float moveFieldX, float moveFieldY, int[][] level, int id){
 		//For moveFieldX
 		if((posX < moveFieldX + initialPosX ) && (xspeedBefore >= 0)){

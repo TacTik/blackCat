@@ -10,22 +10,10 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-/**
- * This is the texture loader Class.
- * 
- * @author Juliette Belin, Alice Neichols, Denis Tribouillois 
- * @version 1.0
- */
 public class TextureLoader {
 
 	private TextureLoader() {}
 	
-	/**
-	 * This function get images from folder.
-	 * @param path
-	 * 				The path of the folder.
-	 * @param {number} [number]
-	 */
 	public static Vector<Image> getImagesFromFolder(String path, int... number ){
 		Vector<Image> texturesImages = new Vector<Image>();
 		
@@ -47,11 +35,6 @@ public class TextureLoader {
 		return texturesImages;
 	}
 	
-	/**
-	 * This function get images from path.
-	 * @param path
-	 * 			the path of the image.
-	 */
 	public static Image getImageFromPath(String path){
 		Image image = null;
 		try {
@@ -62,12 +45,6 @@ public class TextureLoader {
 		return image;
 	}
 	
-	/**
-	 * This function get image icon from path.
-	 * @param path
-	 * 			the path of the image icon.
-	 * @param {number} [number]
-	 */
 	public static Vector<ImageIcon> getImageIconFromPath(String path, int... number){
 		Vector<ImageIcon> texturesImages = new Vector<ImageIcon>();
 		

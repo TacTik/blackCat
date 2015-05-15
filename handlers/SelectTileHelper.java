@@ -1,11 +1,5 @@
 package handlers;
 
-/**
- * This is the select tile helper Class.
- * 
- * @author Juliette Belin, Alice Neichols, Denis Tribouillois 
- * @version 1.0
- */
 public class SelectTileHelper {
 
 	public SelectTileHelper() {}
