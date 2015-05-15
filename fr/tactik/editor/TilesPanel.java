@@ -12,11 +12,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+/**
+ * This is the tiles panel Class. This class .
+ * 
+ * @author Juliette Belin, Alice Neichols, Denis Tribouillois 
+ * @version 1.0
+ */
 public class TilesPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private int nbTexturesSet = 14; // BEGIN AT 1 ! so, there is 5 texture in it.
 	static String rootdir = System.getProperty("user.dir");
 	
+	/**
+	 * This is the constructor of the tiles panel.
+	 */
 	public TilesPanel() {
 		boolean t = TexturesMapper.init();
 
@@ -45,6 +54,9 @@ public class TilesPanel extends JPanel {
 		  }
 	}
 
+	/**
+	 * This function draw the tiles.
+	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		setPreferredSize(new Dimension (100, 200));

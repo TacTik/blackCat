@@ -16,13 +16,17 @@ import javax.swing.JPanel;
 public class GameLoader {
 
 	/**
-	 * 
+	 * This function load the game.
 	 */
-
 	public static void GameLoader() {
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * This function load the path.
+	 * @param path
+	 * 				the path which in loading.
+	 */
 	public static int[] load(String path){
 		//TODO analyse
 		

@@ -14,7 +14,6 @@ import javax.swing.JPanel;
  * @author Juliette Belin, Alice Neichols, Denis Tribouillois 
  * @version 1.0
  */
-
 public class GameDisplay extends JPanel implements Runnable{
 
 	private static final long serialVersionUID = 1L;
@@ -23,20 +22,53 @@ public class GameDisplay extends JPanel implements Runnable{
 	//monde
 	//controler de jeu
 	//controler de menu
-
+	
 	static String rootdir = System.getProperty("user.dir");
 	
+	/**
+	 * This is the background image.
+	 */
 	Image background;
+	/**
+	 * This is the icone for the player life.
+	 */
 	Image footprint;
+	/**
+	 * This is the player.
+	 */
 	Player player;
+	/**
+	 * This is a vector which contains all the mobile entity.
+	 */
 	Vector<Mobile> mobiles;
+	/**
+	 * This is a vector who contains all the still entity.
+	 */
 	Vector<Still> stills;
 	
+	/**
+	 * This is the x window size.
+	 */
 	static int windowSizeX = 1000;
+	/**
+	 * This is the y window size.
+	 */
 	static int windowSizeY = 600;
+	/**
+	 * This is the x world size.
+	 */
 	static int worldSizeX = 0;
+	/**
+	 * This is the y world size.
+	 */
 	static int worldSizeY = 0;
+	/**
+	 * This is the offset which manage the camera in x.
+	 */
 	int offsetX = 0;
+	/**
+	 * This is the offset which manage the camera in y.
+	 */
 	int offsetY = 0;
 	
 	long lastLoopTime = System.nanoTime();
@@ -46,12 +78,23 @@ public class GameDisplay extends JPanel implements Runnable{
     int fps = 0;
     ControlerPlayer controlPlayer;
 
+	/**
+	 * This is two dimension table in order to build a level.
+	 */
     int[][] level;
+	/**
+	 * This is number of lines for the level.
+	 */
     static int nbLines = 0;
+	/**
+	 * This is number of columns for the level.
+	 */
 	static int nbColumns = 0;
 
 
-    
+	/**
+	 * This function read a level from a text file.
+	 */
 	public static int[][] readLevel(){
 		
 		int i = 0;
@@ -90,7 +133,9 @@ public class GameDisplay extends JPanel implements Runnable{
 	}
     
 	
-    
+	/**
+	 * This function load all elements in a level.
+	 */
 	public void initGame() {
 		
 		try {
@@ -171,6 +216,9 @@ public class GameDisplay extends JPanel implements Runnable{
 		this.setFocusable(true);
 	}
 	
+	/**
+	 * This function update the game every frame according to event.
+	 */
 	public void gameUpdate() {
 		
 		for (int i = 0; i < mobiles.size(); i++){
@@ -208,10 +256,14 @@ public class GameDisplay extends JPanel implements Runnable{
 		
 	}
 	
+	/**
+	 * This function repaint all the window.
+	 */
 	public void render() {		
 		repaint();
 	}
 	
+
 	public GameDisplay() {	
 		initGame();	
 	}	
@@ -219,6 +271,11 @@ public class GameDisplay extends JPanel implements Runnable{
 	
 	
 	@Override
+	/**
+	 * This function paint all elements and manage the camera.
+	 * @param g 
+	 * 			Java object for display.
+	 */
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 	    	// Background
@@ -401,6 +458,9 @@ public class GameDisplay extends JPanel implements Runnable{
 	}
 
 	@Override
+	/**
+	 * This function make the player running.
+	 */
 	public void run() {
 		
 		while (true){
