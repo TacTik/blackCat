@@ -13,8 +13,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-
 import handlers.SelectTileHelper;
 import handlers.TextureLoader;
 import handlers.TexturesMapper;
@@ -28,7 +26,7 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 	
 	private static final long serialVersionUID = 1L;
 	Image backgroundImage;
-	String bg;
+	static String bg;
 	
 	static int width;
 	static int height;
@@ -36,7 +34,7 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 	static int[][] tiles;
 	
 	public LevelPanel(int width, int height, String background){
-		this.bg = background;
+		LevelPanel.bg = background;
 		LevelPanel.width = width;
 		LevelPanel.height = height;
 		tiles = new int[width][height];
@@ -48,14 +46,14 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 	}
 	
 	public void setBg(String background){
-		this.bg = background;
-		backgroundImage = TextureLoader.getImageFromPath(this.bg);
+		LevelPanel.bg = background;
+		backgroundImage = TextureLoader.getImageFromPath(LevelPanel.bg);
 		repaint();
 	}
 	
 	public int init(){
-		if(this.bg != null)
-			backgroundImage = TextureLoader.getImageFromPath(this.bg);
+		if(LevelPanel.bg != null)
+			backgroundImage = TextureLoader.getImageFromPath(LevelPanel.bg);
 		
 		setPreferredSize(new Dimension((int)width * tileDimention, (int)height * tileDimention));
 		this.requestFocus();
@@ -78,13 +76,14 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 			String[] tokens = strLine.split(" ");
 
     		
-    		while ((strLine = br.readLine()) != null)   {
+    		while (i != height && (strLine = br.readLine()) != null)   {
     			tokens = strLine.split(" ");
-	    	    for (int j = 0; j < height ; j++){
-	    		    tiles[i][j] = Integer.parseInt(tokens[j]);
-    			}
+	    	    for (int j = 0; j < width ; j++){
+	    		    tiles[j][i] = Integer.parseInt(tokens[j]);
+    			} 
 	    	    i++;
     		}
+    		LevelPanel.bg = br.readLine();
     		in.close();
     	}
     	catch (Exception e){
@@ -138,6 +137,7 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
                 	}
                 	writer.write("\n");
                 }
+                writer.write(bg);
             } finally {
                 writer.close();
             }

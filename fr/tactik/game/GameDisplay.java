@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 
 import org.apache.commons.io.FilenameUtils;
 
+import fr.tactik.editor.LevelPanel;
+
 /**
  * This is the GameDisplay Class. This class permit to display all the entity of the game.
  * 
@@ -29,6 +31,7 @@ public class GameDisplay extends JPanel implements Runnable{
 
 	static String rootdir = System.getProperty("user.dir");
 	
+	static String backgroundPath;
 	Image background;
 	Image footprint;
 	Player player;
@@ -77,13 +80,14 @@ public class GameDisplay extends JPanel implements Runnable{
 			worldSizeY = nbLines * 50;
 			
     		
-    		while ((strLine = br.readLine()) != null)   {
+    		while (i != nbLines && (strLine = br.readLine()) != null)   {
     			tokens = strLine.split(" ");
 	    	    for (int j = 0; j < nbColumns ; j++){
 	    		    tab[i][j] = Integer.parseInt(tokens[j]);
     			}
 	    	    i++;
     		}
+    		backgroundPath = br.readLine();
     		in.close();
     	}
     	catch (Exception e){
@@ -110,7 +114,11 @@ public class GameDisplay extends JPanel implements Runnable{
 		}
 		
 		try {
-        	background = ImageIO.read(new File(rootdir + "/images/game/background.jpg"));
+			if (backgroundPath == null){
+				backgroundPath = "/images/game/backgrounds/01_background.jpg";
+			}
+			System.out.println(backgroundPath);
+        	background = ImageIO.read(new File(rootdir + "/" + backgroundPath));
         } catch (IOException e) {
             e.printStackTrace();
         }

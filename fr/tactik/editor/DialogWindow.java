@@ -7,10 +7,12 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
+import java.util.Vector;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -78,7 +80,7 @@ public class DialogWindow extends JDialog{
 			JButton validation = new JButton("OK");
 			final JTextField widthField = new JTextField("50");
 			final JTextField heightField = new JTextField("10");
-			final JButton bgPathField = new JButton("Browse ...");
+			/*final JButton bgPathField = new JButton("Browse ...");
 			
 			bgPathField.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -86,8 +88,30 @@ public class DialogWindow extends JDialog{
 						setLevelBgPath(null);
 					}
 				}
-			});
+			});*/
+			
+			Vector<String> backgroundList = new Vector<String>();
+			final String path = "images/game/backgrounds/";
+			File folder = new File(path);
+			File[] listOfFiles = folder.listFiles();
 
+			    for (int i = 0; i < listOfFiles.length; i++) {
+			      if (listOfFiles[i].isFile()) {
+			        backgroundList.add(listOfFiles[i].getName());
+			      }
+			    }
+
+		    JComboBox<String> backgroundListBox = new JComboBox<String>(backgroundList);
+		    backgroundListBox.setSelectedIndex(1);
+		    setLevelBgPath((String) path + backgroundListBox.getSelectedItem());
+		    backgroundListBox.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JComboBox cb = (JComboBox)e.getSource();
+					setLevelBgPath((String) path + cb.getSelectedItem());
+				}
+			});
+		    
 			nDialog.add(width);
 			nDialog.add(widthField);
 			nDialog.add(height);
@@ -95,7 +119,7 @@ public class DialogWindow extends JDialog{
 			
 
 			nDialog.add(bgColor);
-			nDialog.add(bgPathField);
+			nDialog.add(backgroundListBox);
 			
 			JButton cancel = new JButton("Cancel");
 
@@ -142,17 +166,70 @@ public class DialogWindow extends JDialog{
 		}
 		
 		static boolean createBgDialog(final JFrame owner) {
-			final JFileChooser chooser = new JFileChooser();
-			chooser.setCurrentDirectory(new java.io.File("."));
-			chooser.setDialogTitle("Load background");
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("images files only", "jpg", "JPEG", "PNG", "png");
-			chooser.setFileFilter(filter);
-			chooser.setMultiSelectionEnabled(false);
-			if(chooser.showOpenDialog(owner) == JFileChooser.APPROVE_OPTION) {
-				setLevelBgPath(chooser.getSelectedFile().getAbsolutePath());
-				return true;
-			}
-			return false;
+					
+			final DialogWindow nDialog = new DialogWindow(owner);
+			GridLayout grid = new GridLayout (2,1);
+			nDialog.setLocationRelativeTo(owner);
+			nDialog.setLocation(owner.getWidth()/2, owner.getHeight()/2);
+			nDialog.setResizable(true);
+			nDialog.setLayout(grid);
+			JLabel bgPath = new JLabel ("Choose a background :");
+			
+			JButton validation = new JButton("OK");
+
+
+			Vector<String> backgroundList = new Vector<String>();
+			final String path = "images/game/backgrounds/";
+			File folder = new File(path);
+			File[] listOfFiles = folder.listFiles();
+
+			    for (int i = 0; i < listOfFiles.length; i++) {
+			      if (listOfFiles[i].isFile()) {
+			        backgroundList.add(listOfFiles[i].getName());
+			      }
+			    }
+
+		    JComboBox<String> backgroundListBox = new JComboBox<String>(backgroundList);
+		    backgroundListBox.setSelectedIndex(1);
+		    setLevelBgPath((String) path + backgroundListBox.getSelectedItem());
+		    backgroundListBox.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JComboBox cb = (JComboBox)e.getSource();
+					setLevelBgPath((String) path + cb.getSelectedItem());
+				}
+			});
+		    
+			JButton cancel = new JButton("Cancel");
+
+
+			//events
+			
+			cancel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					nDialog.dispose();
+				}
+			});
+			
+			validation.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					nDialog.dispose();
+				}
+			});
+			
+			nDialog.add(bgPath);
+			nDialog.add(backgroundListBox);
+			
+			nDialog.add(validation);
+			nDialog.add(cancel);
+			
+			nDialog.setSize(500,200);
+			nDialog.setResizable(false);
+			nDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			nDialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+			nDialog.pack();
+			nDialog.setVisible(true);
+			return isLevelCreated();
 		}
 		
 		static boolean createOpenExistingLevelDialog(final JFrame owner) {
