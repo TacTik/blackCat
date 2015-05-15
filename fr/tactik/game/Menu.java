@@ -21,9 +21,11 @@ import fr.tactik.editor.EditorWindow;
 public class Menu extends JMenuBar {
 	
 	GameWindow mainWindow;
+	GameDisplay gamePanel;
 	
-	Menu(){
+	Menu(GameDisplay gamePanel){
 		
+		this.gamePanel = gamePanel;
 		// game
 		JMenu game = new JMenu ("Game");
 		game.setMnemonic(KeyEvent.VK_J);
@@ -48,7 +50,7 @@ public class Menu extends JMenuBar {
 		game.addSeparator();
 		
 			// load
-		JMenuItem load = new JMenuItem ("Load");
+		JMenuItem load = new JMenuItem ("Load a level");
 		game.add(load);
 		load.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
 				ActionEvent.CTRL_MASK));
@@ -69,6 +71,14 @@ public class Menu extends JMenuBar {
 		add(editor);
 
 		
+		load.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent ev) {
+		          initGame(false);
+		    }
+		});
+		
+
+		
 		editor.addMenuListener(new MenuListener() {
 			@Override
 			public void menuSelected(MenuEvent arg0) {
@@ -76,13 +86,13 @@ public class Menu extends JMenuBar {
 			}
 
 			@Override
-			public void menuCanceled(MenuEvent e) {
+			public void menuCanceled(MenuEvent arg0) {
 				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
-			public void menuDeselected(MenuEvent e) {
+			public void menuDeselected(MenuEvent arg0) {
 				// TODO Auto-generated method stub
 				
 			}
@@ -92,5 +102,9 @@ public class Menu extends JMenuBar {
 		JMenu about = new JMenu ("About");
 		add(about);
 
+	}
+	
+	public void initGame(boolean isFirst){
+		gamePanel.initGame(isFirst);
 	}
 }

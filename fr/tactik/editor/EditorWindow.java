@@ -10,7 +10,6 @@ import java.awt.event.WindowListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -21,7 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
-import javax.swing.filechooser.FileNameExtensionFilter;
+
 
 public class EditorWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -34,12 +33,13 @@ public class EditorWindow extends JFrame {
 
 	//buttons
 	private static JButton saveLevel;
+	private static JButton loadLevelConfigFile;
 	
+	//menuItems
 	private static JMenuItem changeBg;
 	private static JMenuItem save;
+	private static JMenuItem loadLevel;
 	
-	//level file extension
-	private static final String extName = "bCat";
 	public static EditorWindow  win;
 	
 	//Check if the editor is open
@@ -170,8 +170,8 @@ public class EditorWindow extends JFrame {
 		toolBar.add(newLevelConfFile);
 		
 		toolBar.addSeparator();
-		JButton loadLevelConfigFile = new JButton(new ImageIcon(picturesFolder + "import.png"));
-		loadLevelConfigFile.setToolTipText("open an existant level configuration file");
+		loadLevelConfigFile = new JButton(new ImageIcon(picturesFolder + "import.png"));
+		loadLevelConfigFile.setToolTipText("Open an existant level configuration file");
 		loadLevelConfigFile.setBorderPainted(false); 
 		loadLevelConfigFile.setContentAreaFilled(false);
 		toolBar.add(loadLevelConfigFile);
@@ -256,16 +256,8 @@ public class EditorWindow extends JFrame {
 	// load level
 	private static void openLevel(EditorWindow win){
 		if(currentLevelFile == null){
-			JFileChooser chooser = new JFileChooser();
-			chooser.setDialogTitle("Open a level configuration file");
-			FileNameExtensionFilter filter = new FileNameExtensionFilter(
-			        "Level (."+extName+")", extName);
-			chooser.setFileFilter(filter);
-			chooser.setMultiSelectionEnabled(false);
-			if(chooser.showOpenDialog(win) == JFileChooser.APPROVE_OPTION) {
-				System.out.println(chooser.getSelectedFile());
-				//TODO
-			}
+			if(DialogWindow.createOpenExistingLevelDialog(win));
+				openLevelFromFile(DialogWindow.getLevelPath());
 		}else{
 			int option = JOptionPane.showConfirmDialog(
 				    win,
@@ -300,6 +292,17 @@ public class EditorWindow extends JFrame {
 		if(-1 == levelPanelContainer.initView(DialogWindow.getLevelWidth(), DialogWindow.getLevelHeight(),DialogWindow.getLevelBackground()))
 			return;
 
+		currentLevelFile = new LevelStruct(DialogWindow.getLevelWidth(), DialogWindow.getLevelHeight(), DialogWindow.getLevelBackground());
+		saveLevel.setEnabled(true);
+		changeBg.setEnabled(true);
+		save.setEnabled(true);
+	}
+	
+	private static void openLevelFromFile(String file){
+		if(-1 == levelPanelContainer.initView(DialogWindow.getLevelWidth(), DialogWindow.getLevelHeight(),DialogWindow.getLevelBackground()))
+			return;
+		
+		levelPanelContainer.setViewFromFile(file);
 		currentLevelFile = new LevelStruct(DialogWindow.getLevelWidth(), DialogWindow.getLevelHeight(), DialogWindow.getLevelBackground());
 		saveLevel.setEnabled(true);
 		changeBg.setEnabled(true);

@@ -6,7 +6,10 @@ import java.io.*;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+
+import org.apache.commons.io.FilenameUtils;
 
 /**
  * This is the GameDisplay Class. This class permit to display all the entity of the game.
@@ -52,14 +55,14 @@ public class GameDisplay extends JPanel implements Runnable{
 
 
     
-	public static int[][] readLevel(){
+	public static int[][] readLevel(String levelPath){
 		
 		int i = 0;
 		int[][] tab = null;
     	
 		try{
 			
-			FileInputStream fstream = new FileInputStream("level3.txt");
+			FileInputStream fstream = new FileInputStream(levelPath);
 			DataInputStream in = new DataInputStream(fstream);
     		BufferedReader br = new BufferedReader(new InputStreamReader(in));
     		String strLine;
@@ -91,7 +94,20 @@ public class GameDisplay extends JPanel implements Runnable{
     
 	
     
-	public void initGame() {
+	public void initGame(boolean isFirst) {
+		
+		if(isFirst){
+			level = readLevel("level3.txt");
+		}
+		else {
+			final JFileChooser chooser = new JFileChooser();
+			chooser.setCurrentDirectory(new java.io.File("."));
+			chooser.setDialogTitle("Choose a Level");
+			chooser.setMultiSelectionEnabled(false);
+			if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+				level = readLevel(chooser.getSelectedFile().toString());
+			} else System.exit(-1);
+		}
 		
 		try {
         	background = ImageIO.read(new File(rootdir + "/images/game/background.jpg"));
@@ -109,9 +125,9 @@ public class GameDisplay extends JPanel implements Runnable{
 		mobiles = new Vector<Mobile>();		
 		stills = new Vector<Still>();
 		
-		
-		level = readLevel();
 
+
+		
 		for (int i = 0; i < nbLines; i++){
 			for (int j = 0; j < nbColumns ; j++){
 				int id = level[i][j];
@@ -213,7 +229,7 @@ public class GameDisplay extends JPanel implements Runnable{
 	}
 	
 	public GameDisplay() {	
-		initGame();	
+		initGame(true);	
 	}	
 
 	

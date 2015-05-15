@@ -4,7 +4,11 @@ import java.awt.GridLayout;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -14,8 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
-
 import org.apache.commons.io.*;
 
 public class DialogWindow extends JDialog{
@@ -50,8 +52,8 @@ public class DialogWindow extends JDialog{
 			DialogWindow.levelBackground = levelBgPath; 
 		}
 		
-		public static void setLevelPath(String levelSave){
-			DialogWindow.levelPath = levelSave;
+		public static void setLevelPath(String level){
+			DialogWindow.levelPath = level;
 		}
 		
 		public static String getLevelPath(){
@@ -141,24 +143,43 @@ public class DialogWindow extends JDialog{
 		
 		static boolean createBgDialog(final JFrame owner) {
 			final JFileChooser chooser = new JFileChooser();
+			chooser.setCurrentDirectory(new java.io.File("."));
 			chooser.setDialogTitle("Load background");
-			FileNameExtensionFilter filter = new FileNameExtensionFilter(
-			        "png", "jpg", "JPEG", "PNG");
-			    chooser.setFileFilter(filter);
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("images files only", "jpg", "JPEG", "PNG", "png");
+			chooser.setFileFilter(filter);
 			chooser.setMultiSelectionEnabled(false);
 			if(chooser.showOpenDialog(owner) == JFileChooser.APPROVE_OPTION) {
-				System.out.println(chooser.getSelectedFile().getAbsolutePath());
 				setLevelBgPath(chooser.getSelectedFile().getAbsolutePath());
 				return true;
 			}
 			return false;
-			
+		}
+		
+		static boolean createOpenExistingLevelDialog(final JFrame owner) {
+			System.out.println("CREATION");
+			final JFileChooser chooser = new JFileChooser();
+			chooser.setCurrentDirectory(new java.io.File("."));
+			chooser.setDialogTitle("Open Level");
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt", "TXT");
+			chooser.setFileFilter(filter);
+			chooser.setMultiSelectionEnabled(false);
+			if(chooser.showOpenDialog(owner) == JFileChooser.APPROVE_OPTION) {
+				String filePath = chooser.getSelectedFile().getAbsolutePath();
+				setLevelPath(filePath);
+				setLevelWidth((short)getWidthFromFile(filePath));
+				setLevelHeight((short)getHeightFromFile(filePath));
+				levelCreated = true;
+				return true;
+				
+			}
+			levelCreated = false;
+			return false;
 		}
 		
 		static boolean createSaveLevelDialog(final JFrame owner) {
 			final JFileChooser chooser = new JFileChooser();
 			chooser.setCurrentDirectory(new java.io.File("."));
-			chooser.setDialogTitle("Save Leve");
+			chooser.setDialogTitle("Save Level");
 			chooser.setMultiSelectionEnabled(false);
 			if(chooser.showSaveDialog(owner) == JFileChooser.APPROVE_OPTION) {
 				File file = chooser.getSelectedFile();
@@ -173,7 +194,6 @@ public class DialogWindow extends JDialog{
 				return true;
 			}
 			return false;
-			
 		}
 
 		public static boolean isLevelCreated() {
@@ -182,5 +202,41 @@ public class DialogWindow extends JDialog{
 
 		public static void setLevelCreated(boolean mapIsCreated) {
 			DialogWindow.levelCreated = mapIsCreated;
+		}
+		
+		public static int getWidthFromFile(String levelPath){
+			try{
+				
+				FileInputStream fstream = new FileInputStream(levelPath);
+				DataInputStream in = new DataInputStream(fstream);
+	    		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+	    		String strLine;
+	    		
+	    		strLine = br.readLine();  
+				String[] tokens = strLine.split(" ");
+				return Integer.parseInt(tokens[1]);
+	    	}
+	    	catch (Exception e){
+	    	     System.err.println("Error: " + e.getMessage());
+	    	}
+			return 0;
+		}
+		
+		public static int getHeightFromFile(String levelPath){
+			try{
+				
+				FileInputStream fstream = new FileInputStream(levelPath);
+				DataInputStream in = new DataInputStream(fstream);
+	    		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+	    		String strLine;
+	    		strLine = br.readLine();  
+				String[] tokens = strLine.split(" ");
+				br.close();
+				return Integer.parseInt(tokens[0]);
+	    	}
+	    	catch (Exception e){
+	    	     System.err.println("Error: " + e.getMessage());
+	    	}
+			return 0;
 		}
 }

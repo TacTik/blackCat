@@ -7,8 +7,13 @@ import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.util.Arrays;
 
 import handlers.SelectTileHelper;
 import handlers.TextureLoader;
@@ -60,12 +65,42 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 	}
 	
 	
+	public void setViewFromFile(String levelPath){
+		int i = 0;
+
+		try{
+			FileInputStream fstream = new FileInputStream(levelPath);
+			DataInputStream in = new DataInputStream(fstream);
+    		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    		String strLine;
+    		
+    		strLine = br.readLine();  
+			String[] tokens = strLine.split(" ");
+
+    		
+    		while ((strLine = br.readLine()) != null)   {
+    			tokens = strLine.split(" ");
+	    	    for (int j = 0; j < height ; j++){
+	    		    tiles[i][j] = Integer.parseInt(tokens[j]);
+    			}
+	    	    i++;
+    		}
+    		in.close();
+    	}
+    	catch (Exception e){
+    	     System.err.println("Error: " + e.getMessage());
+    	}
+
+		//repaint();
+	}
+	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.drawImage(backgroundImage, 0,0,null);
 		
 		g.setColor(new Color(51,51,51,40));
 		
+	
 		for(int i = 0; i < LevelPanel.width; i++){
 			for(int j = 0; j < LevelPanel.height; j++){
 				if(tiles[i][j] == -8){
@@ -110,6 +145,7 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
             System.out.println("can't create file");
         }
 	}
+
 
 	@Override
 	public void mouseEntered(MouseEvent e) {}
