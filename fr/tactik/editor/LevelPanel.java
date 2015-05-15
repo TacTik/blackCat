@@ -1,6 +1,7 @@
 package fr.tactik.editor;
 
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -20,6 +21,12 @@ import handlers.TexturesMapper;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+/**
+ * This is the levelPanel class. This class create a panel which display the level.
+ * 
+ * @author Juliette Belin, Alice Neichols, Denis Tribouillois 
+ * @version 1.0
+ */
 public class LevelPanel extends JPanel implements MouseListener, MouseMotionListener {
 
 	static String rootdir = System.getProperty("user.dir");
@@ -33,6 +40,15 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 	int tileDimention = 50;
 	static int[][] tiles;
 	
+	/**
+	 * This function create the level panel.
+	 * @param width
+	 * 				width of the panel.
+	 * @param height
+	 * 				height of the panel.
+	 * @param background
+	 * 				the path to the panel background.
+	 */
 	public LevelPanel(int width, int height, String background){
 		LevelPanel.bg = background;
 		LevelPanel.width = width;
@@ -45,12 +61,20 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 
 	}
 	
+	/**
+	 * This function load the background and refresh the panel.
+	 * @param background
+	 * 				the path for the background.
+	 */
 	public void setBg(String background){
 		LevelPanel.bg = background;
 		backgroundImage = TextureLoader.getImageFromPath(LevelPanel.bg);
 		repaint();
 	}
 	
+	/**
+	 * This function create the background and give the dmension to the panel and capture the movement of the mouse.
+	 */
 	public int init(){
 		if(LevelPanel.bg != null)
 			backgroundImage = TextureLoader.getImageFromPath(LevelPanel.bg);
@@ -62,6 +86,7 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 		return 0;
 	}
 	
+
 	
 	public void setViewFromFile(String levelPath){
 		int i = 0;
@@ -93,6 +118,11 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 		//repaint();
 	}
 	
+
+	/**
+	 * This function paint all the components.
+	 */
+
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.drawImage(backgroundImage, 0,0,null);
@@ -119,6 +149,9 @@ public class LevelPanel extends JPanel implements MouseListener, MouseMotionList
 		}
 	}
 	
+	/**
+	 * This function write a file from the editor.
+	 */
 	public static void writeFileFromEditor(String levelPath){
 		final String path = levelPath;
 
