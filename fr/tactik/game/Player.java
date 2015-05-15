@@ -4,11 +4,18 @@
 package fr.tactik.game;
 
 import java.awt.Image;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 /**
  * @author juliette
@@ -28,6 +35,7 @@ public class Player extends Mobile{
 	 * 
 	 */
 	
+	static String rootdir = System.getProperty("user.dir");
 	float jump = 0;
 	int jumpsAvailable = 0;
 	boolean running = false;
@@ -71,6 +79,8 @@ public class Player extends Mobile{
 				level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX) / 50) + 1] == 11){
 				removeStillFromLevel(level,nbColumns,((int)(posY + this.yspeed - 2) / 50) + 1,((int)(posX) / 50) + 1,stills);
 				level[((int)(posY + this.yspeed - 2) / 50) + 1][((int)(posX) / 50) + 1] = 0;
+				
+				readSound(rootdir + "/sounds/foe_dying.wav");
 			}
 			
 			// Key
@@ -112,6 +122,8 @@ public class Player extends Mobile{
 					level[(int)(posY + this.yspeed +25) / 50][((int)(posX + this.xspeed-8) / 50) + 2] == 11){
 				this.lifePoints --;
 				this.posX -= 75;
+				
+				readSound(rootdir + "/sounds/cat_hurt.wav");
 			}
 			
 			// Key
@@ -127,11 +139,13 @@ public class Player extends Mobile{
 					removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,((int)(posX + this.xspeed-8) / 50) + 2,stills);
 					level[(int)(posY + this.yspeed +25) / 50][((int)(posX + this.xspeed-8) / 50) + 2] = 0;
 					this.triggerNextLevel = true;
+					readSound(rootdir + "/sounds/door.wav");
 				}
 			}
 			
 			// QuestionGuy
 			if (level[(int)(posY + this.yspeed +25) / 50][((int)(posX + this.xspeed-8) / 50) + 2] == 14){
+				readSound(rootdir + "/sounds/fouras.wav");
 				if (questionGuy(controlPlayer)==true){
 					removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,((int)(posX + this.xspeed-8) / 50) + 2,stills);
 					level[(int)(posY + this.yspeed +25) / 50][((int)(posX + this.xspeed-8) / 50) + 2] = 0;
@@ -164,6 +178,8 @@ public class Player extends Mobile{
 				level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 11){
 				this.lifePoints --;
 				this.posX += 75;
+				
+				readSound(rootdir + "/sounds/cat_hurt.wav");
 			}
 			
 			// Key
@@ -179,11 +195,13 @@ public class Player extends Mobile{
 					removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,(int)(posX + this.xspeed+8) / 50,stills);
 					level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] = 0;
 					this.triggerNextLevel = true;
+					readSound(rootdir + "/sounds/door.wav");
 				}
 			}
 			
 			// QuestionGuy
 			if (level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 14){
+				readSound(rootdir + "/sounds/fouras.wav");
 				if (questionGuy(controlPlayer)==true){
 					removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,(int)(posX + this.xspeed+8) / 50,stills);
 					level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] = 0;
@@ -270,5 +288,21 @@ public class Player extends Mobile{
 		else{
 			return false;
 		}
+	}
+	
+	public void readSound(String path){
+	    InputStream in = null;
+		try {
+			in = new FileInputStream(path);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	    AudioStream audioStream = null;
+		try {
+			audioStream = new AudioStream(in);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    AudioPlayer.player.start(audioStream);
 	}
 }
