@@ -183,7 +183,7 @@ public class Player extends Mobile{
 			}
 			
 			// QuestionGuy
-			if (level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 12){
+			if (level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 14){
 				if (questionGuy(controlPlayer)==true){
 					removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,(int)(posX + this.xspeed+8) / 50,stills);
 					level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] = 0;
@@ -262,6 +262,8 @@ public class Player extends Mobile{
 		controlPlayer.running = false;
 		controlPlayer.left = false;
 		this.running = false;
+		if (test == null)
+			return false;
 		if (test.equals(answer)){
 			return true;
 		}
