@@ -4,7 +4,11 @@
 package fr.tactik.game;
 
 import java.awt.Image;
+import java.util.Random;
 import java.util.Vector;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * @author juliette
@@ -44,7 +48,7 @@ public class Player extends Mobile{
 		this.yspeed += 4;
 	}
 	
-	public void collision(int[][] level, int nbLines, int nbColumns, Vector<Still> stills){	
+	public void collision(int[][] level, int nbLines, int nbColumns, Vector<Still> stills, ControlerPlayer controlPlayer){	
 		
 		// Bottom
 		if ((int)(posY + this.yspeed - 2) + 50 >= nbLines * 50){
@@ -126,6 +130,15 @@ public class Player extends Mobile{
 				}
 			}
 			
+			// QuestionGuy
+			if (level[(int)(posY + this.yspeed +25) / 50][((int)(posX + this.xspeed-8) / 50) + 2] == 14){
+				if (questionGuy(controlPlayer)==true){
+					removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,((int)(posX + this.xspeed-8) / 50) + 2,stills);
+					level[(int)(posY + this.yspeed +25) / 50][((int)(posX + this.xspeed-8) / 50) + 2] = 0;
+				}
+				else this.posX -= 10;
+			}
+			
 			
 			this.xspeed = 0;
 			if (jumpsAvailable != 2) jumpsAvailable = 1;
@@ -155,7 +168,6 @@ public class Player extends Mobile{
 			
 			// Key
 			if (level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 12){
-				
 				removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,(int)(posX + this.xspeed+8) / 50,stills);
 				level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] = 0;
 				this.inventory.add("key");
@@ -163,7 +175,6 @@ public class Player extends Mobile{
 			
 			// Door
 			if (level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 13){
-				System.out.println("ksss");
 				if(this.inventory.contains("key")){
 					removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,(int)(posX + this.xspeed+8) / 50,stills);
 					level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] = 0;
@@ -171,6 +182,14 @@ public class Player extends Mobile{
 				}
 			}
 			
+			// QuestionGuy
+			if (level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] == 14){
+				if (questionGuy(controlPlayer)==true){
+					removeStillFromLevel(level,nbColumns,(int)(posY + this.yspeed +25) / 50,(int)(posX + this.xspeed+8) / 50,stills);
+					level[(int)(posY + this.yspeed +25) / 50][(int)(posX + this.xspeed+8) / 50] = 0;
+				}
+				else this.posX += 10;
+			}
 			
 			
 			this.xspeed = 0;
@@ -184,11 +203,11 @@ public class Player extends Mobile{
 		
 		for (int j = 0; j < x; j++){
 			for (int i = 0; i < nbColumns; i++){
-				if (level[j][i] >= 4 && level[j][i] <= 13) index++;
+				if (level[j][i] >= 4) index++;
 			}
 		}
 		for (int i = 0; i < y; i++){
-			if (level[x][i] >= 4 && level[x][i] <= 13) index++;
+			if (level[x][i] >= 4) index++;
 		}
 		stills.remove(index);
 		return;
@@ -196,5 +215,60 @@ public class Player extends Mobile{
 	
 	public void cleanInventory(){
 		inventory.clear();
+	}
+	
+	public boolean questionGuy(ControlerPlayer controlPlayer){
+		String question = "";
+		String answer = "";
+		Random random = new Random();
+		int foo = random.nextInt(10);
+		
+		switch (foo){
+		case 0: question = "Quelle est la couleur du cheval blanc d'Henry IV ?";
+				answer = "blanc";
+				break;
+		case 1: question = "Pourquoi ne font-ils pas de nourriture pour chat à saveur de souris ?";
+				answer = "parce que";
+				break;
+		case 2: question = "Quelle est le meilleur langage de programmation ?";
+				answer = "java";
+				break;
+		case 3: question = "C'est en sciant que Léonard devint...";
+				answer = "scie";
+				break;
+		case 4: question = "Qui était là en premier: l'oeuf ou la poule ?";
+				answer = "les deux";
+				break;
+		case 5: question = "Quel est le synonyme de synonyme ?";
+				answer = "synonyme";
+				break;
+		case 6: question = "Question6";
+				answer = "answer6";
+				break;
+		case 7: question = "Question7";
+				answer = "answer7";
+				break;
+		case 8: question = "Question8";
+				answer = "answer8";
+				break;
+		case 9: question = "Question9";
+				answer = "answer9";
+				break;
+		default: break;
+		}
+		
+		String test = JOptionPane.showInputDialog(null, question,"Le vieux sage",JOptionPane.QUESTION_MESSAGE);
+		controlPlayer.right = false;
+		controlPlayer.running = false;
+		controlPlayer.left = false;
+		this.running = false;
+		if (test == null)
+			return false;
+		if (test.equals(answer)){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 }

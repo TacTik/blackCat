@@ -104,6 +104,8 @@ public class GameDisplay extends JPanel implements Runnable{
     	}
     	return tab;
 	}
+	
+	
     
 	
     public void createListOfLevels(){
@@ -202,6 +204,9 @@ public class GameDisplay extends JPanel implements Runnable{
 		            case 13: StillPlat door = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/door/",0, 13);
 		 	 		 		 stills.add (door);
 		 	 		 		 break;
+		            case 14: StillPlat questionGuy = new StillPlat(50*j,50*i,50,50,false, rootdir + "/images/game/questionGuy/",0, 14);
+	 		 		 		 stills.add (questionGuy);
+	 		 		 		 break;
 		            default: 
 		                     break;
 				}
@@ -224,13 +229,10 @@ public class GameDisplay extends JPanel implements Runnable{
 			int x = 0;
 			int y = 0;
 			switch (mobiles.get(i).id) {
-	            case 1:  x = 0;
-	            		 y = 100;
+	            case 1:  x = 100;
+	            		 y = 0;
 	                     break;
 	            case 2:  x = 0;
-       		 			 y = 100;
-	            		 break;
-	            case 3:  x = 100;
        		 			 y = 100;
 	            		 break;
 	            default: x = 0;
@@ -246,7 +248,7 @@ public class GameDisplay extends JPanel implements Runnable{
 		controlPlayer.playerSprite();
 		player.jump();
 		player.gravity();
-		player.collision(level,nbLines,nbColumns,stills);
+		player.collision(level,nbLines,nbColumns,stills,controlPlayer);
 		player.update();
 		
 		//System.out.println(level[8][5]);
@@ -284,19 +286,15 @@ public class GameDisplay extends JPanel implements Runnable{
 	}
 	@Override
 	  protected void paintComponent(Graphics g) {
-	    super.paintComponent(g);
+		 super.paintComponent(g);
 	    	if(isGameOver){
 	    		g.setColor(Color.black);
 	    		g.fillRect(0, 0, GameDisplay.nbColumns * 50, GameDisplay.nbLines * 50);
-	    		g.drawImage(gameOver,GameDisplay.nbColumns * 50 / 2 - gameOver.getWidth(this) / 2,
-	    					GameDisplay.nbLines * 50 / 2 - gameOver.getHeight(this),
-	    					this);
+	    		g.drawImage(gameOver,0,0,this);
 	    	}else if(isGameWin){
 	    		g.setColor(Color.black);
-	    		g.drawImage(gameWin,GameDisplay.nbColumns * 50 / 2 - gameOver.getWidth(this) / 2,
-    					GameDisplay.nbLines * 50 / 2 - gameOver.getHeight(this),
-    					this);
-	    		g.drawImage(gameWin,0,0,null);
+	    		g.fillRect(0, 0, GameDisplay.nbColumns * 50, GameDisplay.nbLines * 50);
+	    		g.drawImage(gameWin,0,0,this);
 	    	}else{
 		    	// Background
 		    	g.drawImage(background,0,0,null);
@@ -475,7 +473,6 @@ public class GameDisplay extends JPanel implements Runnable{
 		    		g.drawImage(footprint,30*i +10,10 ,null);
 		    	}
 	    	}
-
 	}
 
 	@Override
@@ -510,7 +507,8 @@ public class GameDisplay extends JPanel implements Runnable{
 			render();
 			
 			try {
-				Thread.sleep((lastLoopTime-System.nanoTime() + OPTIMAL_TIME)/1000000);
+				if((lastLoopTime-System.nanoTime() + OPTIMAL_TIME)/1000000>0)
+					Thread.sleep((lastLoopTime-System.nanoTime() + OPTIMAL_TIME)/1000000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
