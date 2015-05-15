@@ -80,15 +80,6 @@ public class DialogWindow extends JDialog{
 			JButton validation = new JButton("OK");
 			final JTextField widthField = new JTextField("50");
 			final JTextField heightField = new JTextField("10");
-			/*final JButton bgPathField = new JButton("Browse ...");
-			
-			bgPathField.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if(false == createBgDialog(owner)){
-						setLevelBgPath(null);
-					}
-				}
-			});*/
 			
 			Vector<String> backgroundList = new Vector<String>();
 			final String path = "images/game/backgrounds/";
@@ -235,7 +226,7 @@ public class DialogWindow extends JDialog{
 		static boolean createOpenExistingLevelDialog(final JFrame owner) {
 			System.out.println("CREATION");
 			final JFileChooser chooser = new JFileChooser();
-			chooser.setCurrentDirectory(new java.io.File("."));
+			chooser.setCurrentDirectory(new java.io.File("./levels"));
 			chooser.setDialogTitle("Open Level");
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt", "TXT");
 			chooser.setFileFilter(filter);
@@ -255,7 +246,7 @@ public class DialogWindow extends JDialog{
 		
 		static boolean createSaveLevelDialog(final JFrame owner) {
 			final JFileChooser chooser = new JFileChooser();
-			chooser.setCurrentDirectory(new java.io.File("."));
+			chooser.setCurrentDirectory(new java.io.File("./levels"));
 			chooser.setDialogTitle("Save Level");
 			chooser.setMultiSelectionEnabled(false);
 			if(chooser.showSaveDialog(owner) == JFileChooser.APPROVE_OPTION) {
@@ -291,6 +282,7 @@ public class DialogWindow extends JDialog{
 	    		
 	    		strLine = br.readLine();  
 				String[] tokens = strLine.split(" ");
+				br.close();
 				return Integer.parseInt(tokens[1]);
 	    	}
 	    	catch (Exception e){
