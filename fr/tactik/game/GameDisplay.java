@@ -68,7 +68,11 @@ public class GameDisplay extends JPanel implements Runnable{
 	boolean isGameWin = false;
 
 
-    
+	/**
+	 * This function read a level from a text file.
+	 * @param levelPath
+	 * 			this is the path of the level.
+	 */
 	public static int[][] readLevel(String levelPath){
 		
 		int i = 0;
@@ -109,7 +113,9 @@ public class GameDisplay extends JPanel implements Runnable{
 	
 	
     
-	
+	/**
+	 * This function creates a list of levels .
+	 */
     public void createListOfLevels(){
     	listLevels = new Vector<String>();
 		final String path = "./levels";
@@ -128,6 +134,9 @@ public class GameDisplay extends JPanel implements Runnable{
 		}
     }
     
+	/**
+	 * This function load all elements in a level.
+	 */
 	public void initGame(boolean isFirst) {
 		readSound(rootdir + "/sounds/theme.wav");
 		if(isFirst){
@@ -225,6 +234,9 @@ public class GameDisplay extends JPanel implements Runnable{
 		this.setFocusable(true);
 	}
 	
+	/**
+	 * This function update the game every frame according to event.
+	 */
 	public void gameUpdate() {
 		checkGameOver();
 		for (int i = 0; i < mobiles.size(); i++){
@@ -265,10 +277,16 @@ public class GameDisplay extends JPanel implements Runnable{
 		
 	}
 	
+	/**
+	 * This function repaint all the window.
+	 */
 	public void render() {		
 		repaint();
 	}
 	
+	/**
+	 * This is the constructor of the game display.
+	 */
 	public GameDisplay() {
 		isRunning = true;
 		createListOfLevels();
@@ -276,7 +294,9 @@ public class GameDisplay extends JPanel implements Runnable{
 		initGame(true);	
 	}	
 
-	
+	/**
+	 * This function loads images of game status "win" and "game over".
+	 */
 	public void setImagesStatus(){
 		try {
 			gameWin = ImageIO.read(new File(rootdir + "/" + "/images/game/status/gameWin.png"));
