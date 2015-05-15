@@ -20,6 +20,7 @@ public class TexturesMapper {
 	static ImageIcon foe_1_texturesImages;
 	static ImageIcon key_texturesImages;
 	static ImageIcon door_texturesImages;
+	static ImageIcon questionGuy_texturesImages;
 	static String rootdir = System.getProperty("user.dir");
 	static Map<ImageIcon, Integer> textureMap = new HashMap<ImageIcon, Integer>();
 	
@@ -39,6 +40,7 @@ public class TexturesMapper {
 		foe_1_texturesImages = TextureLoader.getImageIconFromPath(rootdir + "/images/game/foe/", 2).elementAt(1);
 		key_texturesImages = TextureLoader.getImageIconFromPath(rootdir + "/images/game/key/", 1).elementAt(0);
 		door_texturesImages = TextureLoader.getImageIconFromPath(rootdir + "/images/game/door/", 1).elementAt(0);
+		questionGuy_texturesImages = TextureLoader.getImageIconFromPath(rootdir + "/images/game/questionGuy/", 1).elementAt(0);
 		
 	
 		textureMap.put(player_texturesImages, 1);
@@ -54,6 +56,7 @@ public class TexturesMapper {
 		textureMap.put(foe_1_texturesImages, 11);
 		textureMap.put(key_texturesImages, 12);
 		textureMap.put(door_texturesImages, 13);
+		textureMap.put(questionGuy_texturesImages, 14);
 		
 		
 		return true;

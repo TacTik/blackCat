@@ -13,6 +13,7 @@ public class ControlerPlayer implements KeyListener {
 	boolean left = false;
 	boolean right = false;
 	
+	
 	@Override
 	public void keyPressed(KeyEvent e){
 
