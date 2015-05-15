@@ -22,6 +22,12 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.io.*;
 
+/**
+ * This is the DialogWindow Class. This class manage all the DialogBoxes in the editor.
+ * 
+ * @author Juliette Belin, Alice Neichols, Denis Tribouillois 
+ * @version 1.0
+ */
 public class DialogWindow extends JDialog{
 		private static final long serialVersionUID = 1L;
 		private static short levelWidth = -1;
@@ -30,42 +36,86 @@ public class DialogWindow extends JDialog{
 		private static String levelPath = null;
 		private static boolean levelCreated = false;
 		
+		/**
+		 * This function return the width of the level.
+		 * @return 
+		 * 			return the widht of the level.
+		 */
 		public static short getLevelWidth() {
 			return levelWidth;
 		}
 
+		/**
+		 * This function set the width of the level.
+		 */
 		public static void setLevelWidth(short mapWidth) {
 			DialogWindow.levelWidth = mapWidth;
 		}
 
+		/**
+		 * This function return the height of the level.
+		 * @return 
+		 * 			return the height of the level.
+		 */
 		public static short getLevelHeight() {
 			return levelHeight;
 		}
 
+		/**
+		 * This function set the height of the level.
+		 * @param mapHeight
+		 * 				Give the height of the map.
+		 */
 		public static void setLevelHeight(short mapHeight) {
 			DialogWindow.levelHeight = mapHeight;
 		}
 
+		/**
+		 * This function return the path of the level background.
+		 * @return 
+		 * 			The path of the background.
+		 */
 		public static String getLevelBackground() {
 			return levelBackground;
 		}
 
+		/**
+		 * This function set a path to the level background.
+		 * @param levelBgPath 
+		 * 					Set the path of the background.
+		 */
 		public static void setLevelBgPath(String levelBgPath) {
 			DialogWindow.levelBackground = levelBgPath; 
 		}
 		
+		/**
+		 * This function set a path to the level background.
+		 * @param Level
+		 * 				Set the save of the level.
+		 */		
 		public static void setLevelPath(String level){
 			DialogWindow.levelPath = level;
 		}
 		
+		/**
+		 * This function get a path to the level.
+		 * @return 
+		 * 			the path of the level.
+		 */
 		public static String getLevelPath(){
 			return DialogWindow.levelPath;
 		}
 
+		/**
+		 * This function create the dialog window.
+		 */
 		private DialogWindow(JFrame owner) {
 			super(owner, "New Level settings",true);
 		}
 
+		/**
+		 * This function create a level with width, height and a background.	
+		 */
 		static boolean createDialog(final JFrame owner) {
 			final DialogWindow nDialog = new DialogWindow(owner);
 			GridLayout grid = new GridLayout (4,2);
@@ -80,6 +130,7 @@ public class DialogWindow extends JDialog{
 			JButton validation = new JButton("OK");
 			final JTextField widthField = new JTextField("50");
 			final JTextField heightField = new JTextField("10");
+			final JButton bgPathField = new JButton("Browse ...");
 			
 			Vector<String> backgroundList = new Vector<String>();
 			final String path = "images/game/backgrounds/";
@@ -102,7 +153,7 @@ public class DialogWindow extends JDialog{
 					setLevelBgPath((String) path + cb.getSelectedItem());
 				}
 			});
-		    
+
 			nDialog.add(width);
 			nDialog.add(widthField);
 			nDialog.add(height);
@@ -156,6 +207,9 @@ public class DialogWindow extends JDialog{
 			return isLevelCreated();
 		}
 		
+		/**
+		 * This function allows to change background.
+		 */
 		static boolean createBgDialog(final JFrame owner) {
 					
 			final DialogWindow nDialog = new DialogWindow(owner);
@@ -238,12 +292,15 @@ public class DialogWindow extends JDialog{
 				setLevelHeight((short)getHeightFromFile(filePath));
 				levelCreated = true;
 				return true;
-				
 			}
 			levelCreated = false;
 			return false;
+			
 		}
 		
+		/**
+		 * This function create a save for a level.
+		 */
 		static boolean createSaveLevelDialog(final JFrame owner) {
 			final JFileChooser chooser = new JFileChooser();
 			chooser.setCurrentDirectory(new java.io.File("./levels"));
@@ -262,12 +319,23 @@ public class DialogWindow extends JDialog{
 				return true;
 			}
 			return false;
+			
 		}
 
+		/**
+		 * This function indicate if a level is created or not.
+		 * @return levelCreated
+		 * 				If it is true, the level was created.
+		 */
 		public static boolean isLevelCreated() {
 			return levelCreated;
 		}
-
+		
+		/**
+		 * This function set a level which is created.
+		 * @param mapIsCreated 
+		 * 				If it is true, the map was created.
+		 */
 		public static void setLevelCreated(boolean mapIsCreated) {
 			DialogWindow.levelCreated = mapIsCreated;
 		}

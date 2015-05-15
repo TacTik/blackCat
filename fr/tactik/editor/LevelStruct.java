@@ -1,5 +1,11 @@
 package fr.tactik.editor;
 
+/**
+ * This is the level struct Class. This class .
+ * 
+ * @author Juliette Belin, Alice Neichols, Denis Tribouillois 
+ * @version 1.0
+ */
 public class LevelStruct {
 	
 	private final int width;
