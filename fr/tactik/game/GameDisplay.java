@@ -34,55 +34,20 @@ public class GameDisplay extends JPanel implements Runnable{
 
 	static String rootdir = System.getProperty("user.dir");
 	
-	static String backgroundPath;	
-	/**
-	 * This is the background image.
-	 */
+	static String backgroundPath;
 	Image background;
-	/**
-	 * This is the icone for the player life.
-	 */
 	Image footprint;
-	/**
-	 * This is the player.
-	 */
-	Player player;
-
 	Image gameWin;
 	Image gameOver;
-
-	/**
-	 * This is a vector which contains all the mobile entity.
-	 */
+	Player player;
 	Vector<Mobile> mobiles;
-	/**
-	 * This is a vector who contains all the still entity.
-	 */
 	Vector<Still> stills;
-	
-	/**
-	 * This is the x window size.
-	 */
+	Vector<String> listLevels;
 	static int windowSizeX = 1000;
-	/**
-	 * This is the y window size.
-	 */
 	static int windowSizeY = 600;
-	/**
-	 * This is the x world size.
-	 */
 	static int worldSizeX = 0;
-	/**
-	 * This is the y world size.
-	 */
 	static int worldSizeY = 0;
-	/**
-	 * This is the offset which manage the camera in x.
-	 */
 	int offsetX = 0;
-	/**
-	 * This is the offset which manage the camera in y.
-	 */
 	int offsetY = 0;
 	int currentLevel = 0;
 	
@@ -94,25 +59,14 @@ public class GameDisplay extends JPanel implements Runnable{
     boolean isRunning = false;
     ControlerPlayer controlPlayer;
 
-	/**
-	 * This is two dimension table in order to build a level.
-	 */
     int[][] level;
-	/**
-	 * This is number of lines for the level.
-	 */
     static int nbLines = 0;
-	/**
-	 * This is number of columns for the level.
-	 */
 	static int nbColumns = 0;
 	boolean isGameOver = false;
 	boolean isGameWin = false;
 
 
-    /**
-	 * This function read a level from a text file.
-	 */
+    
 	public static int[][] readLevel(String levelPath){
 		
 		int i = 0;
@@ -150,6 +104,8 @@ public class GameDisplay extends JPanel implements Runnable{
     	}
     	return tab;
 	}
+	
+	
     
 	
     public void createListOfLevels(){
@@ -203,8 +159,7 @@ public class GameDisplay extends JPanel implements Runnable{
 		
 		mobiles = new Vector<Mobile>();		
 		stills = new Vector<Still>();
-		
-		
+
 		
 		for (int i = 0; i < nbLines; i++){
 			for (int j = 0; j < nbColumns ; j++){
@@ -295,6 +250,7 @@ public class GameDisplay extends JPanel implements Runnable{
 		player.gravity();
 		player.collision(level,nbLines,nbColumns,stills,controlPlayer);
 		player.update();
+		
 		//System.out.println(level[8][5]);
 		
 		offsetX = (int) player.posX - (windowSizeX/2 - 50);
@@ -383,14 +339,6 @@ public class GameDisplay extends JPanel implements Runnable{
 			    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX(),(int)stills.get(i).getPosY(),null);
 			    	}
 		    	}
-	    	}
-	    	
-	    	// -------------------------------- Top/Left -----------------------------
-	    	else if (player.posX <= windowSizeX/2 - 50 &&
-		    		player.posY <= windowSizeY/2){
-	    		
-	    		// Player
-			    g.drawImage(player.getCurrentTexture(),(int)player.getPosX(),(int)player.getPosY(),this);
 		    	
 		    	// -------------------------------- Left -----------------------------
 		    	else if (player.posX <= windowSizeX/2 - 50 &&
@@ -427,14 +375,6 @@ public class GameDisplay extends JPanel implements Runnable{
 			    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX(),(int)stills.get(i).getPosY() - (worldSizeY - windowSizeY + 50),null);
 			    	}
 		    	}
-	    	}
-	    	
-	    	// -------------------------------- Left -----------------------------
-	    	else if (player.posX <= windowSizeX/2 - 50 &&
-	    			player.posY > windowSizeY/2 && player.posY < worldSizeY - windowSizeY/2){
-
-	    		// Player
-			    g.drawImage(player.getCurrentTexture(),(int)player.getPosX(),windowSizeY/2 - 25,this);
 		    	
 		    	// -------------------------------- Bot -----------------------------
 		    	else if (player.posX > windowSizeX/2 - 50 && player.posX < worldSizeX - windowSizeX/2 &&
@@ -471,14 +411,6 @@ public class GameDisplay extends JPanel implements Runnable{
 			    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX()- (worldSizeX - windowSizeX + 20),(int)stills.get(i).getPosY() - (worldSizeY - windowSizeY + 50),null);
 			    	}
 		    	}
-	    	}
-	    	
-	    	// -------------------------------- Bot/Left -----------------------------
-	    	else if (player.posX <= windowSizeX/2 - 50 &&
-		    		player.posY >= worldSizeY - windowSizeY/2){
-	    		
-	    		// Player
-			    g.drawImage(player.getCurrentTexture(),(int)player.getPosX(),(int)player.getPosY() - (worldSizeY - windowSizeY + 50),this);
 		    	
 		    	// -------------------------------- Right -----------------------------
 		    	else if (player.posX >= worldSizeX - windowSizeX/2 &&
@@ -515,14 +447,6 @@ public class GameDisplay extends JPanel implements Runnable{
 			    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX()- (worldSizeX - windowSizeX + 20),(int)stills.get(i).getPosY(),null);
 			    	}
 		    	}
-	    	}
-	    	
-	    	// -------------------------------- Bot -----------------------------
-	    	else if (player.posX > windowSizeX/2 - 50 && player.posX < worldSizeX - windowSizeX/2 &&
-		    		player.posY >= worldSizeY - windowSizeY/2){
-
-	    		// Player
-			    g.drawImage(player.getCurrentTexture(),windowSizeX/2 - 50,(int)player.getPosY() - (worldSizeY - windowSizeY + 50),this);
 		    	
 		    	// -------------------------------- Top -----------------------------
 		    	else if (player.posX > windowSizeX/2 - 50 && player.posX < worldSizeX - windowSizeX/2 &&
@@ -542,91 +466,13 @@ public class GameDisplay extends JPanel implements Runnable{
 			    	}
 		    	}
 		    	
-		    	// Still elements
-		    	for (int i = 0; i < stills.size(); i++){
-		    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX() - offsetX,(int)stills.get(i).getPosY() - (worldSizeY - windowSizeY + 50),null);
-		    	}
-	    	}
-	    	
-	    	// -------------------------------- Bot/Right -----------------------------
-	    	else if (player.posX >= worldSizeX - windowSizeX/2 &&
-		    		player.posY >= worldSizeY - windowSizeY/2){
-	    		
-	    		// Player
-			    g.drawImage(player.getCurrentTexture(),(int)player.getPosX()- (worldSizeX - windowSizeX + 20),(int)player.getPosY() - (worldSizeY - windowSizeY + 50),this);
 		    	
-		    	// Mobile elements
-		    	for (int i = 0; i < mobiles.size(); i++){
-		    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX()- (worldSizeX - windowSizeX + 20),(int)mobiles.get(i).getPosY() - (worldSizeY - windowSizeY + 50),null);
-		    	}
 		    	
 		    	// Life points
 		    	for (int i = 0; i < player.lifePoints; i++){
 		    		g.drawImage(footprint,30*i +10,10 ,null);
 		    	}
 	    	}
-	    	
-	    	// -------------------------------- Right -----------------------------
-	    	else if (player.posX >= worldSizeX - windowSizeX/2 &&
-	    			player.posY > windowSizeY/2 && player.posY < worldSizeY - windowSizeY/2){
-	    		
-	    		// Player
-			    g.drawImage(player.getCurrentTexture(),(int)player.getPosX()- (worldSizeX - windowSizeX + 20),windowSizeY/2 - 25,this);
-		    	
-		    	// Mobile elements
-		    	for (int i = 0; i < mobiles.size(); i++){
-		    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX()- (worldSizeX - windowSizeX + 20),(int)mobiles.get(i).getPosY() - offsetY,null);
-		    	}
-		    	
-		    	// Still elements
-		    	for (int i = 0; i < stills.size(); i++){
-		    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX()- (worldSizeX - windowSizeX + 20),(int)stills.get(i).getPosY() - offsetY,null);
-		    	}
-	    	}
-	    	
-	    	// -------------------------------- Top/Right -----------------------------
-	    	else if (player.posX >= worldSizeX - windowSizeX/2 &&
-	    			player.posY <= windowSizeY/2){
-	    		
-	    		// Player
-			    g.drawImage(player.getCurrentTexture(),(int)player.getPosX()- (worldSizeX - windowSizeX + 20),(int)player.getPosY(),this);
-		    	
-		    	// Mobile elements
-		    	for (int i = 0; i < mobiles.size(); i++){
-		    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX()- (worldSizeX - windowSizeX + 20),(int)mobiles.get(i).getPosY(),null);
-		    	}
-		    	
-		    	// Still elements
-		    	for (int i = 0; i < stills.size(); i++){
-		    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX()- (worldSizeX - windowSizeX + 20),(int)stills.get(i).getPosY(),null);
-		    	}
-	    	}
-	    	
-	    	// -------------------------------- Top -----------------------------
-	    	else if (player.posX > windowSizeX/2 - 50 && player.posX < worldSizeX - windowSizeX/2 &&
-	    			player.posY <= windowSizeY/2){
-	    		
-	    		// Player
-			    g.drawImage(player.getCurrentTexture(),windowSizeX/2 - 50,(int)player.getPosY(),this);
-		    	
-		    	// Mobile elements
-		    	for (int i = 0; i < mobiles.size(); i++){
-		    		g.drawImage(mobiles.get(i).getCurrentTexture(),(int)mobiles.get(i).getPosX() - offsetX,(int)mobiles.get(i).getPosY(),null);
-		    	}
-		    	
-		    	// Still elements
-		    	for (int i = 0; i < stills.size(); i++){
-		    		g.drawImage(stills.get(i).getCurrentTexture(),(int)stills.get(i).getPosX() - offsetX,(int)stills.get(i).getPosY(),null);
-		    	}
-	    	}
-	    	
-	    	
-	    	
-	    	// Life points
-	    	for (int i = 0; i < player.lifePoints; i++){
-	    		g.drawImage(footprint,30*i +10,10 ,null);
-	    	}
-
 	}
 
 	@Override
