@@ -64,7 +64,7 @@ public class EditorWindow extends JFrame {
 		if (win == null && !getIsOpen()){
 			win = new EditorWindow();
 			win.setTitle("level Editor");
-			win.setSize(800,800);
+			win.setExtendedState(win.MAXIMIZED_BOTH);
 			win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			win.setIconImage(new ImageIcon("images/icons/icon_editor.png").getImage());
 	
